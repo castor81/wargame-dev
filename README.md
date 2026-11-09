@@ -1,6 +1,6 @@
 # Wargame Studio – fejlesztési vonal (wargame-dev)
 
-**Jelenlegi verzió:** v0.3.4-dev (2026-11-09)
+**Jelenlegi verzió:** v0.3.5-dev (2026-11-09)
 
 A NATO Wargaming Handbook alapú Wargame Studio külön fejlesztési ága. A stabil demó (v0.2.x) a `castor81/wargame` repóban marad.
 
@@ -25,6 +25,7 @@ A telefonos szinkron Supabase-adatai (`wg_rooms`, `wg_events`) 3 nap után autom
 - A profil szerinti nézetkorlátozás kliensoldali, nem biztonsági határ.
 
 ## Változásnapló
+- **v0.3.5-dev (2026-11-09):** a „Pull” felirat doboza nyíl alakú, és ütemesen a húzás irányába (a pintől balra) mozog.
 - **v0.3.4-dev (2026-11-09):** a Supabase demó-adatok (szobák, események) automatikus törlése 3 nap után (napi időzített feladat).
 - **v0.3.3-dev (2026-11-09):** DEMÓ: minden új belépés tiszta játékkal indul (az előző játék mentett állapota törlődik; frissítésnél, ugyanazon a munkameneten belül az állapot megmarad). A Wargame-igazgató bármely lépésben aktiválhat/kikapcsolhat helyeket a Játékosok nézetben.
 - **v0.3.2-dev (2026-11-09):** belépő oldal: a „Húzd ki a pint” felirat helyett arany nyíl „Pull” felirattal; nyelvválasztó (HU/EN/DE/FR), a teljes belépő felület – szerepkör-lista, leírások, üzenetek – a választott nyelven; a választás megmarad. Az `app.html` egyelőre magyar.
