@@ -37,3 +37,4 @@ A telefonos szinkron Supabase-adatai (`wg_rooms`, `wg_events`) 3 nap után autom
 
 - **v0.5.0-dev (2026-11-09)** – Új játék üres (nincs előző scenario/opció). Importálható Scenario-csomag (JSON), Scenario-fejlesztő nézet, Scenario Brief gomb minden szerepnek (telefonon is), csapatonkénti válaszlehetőségek és injektek a scenarióból, 5. lépés kapuja, naplózás, sablon + minta (`scenarios/`).
 - **v0.5.0-dev (2026-11-09)** – `scenario-szerkeszto_v1.0_2026-11-09.html`: önálló űrlapos Scenario-szerkesztő (élő JSON-előnézet, letöltés, betöltés, ellenőrzés), a fő program színvilágával; a Scenario nézetből is elérhető.
+- **v0.6.0-dev (2026-11-09)** – Élő AI-ügynökök (N8N webhook → LLM) IGA-kapcsolóval (kétszeres megerősítés + kód), alapértelmezetten szimulált; elbírálás-támogatás; napló. N8N workflow-k: `docs/n8n/`.
