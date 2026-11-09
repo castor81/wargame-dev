@@ -1,0 +1,834 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Wargame Studio Demó</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+/* Koncepció: parancsnoki munkaasztal. Átlátszó üvegpanelek egy procedurálisan generált, lassan sodródó légi felvétel-szerű terep felett. A folyamat 18 lépése a gerinc, minden nézet a handbook szerinti lépéshez van kötve. */
+:root{
+  --bg:#E8EEEC;--glass:rgba(247,250,249,.8);--glass2:rgba(255,255,255,.92);
+  --ink:#0F1B21;--mut:#41545C;--ln:rgba(15,27,33,.18);--ln2:rgba(15,27,33,.08);
+  --ac:#1B5C78;--ac-t:rgba(27,92,120,.12);--ok:#1E7A3C;--now:#8F5500;--bad:#B3262D;
+  --hu:#0A7A70;--ai:#5B3FD0;--on-rc:#fff;
+  --pf:saturate(.85) brightness(1.12);--veil-a:rgba(232,238,236,.55);--veil-b:rgba(232,238,236,.78);--veil-edge:rgba(232,238,236,.9);
+  --c-MEG:#8A5800;--c-IGA:#A1232B;--c-TER:#6A3CA3;--c-FEJ:#2B4DB8;--c-ELE:#0A6B70;--c-FOR:#A12F6C;--c-OPF:#4B5566;--c-REN:#AD460A;--c-JAT:#23743A;--c-ADJ:#6A4A2A;--c-FAC:#5C6900;
+  --f-sans:'IBM Plex Sans',system-ui,sans-serif;--f-cond:'IBM Plex Sans Condensed','IBM Plex Sans',sans-serif;--f-mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#091014;--glass:rgba(12,20,26,.78);--glass2:rgba(20,31,39,.88);
+  --ink:#E7EFF3;--mut:#9DB1BB;--ln:rgba(160,190,205,.22);--ln2:rgba(160,190,205,.1);
+  --ac:#72BAD8;--ac-t:rgba(114,186,216,.14);--ok:#5CC274;--now:#F0B84A;--bad:#FF8085;
+  --hu:#3DD6C6;--ai:#B8A0FF;--on-rc:#091014;
+  --pf:saturate(.75) brightness(.5) contrast(1.1);--veil-a:rgba(9,16,20,.45);--veil-b:rgba(9,16,20,.7);--veil-edge:rgba(9,16,20,.9);
+  --c-MEG:#E0A93B;--c-IGA:#F0646C;--c-TER:#A97BE0;--c-FEJ:#6C8CF0;--c-ELE:#2FC2C8;--c-FOR:#E066A8;--c-OPF:#8C97A8;--c-REN:#F08A45;--c-JAT:#5CC274;--c-ADJ:#B58A5C;--c-FAC:#B5C73A;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#091014;--glass:rgba(12,20,26,.78);--glass2:rgba(20,31,39,.88);
+  --ink:#E7EFF3;--mut:#9DB1BB;--ln:rgba(160,190,205,.22);--ln2:rgba(160,190,205,.1);
+  --ac:#72BAD8;--ac-t:rgba(114,186,216,.14);--ok:#5CC274;--now:#F0B84A;--bad:#FF8085;
+  --hu:#3DD6C6;--ai:#B8A0FF;--on-rc:#091014;
+  --pf:saturate(.75) brightness(.5) contrast(1.1);--veil-a:rgba(9,16,20,.45);--veil-b:rgba(9,16,20,.7);--veil-edge:rgba(9,16,20,.9);
+  --c-MEG:#E0A93B;--c-IGA:#F0646C;--c-TER:#A97BE0;--c-FEJ:#6C8CF0;--c-ELE:#2FC2C8;--c-FOR:#E066A8;--c-OPF:#8C97A8;--c-REN:#F08A45;--c-JAT:#5CC274;--c-ADJ:#B58A5C;--c-FAC:#B5C73A;
+  color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 var(--f-sans);-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.photo{position:fixed;inset:-6%;width:112%;height:112%;z-index:-3;filter:var(--pf);animation:drift 140s ease-in-out infinite alternate;will-change:transform;object-fit:cover}
+@keyframes drift{from{transform:translate3d(-1.2%,-.8%,0) scale(1.03)}to{transform:translate3d(1.2%,.8%,0) scale(1.09)}}
+.veil{position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 50% 35%,transparent 0,var(--veil-edge) 120%),linear-gradient(var(--veil-a),var(--veil-b));pointer-events:none}
+.grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.07;mix-blend-mode:overlay;background-image:var(--grain)}
+@media (prefers-reduced-motion:reduce){.photo{animation:none}.pulse{animation:none!important}}
+.app{max-width:1500px;margin:0 auto;padding-block:14px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:12px}
+.panel{background:var(--glass);border:1px solid var(--ln);border-radius:10px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);min-width:0}
+.hud{position:relative}
+.hud::before,.hud::after{content:"";position:absolute;width:14px;height:14px;border:2px solid var(--ac);opacity:.7;pointer-events:none}
+.hud::before{left:-1px;top:-1px;border-right:0;border-bottom:0;border-radius:10px 0 0 0}
+.hud::after{right:-1px;bottom:-1px;border-left:0;border-top:0;border-radius:0 0 10px 0}
+.mono{font-family:var(--f-mono)}
+.lbl{font:600 11px/1.2 var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--mut)}
+h1,h2,h3{margin:0;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.03em}
+.top{display:flex;align-items:center;gap:12px;padding:10px 14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px}
+.brand b{font:700 15px/1 var(--f-cond);letter-spacing:.16em;text-transform:uppercase}
+.brand small{display:block;font:500 11px/1.2 var(--f-mono);color:var(--mut);letter-spacing:.04em}
+.vsep{width:1px;height:28px;background:var(--ln)}
+.sp{flex:1}
+.ctl{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mut)}
+select,.btn,input[type=text],input[type=number],textarea{background:var(--glass2);border:1px solid var(--ln);border-radius:8px;min-height:36px;padding:0 10px}
+textarea{padding:8px 10px;width:100%;resize:vertical;line-height:1.45}
+input[type=text],input[type=number]{width:100%}
+.btn{font-weight:600;font-size:13px;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
+.btn:hover{border-color:var(--ac)}
+.btn.pri{background:var(--ac);border-color:var(--ac);color:var(--on-rc)}
+.btn.pri:disabled{background:var(--glass2);color:var(--mut);border-color:var(--ln);cursor:not-allowed}
+.btn.sm{min-height:30px;padding:0 9px;font-size:12px}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{min-height:48px;padding:6px 16px;border-radius:10px;border:1px solid var(--ln);background:var(--glass);backdrop-filter:blur(10px);text-align:left;font-weight:600}
+.tab small{display:block;font:500 11px/1.2 var(--f-mono);color:var(--mut)}
+.tab[aria-selected=true]{border-color:var(--ac);box-shadow:inset 0 -3px 0 var(--ac)}
+.rail{padding:10px 14px;overflow-x:auto}
+.rg{display:grid;grid-template-columns:92px repeat(18,minmax(34px,1fr));gap:4px 4px;min-width:820px;align-items:center}
+.rg .ph{font:700 11px/1 var(--f-cond);letter-spacing:.08em;text-transform:uppercase;color:var(--mut);border-bottom:2px solid var(--ln);padding-bottom:3px}
+.rg .rl{font:600 10.5px/1.1 var(--f-mono);color:var(--mut);letter-spacing:.04em}
+.sb{height:34px;border-radius:50%;border:2px solid var(--ln);background:var(--glass2);font:600 12px var(--f-mono);display:flex;align-items:center;justify-content:center;padding:0;width:34px;justify-self:center}
+.sb.done{background:var(--ok);border-color:var(--ok);color:var(--on-rc)}
+.sb.cur{border-color:var(--now);color:var(--now);box-shadow:0 0 0 4px color-mix(in srgb,var(--now) 22%,transparent)}
+.sb.view{outline:2px solid var(--ac);outline-offset:2px}
+.sb.fut{color:var(--mut)}
+.dia{width:12px;height:12px;background:var(--c-MEG);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);justify-self:center}
+.dia.cond{opacity:.5}
+.lane{height:6px;border-radius:3px;background:var(--ln2)}
+.lane.on.dc{background:var(--c-ELE)}.lane.on.ev{background:var(--c-REN)}
+.lane.has{background:color-mix(in srgb,var(--ln) 70%,transparent)}
+.flow{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:12px;align-items:start}
+.col{display:flex;flex-direction:column;gap:12px;min-width:0}
+.pad{padding:14px 16px}
+.shead{display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap}
+.bign{font:600 56px/.9 var(--f-mono);color:var(--now)}
+.shead h2{font-size:28px;line-height:1.05}
+.chipx{font:600 11px/1 var(--f-mono);padding:4px 7px;border-radius:5px;border:1px solid var(--ln);color:var(--mut);letter-spacing:.04em;text-transform:uppercase}
+.chipx.tp{color:var(--c-MEG);border-color:var(--c-MEG);display:inline-flex;gap:6px;align-items:center}
+.chipx.tp.cond{border-style:dashed}
+.chipx.hu{color:var(--hu);border-color:var(--hu)}.chipx.ai{color:var(--ai);border-color:var(--ai)}
+.inp{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--mut)}
+.task{display:flex;align-items:stretch;border-radius:8px;overflow:hidden;background:color-mix(in srgb,var(--rc) 14%,var(--glass2));border:1px solid color-mix(in srgb,var(--rc) 30%,transparent);cursor:pointer;min-height:44px}
+.task .code{flex:0 0 52px;background:var(--rc);color:var(--on-rc);font:700 12px var(--f-mono);display:flex;align-items:center;justify-content:center}
+.task .tx{flex:1;padding:8px 10px;display:flex;align-items:center}
+.task .ck{flex:0 0 44px;display:flex;align-items:center;justify-content:center}
+.task input{width:20px;height:20px;accent-color:var(--rc)}
+.task.dim{opacity:.62}
+.task.mine{box-shadow:0 0 0 2px var(--rc)}
+.r-MEG{--rc:var(--c-MEG)}.r-IGA{--rc:var(--c-IGA)}.r-TER{--rc:var(--c-TER)}.r-FEJ{--rc:var(--c-FEJ)}.r-ELE{--rc:var(--c-ELE)}.r-FOR{--rc:var(--c-FOR)}.r-OPF{--rc:var(--c-OPF)}.r-REN{--rc:var(--c-REN)}.r-JAT{--rc:var(--c-JAT)}.r-ADJ{--rc:var(--c-ADJ)}.r-FAC{--rc:var(--c-FAC)}
+.tasks{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px}
+.thr{display:flex;align-items:center;gap:10px;border-radius:18px;padding:5px 14px;font-weight:600;font-size:13px;color:var(--on-rc);min-height:32px}
+.thr.dc{background:var(--c-ELE)}.thr.ev{background:var(--c-REN)}
+.prod{border:2px dashed var(--ink);border-radius:10px;padding:12px 14px;background:var(--glass2)}
+.prod .lbl{color:var(--ink)}
+.fld{display:flex;flex-direction:column;gap:4px;margin-top:10px}
+.fld>span{font-size:12px;font-weight:600;color:var(--mut)}
+.ckl{display:flex;gap:10px;align-items:center;min-height:36px;margin-top:6px}
+.ckl input{width:20px;height:20px;accent-color:var(--ac)}
+.gi{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-top:1px solid var(--ln2);font-size:13px}
+.gi:first-child{border-top:0}
+.mk{flex:0 0 20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 12px var(--f-mono);border:2px solid var(--ln);color:var(--mut)}
+.gi.ok .mk{background:var(--ok);border-color:var(--ok);color:var(--on-rc)}
+.gi.soft .mk{border-style:dashed}
+.roster{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;align-items:start}
+.team{padding:10px;display:flex;flex-direction:column;gap:5px}
+.thd{display:flex;align-items:center;gap:10px;padding:2px 4px 6px}
+.thd h3{font-size:16px;flex:1}
+.seat{display:flex;align-items:center;gap:8px;width:100%;min-height:44px;border:1px solid var(--ln);border-radius:8px;background:var(--glass2);padding:0 10px;text-align:left;border-left:5px solid var(--rc,var(--ln))}
+.seat.off{opacity:.5;border-left-color:var(--ln)}
+.seat[aria-expanded=true]{border-color:var(--ac)}
+.seat .nm{flex:1;min-width:0;font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.seat .nm small{display:block;font:500 11px var(--f-mono);color:var(--mut)}
+.tg{font:700 10px var(--f-mono);padding:2px 6px;border-radius:4px}
+.tg.hu{color:var(--hu);background:color-mix(in srgb,var(--hu) 16%,transparent)}.tg.ai{color:var(--ai);background:color-mix(in srgb,var(--ai) 16%,transparent)}.tg.ok{color:var(--ok);background:color-mix(in srgb,var(--ok) 16%,transparent)}.tg.wt{color:var(--now);background:color-mix(in srgb,var(--now) 16%,transparent)}.tg.off{color:var(--mut);background:var(--ln2)}
+.sdet{border:1px solid var(--ac);border-radius:8px;background:var(--glass2);padding:10px;display:flex;flex-direction:column;gap:10px}
+.seg{display:flex;border:1px solid var(--ln);border-radius:8px;overflow:hidden}
+.seg button{flex:1;min-height:40px;border:0;background:transparent;font-weight:600;color:var(--mut)}
+.seg button.on.hu{background:color-mix(in srgb,var(--hu) 18%,transparent);color:var(--hu)}.seg button.on.ai{background:color-mix(in srgb,var(--ai) 18%,transparent);color:var(--ai)}
+.acc{border-top:1px solid var(--ln2)}
+.acc>summary{min-height:40px;display:flex;align-items:center;cursor:pointer;font-weight:600;font-size:13px}
+.kv{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:3px 0;color:var(--mut)}.kv b{color:var(--ink);font-weight:500;text-align:right}
+.qr{background:#fff;padding:8px;border-radius:8px;width:144px;height:144px;flex:none}
+.qr img,.qr canvas{width:100%!important;height:100%!important;display:block}
+.board{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:12px;align-items:start}
+.mapw{position:relative;aspect-ratio:3/2;border-radius:8px;border:1px solid var(--ln);background:#222}
+.mclip{position:absolute;inset:0;overflow:hidden;border-radius:7px}
+.mapw canvas{position:absolute;inset:0;width:100%;height:100%;filter:saturate(.95)}
+.mgrid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)}
+.mgrid div{border:1px solid rgba(255,255,255,.35);position:relative}
+.mgrid span{position:absolute;left:6px;top:4px;font:600 11px var(--f-mono);color:#fff;text-shadow:0 1px 2px #000}
+.mgrid .hot{background:rgba(255,190,60,.22);border-color:rgba(255,190,60,.9)}
+.mk2{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:2px;transition:left .8s,top .8s}
+.mk2 i{font:600 10px var(--f-mono);font-style:normal;background:rgba(0,0,0,.65);color:#fff;padding:1px 4px;border-radius:3px}
+.mk2{cursor:pointer;background:none;border:0;padding:4px;font:inherit;border-radius:8px;z-index:2}
+.mk2:hover,.mk2:focus-visible,.mk2.pin{outline:2px solid var(--ac);background:rgba(0,0,0,.25)}
+.tip{display:none;position:absolute;z-index:30;width:min(372px,calc(100% - 16px));background:var(--bg2,var(--glass2));color:var(--ink);border:1px solid var(--ln);border-radius:10px;padding:10px 12px;box-shadow:0 12px 32px rgba(0,0,0,.45);pointer-events:none;font-size:12px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.mk2:hover+.tip,.mk2:focus-visible+.tip,.mk2.pin+.tip{display:block}
+.tip.c0{left:8px}.tip.c1{left:50%;transform:translateX(-50%)}.tip.c2{right:8px}.tip.r0{bottom:8px}.tip.r1,.tip.r2{top:8px}
+.tip h4{margin:0 0 6px;display:flex;gap:8px;align-items:center;font-size:13px}
+.tip h4 em{margin-left:auto;font:600 11px var(--f-mono);font-style:normal;color:var(--mut)}
+.tip .sub{font:600 10px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin:8px 0 3px}
+.dm{width:100%;border-collapse:collapse;font-size:11px}
+.dm th{font:600 9.5px var(--f-mono);color:var(--mut);padding:2px 1px;text-align:center}
+.dm td{padding:2px 1px;text-align:center;border-top:1px solid var(--ln2)}
+.dm td:first-child,.dm th:first-child{text-align:left;padding-right:4px;white-space:nowrap;max-width:96px;overflow:hidden;text-overflow:ellipsis}
+.dm .on{color:var(--tc);font-weight:700}.dm tfoot td{font-weight:700;color:var(--mut)}
+.tip .res{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.tip .why{color:var(--mut);margin-top:3px}
+.tip svg.ch{width:100%;height:auto;display:block}
+.tip .twoc{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:end}
+.sh{display:grid;grid-template-columns:repeat(3,22px);grid-template-rows:repeat(3,22px);gap:2px}
+.sh b{display:grid;place-items:center;font:600 10px var(--f-mono);border-radius:3px;background:color-mix(in srgb,var(--tc) calc(var(--k)*22%),transparent);border:1px solid var(--ln);color:var(--ink)}
+.sh b.here{outline:2px solid var(--tc);outline-offset:1px}
+@media(max-width:760px){.tip{left:0!important;right:0!important;top:calc(100% + 6px)!important;bottom:auto!important;transform:none!important;width:auto}}
+.pulse{animation:pl 2.4s ease-in-out infinite}
+@keyframes pl{50%{opacity:.45}}
+.pipe{display:flex;gap:4px;flex-wrap:wrap}
+.pipe span{flex:1;min-width:88px;text-align:center;font:600 11px var(--f-mono);padding:7px 4px;border-radius:6px;border:1px solid var(--ln);color:var(--mut);letter-spacing:.04em}
+.pipe span.on{border-color:var(--now);color:var(--now);background:color-mix(in srgb,var(--now) 12%,transparent)}
+.pipe span.dn{background:var(--ok);border-color:var(--ok);color:var(--on-rc)}
+.ord{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;padding:8px;border:1px solid var(--ln);border-radius:8px;background:var(--glass2)}
+.ord .r1{display:flex;align-items:center;gap:8px}
+.ord .r2{display:grid;grid-template-columns:1fr 84px;gap:6px}
+.sc{display:flex;height:14px;border-radius:3px;overflow:hidden;background:var(--ln2)}
+.sc i{display:block}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:6px 8px;border-top:1px solid var(--ln2);vertical-align:top}
+th{font:600 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.scr{overflow-x:auto}
+.dgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:start}
+.note{font-size:13px;color:var(--mut);padding:8px 12px;border-left:3px solid var(--now);background:color-mix(in srgb,var(--now) 9%,transparent);border-radius:0 6px 6px 0}
+.tri{display:inline-flex;border:1px solid var(--ln);border-radius:6px;overflow:hidden}
+.tri button{border:0;background:transparent;min-height:32px;padding:0 8px;font:600 11px var(--f-mono);color:var(--mut)}
+.tri button.on{background:var(--ac-t);color:var(--ac)}.tri button.on.bad{background:color-mix(in srgb,var(--bad) 16%,transparent);color:var(--bad)}.tri button.on.okk{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+.scrim{position:fixed;inset:0;z-index:50;background:rgba(5,10,14,.7);display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
+.phone{width:min(380px,100%);background:var(--bg);border:8px solid #11181d;border-radius:34px;min-height:640px;max-height:92vh;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px;position:relative}
+.foot{font:500 11px/1.5 var(--f-mono);color:var(--mut);padding:4px 2px 14px}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:8px;font-weight:600;z-index:80;max-width:90vw}
+.sym{flex:none}
+@media (max-width:1040px){.flow,.board,.dgrid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:560px){.bign{font-size:44px}.shead h2{font-size:22px}.tasks{grid-template-columns:minmax(0,1fr)}.top .sp{display:none}}
+</style>
+<script src="js/profiles.js"></script>
+</head>
+<body>
+<canvas id="terrain" class="photo" aria-hidden="true"></canvas>
+<div class="veil" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="app" id="app">
+  <header class="panel hud top">
+    <div class="brand">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 28 9v14L16 30 4 23V9z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 20 16 8l7 12M11.5 16h9" fill="none" stroke="var(--ac)" stroke-width="2"/></svg>
+      <div><b>Wargame Studio</b><small>DEV v0.3.0 · 2026-11-09</small></div>
+    </div>
+    <div class="vsep"></div>
+    <div><div class="lbl">Játék</div><input type="text" id="gtitle" aria-label="Játék címe" style="min-height:30px;width:210px;font-weight:600"></div>
+    <div class="sp"></div>
+    <span class="chipx" id="sync" title="Élő szinkron a telefonos nézetekkel">Szinkron…</span>
+    <span class="chipx hu" id="who" title="Bejelentkezett profil"></span><button class="btn sm" data-act="logout" type="button">Kilépés</button>
+    <label class="ctl">Terep <select id="terr" aria-label="Terep"><option value="temp">Mérsékelt</option><option value="arid">Száraz</option><option value="arctic">Hegyvidéki</option></select></label>
+    <button class="btn sm" id="themeBtn" type="button">Téma</button>
+    <label class="btn sm" for="bgfile" style="cursor:pointer">Háttérkép</label><input type="file" id="bgfile" accept="image/*" hidden>
+    <button class="btn sm" data-act="reset" type="button">Új játék</button>
+  </header>
+
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Nézetek"></nav>
+  <section class="panel rail" id="rail" aria-label="A wargame életciklusa"></section>
+  <main id="view"></main>
+  <footer class="foot">Alap: NATO Wargaming Handbook, első kiadás (HQ SACT, 2023; nem hivatalos NATO-kiadvány). A terep procedurálisan generált illusztráció, a szereplők, forgatókönyv és adatok mintaadatok. Az állapot csak ebben a böngészőben tárolódik.</footer>
+</div>
+
+<div class="scrim" id="phoneModal" hidden></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+'use strict';
+/* ---------- segédek ---------- */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const KEY='wgd-state-v0.3', VER='v0.3.0 · 2026-11-09';
+const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+
+/* ---------- szerepek (handbook) ---------- */
+const ROLES={MEG:['Megbízó','Sponsor'],IGA:['Wargame-igazgató','Wargame Director'],TER:['Játéktervező','Game Designer'],FEJ:['Játékfejlesztő','Game Developer'],ELE:['Elemző','Analyst'],FOR:['Forgatókönyv-tervező','Scenario Designer'],OPF:['Nem játékos csapatok (OPFOR)','Non-player teams'],REN:['Rendezvényszervező','Event Manager'],JAT:['Játékosok','Players'],ADJ:['Adjudikátor','Adjudicator'],FAC:['Facilitátor','Facilitator']};
+const RC=r=>r==='JAT'?'JÁT':r;
+
+/* ---------- a 18 lépés (handbook 3–6. fejezet) ---------- */
+const PH=['Tervezés','Fejlesztés','Végrehajtás','Elemzés és jelentés'];
+const T=(r,t)=>[r,t];
+const STEPS=[
+{nm:'Kezdeményezés',en:'Initiation',ref:'§ 3.2',tp:1,prod:'Problémamegfogalmazás: kérdés + kívánt eredmény',dc:'Probléma → elemzési kérdés',ev:'Bevonás a kezdeményezésbe',tasks:[T('MEG','Megfogalmazza a problémát és a kívánt eredményt; erőforrást ad'),T('IGA','Tisztázza a problémát; nélküle nem lép tovább a tervezésben'),T('ELE','Segít a probléma szerkezetbe foglalásában'),T('REN','Már itt bekapcsolódik a tervezésbe')]},
+{nm:'Behatárolás',en:'Scoping event',ref:'§ 3.3',tp:1,prod:'Cél, 3–4 célkitűzés, elvárt eredmények, mérföldkövek, korlátok',dc:'Elemzési koncepció, kérdések',ev:'Részvétel a behatárolásban',tasks:[T('MEG','Közösen elfogadja a célt, a célkitűzéseket, a mérföldköveket'),T('IGA','Vezeti a behatároló megbeszélést, témánként egy dia'),T('ELE','Elemzési koncepció, alapkérdések, torzítás-ellenőrzés'),T('REN','Részt vesz a behatárolásban')]},
+{nm:'Kutatás',en:'Research',ref:'§ 3.4',tp:0,prod:'Kutatási alap: téma, hasonló játékok, erők/elemek',dc:'Módszer: kell-e wargame?',ev:'',tasks:[T('TER','Témát, hasonló játékok mechanikáit, erőket kutat'),T('FOR','Háttéranyagot gyűjt, szakértőket (SME) von be'),T('ELE','Módszert választ: tényleg wargame kell?')]},
+{nm:'Tervezési ismertető',en:'Design brief',ref:'§ 3.5',tp:1,prod:'Design brief 8 elemmel; formális esetben MoA',dc:'Finomított elemzési koncepció',ev:'',tasks:[T('MEG','Jóváhagyja az ismertetőt és az ütemtervet'),T('IGA','Bemutatja a 8 elemet, lehetőleg személyesen'),T('TER','Kezdeti formátum és struktúra (hossz, csapatok)'),T('ELE','Finomított elemzési koncepció')]},
+{nm:'Játéktervezés',en:'Design',ref:'§ 3.6',tp:0,prod:'Játékváz: szabályok, DCAP, forgatókönyv + OOB, prototípus, esemény-terv',dc:'DCAP elkészítése (mérőszámok)',ev:'Kezdeti előkészítés',tasks:[T('TER','Szabályok, körök, bemenetek, elbírálás'),T('ELE','DCAP: mérőszámok, kérdések, módszerek'),T('FOR','Forgatókönyv, vignette-ek, erők/OOB'),T('FEJ','Prototípus: térkép, bábuk, kártyák'),T('OPF','Segít a forgatókönyvben és az erőkben'),T('REN','Helyszín, biztonság, IT, szállás, étkezés')]},
+{nm:'Playtest',en:'Playtesting',ref:'§ 4.2',tp:0,prod:'Playtest-hibalista és megfigyelések (≥ 2 teljes futás ideális)',dc:'DCAP tesztelése playtesten',ev:'',tasks:[T('FEJ','Teljes playtest: térkép, elemek, mechanika, időzítés, tér, IT'),T('ELE','A DCAP tesztje: keletkezik-e a szükséges adat?')]},
+{nm:'Finomítás',en:'Refine mechanics',ref:'§ 4.3',tp:0,prod:'Finomított szabályok, mechanika; ismételt playtest',dc:'DCAP igazítása a hiányokhoz',ev:'',tasks:[T('FEJ','Javítja a szabályokat, információt, időzítést; újrateszt'),T('ELE','Hiányzó vagy felesleges adat miatt igazítja a DCAP-ot')]},
+{nm:'Véglegesítés',en:'Finalise + DCAP',ref:'§ 4.4–4.6',tp:2,prod:'Végleges játéktermékek, validált DCAP, meghívó + admin melléklet',dc:'DCAP validálása',ev:'Meghívó (calling message)',tasks:[T('MEG','Ha a DCAP nem ad elég adatot: őszinte egyeztetés'),T('IGA','Lezárja a fejlesztést a megállapodott határidőre'),T('FEJ','Véglegesíti a játéktermékeket, mechanikát, OOB-t'),T('ELE','Validálja a DCAP-ot: minden kérdésre van adat?'),T('REN','Véglegesíti a feladatokat; kiküldi a meghívót')]},
+{nm:'Főpróba',en:'Rehearse',ref:'§ 4.7',tp:1,prod:'Begyakorolt végrehajtó stáb, a szabályokat értő csapat',dc:'Elemzők a főpróbán',ev:'Támogató stáb a főpróbán',tasks:[T('MEG','Maga vagy képviselője részt vesz'),T('IGA','Vezeti; szenior játéknál alsóbb stábbal is'),T('ELE','Gyakorolja az adatgyűjtést'),T('REN','Rendezvénytámogató stáb gyakorol'),T('ADJ','Begyakorolja az elbírálást'),T('FAC','Begyakorolja a facilitálást')]},
+{nm:'Kiképzés',en:'Training',ref:'§ 5.2',tp:0,prod:'Felkészült játékosok és stáb; kiadott read-ahead anyag',dc:'Elemzők képzése (DCAP)',ev:'',tasks:[T('IGA','Read-ahead 1–2 héttel előbb kiadva'),T('ELE','Kiképzi az elemzőket: DCAP, hol-mikor-hogyan'),T('JAT','Célok → háttér → mechanika → időrend → kommunikáció'),T('ADJ','Mechanika, időzítés, kommunikáció'),T('FAC','Ugyanez + ellenőrzi: értik-e a céljaikat?')]},
+{nm:'Felállítás, IT-teszt',en:'Set-up, E2E IT test',ref:'§ 5.2–5.3',tp:0,prod:'Üzemkész helyszín, végponttól végpontig tesztelt IT',dc:'',ev:'Helyszín és IT felállítása',tasks:[T('IGA','Gondoskodik: minden kész és tesztelt érkezés előtt'),T('FEJ','Felállítja a játékeszközöket, kijelzőket'),T('REN','Helyszín, szállítás, biztonság, regisztráció, étkezés'),T('REN','IT-szakemberekkel végponttól végpontig tesztel')]},
+{nm:'Jégtörő, warm start',en:'Ice breaker, turn 0',ref:'§ 5.4–5.5',tp:0,prod:'Megszokott folyamat: turn 0 lefutott, elbírálás kipróbálva',dc:'Elemzők bemutatkozása',ev:'',tasks:[T('IGA','A warm startot beépíti az időtervbe'),T('FAC','Jégtörő: oldja a feszültséget (opcionális)'),T('ELE','Bemutatkozik a játékosoknak, bekapcsolódik'),T('JAT','Turn 0: teljes próbakör könnyebb vignette-tel'),T('ADJ','Kipróbálja az elbírálást a turn 0-n')]},
+{nm:'Játék végrehajtása',en:'Execution',ref:'§ 5.6–5.7',tp:0,prod:'Döntések + indoklások, következmények, nyers adat a DCAP szerint',dc:'Észrevétlen adatgyűjtés',ev:'Szünetek szigorú betartása',tasks:[T('IGA','Irányít, kivédi a külső zavarást'),T('JAT','Csak ők döntenek; indokolják a döntésüket'),T('OPF','Súrlódást ad a célok szerint, az igazgató alatt'),T('FAC','Tartja az időt, magyarázza a szabályt; nem tereli'),T('ADJ','Időben, érthetően elbírál; tartalék-módszer kell'),T('ELE','Észrevétlenül gyűjt adatot; jelez, ha hiány van')]},
+{nm:'Zárás',en:'Conclusion',ref:'§ 5.7',tp:1,prod:'Hot-wash: felismerések, további elemzés, tanulságok; exit survey',dc:'Exit survey + hot-wash adat',ev:'',tasks:[T('MEG','Gyakran jelen van a hot-washen'),T('FAC','Vezeti a hot-washt: felismerések, tanulságok'),T('JAT','Elmondják felismeréseiket; kitöltik az exit survey-t'),T('ELE','Exit survey + további elemzendő kérdések')]},
+{nm:'Utóelemzés',en:'Post-game analysis',ref:'§ 6.1, 6.5',tp:0,prod:'Cél-elérés bizonyítékkal, ODCR témák, vizualizáció, gyorsjelentés',dc:'ODCR-elemzés',ev:'',tasks:[T('ELE','Rendszerezi az adatot: cél-elérés, ODCR, vizualizáció'),T('IGA','Gyorsjelentés: genezis, módszertan, megállapítások')]},
+{nm:'Értékelés, AAR',en:'Assessment, AAR',ref:'§ 6.1',tp:1,prod:'Formális AAR + belső értékelés (megosztva más szakemberekkel)',dc:'AAR: kulcsmegállapítások',ev:'',tasks:[T('MEG','Előre elfogadott AAR-szerkezet és határidő'),T('ELE','AAR: kulcsmegállapítások, cél-elérés, követő lépések'),T('IGA','Belső értékelés: szabályok, DCAP, rendezvény, megbízó')]},
+{nm:'Jelentés, bemutató',en:'Report, presentation',ref:'§ 6.1',tp:1,prod:'Végső jelentés; formális átadás a megbízónak',dc:'Végső jelentés',ev:'',tasks:[T('IGA','Formális bemutató a megbízónak'),T('ELE','Végső jelentés: a követő felhasználás a fókusz'),T('MEG','Átveszi az eredményt; felülvizsgálja a jelentést')]},
+{nm:'Tudás és beépítés',en:'Knowledge mgmt',ref:'§ 6.1',tp:0,prod:'Archivált tudás; megállapítások beépítve a kampányba',dc:'Bemenet a követő elemzéshez',ev:'',tasks:[T('IGA','Tudás tárolása; követi, ki használja az eredményt'),T('MEG','Beépíti a felismeréseket a további kampányba')]}
+];
+STEPS.forEach((s,i)=>{s.n=i+1;s.ph=i<5?0:i<9?1:i<14?2:3;});
+
+/* ---------- produktum-űrlapok ---------- */
+const A=(id,l,req)=>({id,t:'a',l,req}),Tt=(id,l,req)=>({id,t:'t',l,req}),C=(id,l,req)=>({id,t:'c',l,req}),N=(id,l,min,max,def)=>({id,t:'n',l,min,max,def,req:true}),S_=(id,l,opts,req)=>({id,t:'s',l,opts,req});
+const RIG=['Szeminárium','Matrix wargame','Szabad Kriegsspiel','Merev Kriegsspiel','Szimuláció'];
+const ADJM=['Szakértői ítélet','Konszenzus','Analitikus támogatással','Szabályalapú'];
+const FIELDS={
+1:[A('problem','Probléma / kérdés a megbízó megfogalmazásában',1),A('outcome','Kívánt eredmény',1)],
+2:[Tt('goal','Cél',1),A('objectives','Célkitűzések (3–4, soronként egy)',1),A('expected','Elvárt eredmények'),Tt('milestones','Mérföldkövek'),Tt('constraints','Korlátok')],
+3:[A('research','Kutatási alap: téma, hasonló játékok, erők/elemek',1),S_('method','Módszer-döntés: kell-e wargame?',['Wargame indokolt','Más módszer indokolt (M&S, kísérlet, elemzés)'],1)],
+4:[N('turns','Játékkörök száma (turn 1…N)',1,8,3),S_('rigidity','Merevségi skála',RIG,1),S_('adj','Elbírálási módszer',ADJM,1),S_('formal','Megállapodás',['Informális','Formális (MoA)'],1)],
+5:[A('scenario','Forgatókönyv és vignette-ek',1),A('eventplan','Esemény-terv: helyszín, biztonság, IT, szállás, étkezés',1)],
+6:[A('bugs','Playtest-hibalista és megfigyelések',1)],
+7:[A('refine','Finomított szabályok, mechanika, időzítés',1)],
+8:[A('invite','Meghívó (calling message) és adminisztratív melléklet',1),C('oobfinal','A szereplista (OOB) és a játéktermékek véglegesek',1)],
+9:[A('rehearse','A főpróba tapasztalatai',1)],
+10:[A('readahead','Kiadott read-ahead anyag (tartalom, dátum)',1),C('readsent','A read-ahead 1–2 héttel előbb kiment',1)],
+11:[A('setup','Helyszín- és IT-állapot jegyzet'),C('it','A végponttól végpontig tartó IT-teszt lefutott',1),C('equip','A játékeszközök, kijelzők fel vannak állítva',1)],
+12:[C('ice','Jégtörő megtartva (opcionális)')],
+14:[A('hotwash','Hot-wash: felismerések, tanulságok',1),C('survey','Az exit survey kiküldve és kitöltve',1)],
+16:[A('aar','AAR: kulcsmegállapítások, cél-elérés, követő lépések',1),A('eval','Belső értékelés: szabályok, DCAP, rendezvény, megbízó',1),C('aarstruct','Az AAR szerkezetét és határidejét a megbízó előre elfogadta',1)],
+17:[A('report','Végső jelentés – összefoglaló',1),C('presented','A formális bemutató megtörtént',1)],
+18:[A('archive','Archivált tudás: hol tárolva, ki használja',1),A('integr','Beépítés a további kampányba',1),C('archived','A tudás archiválva',1)]
+};
+const SAMPLE={problem:'Hogyan befolyásolja a szövetséges utánpótlási lánc késleltetése a védelmi műveletek tempóját?',outcome:'A kritikus függőségek és a döntési alternatívák feltárása.',goal:'A logisztikai függőségek feltárása védelmi forgatókönyvben.',objectives:'Azonosítani a kritikus utánpótlási útvonalakat\nFeltárni a döntési késleltetés hatását\nÉrtékelni a szövetséges koordinációt',expected:'Rangsorolt függőségi lista; ajánlások a tervezőknek.',milestones:'Behatárolás, főpróba, játék, jelentés',constraints:'3 nap, 3 játékkör, osztályozatlan adatok',research:'Hasonló logisztikai wargame-ek, erők és harcrend-mintái.',scenario:'Szomszédos államok közötti válság; 3 vignette a 3×3 szektorrácson.',eventplan:'Helyszín: gyakorlóterem, zárt hálózat, étkezés a helyszínen.',bugs:'A körök időzítése szoros; az injekt-kiadás lassú.',refine:'Körönként 25 perc döntési idő; egyszerűsített elbírálási lap.',invite:'Meghívó és tájékoztató melléklet kiküldve.',rehearse:'Az elbírálók és facilitátorok begyakorolták a kör menetét.',readahead:'Háttéranyag és szabálykivonat, 10 nappal a játék előtt.',setup:'Az eszközök és a hálózat rendben.',hotwash:'A játékosok szerint az információmegosztás volt a szűk keresztmetszet.',aar:'A célok 2/3-a teljesült; a koordináció a fő tanulság.',eval:'A szabályok működtek; a DCAP két mérőszáma finomításra szorul.',report:'Végső jelentés a követő felhasználásra összeállítva.',archive:'Archívum: intranet / wargame-tár; felhasználó: tervezési osztály.',integr:'A megállapítások beépülnek a következő tervezési ciklusba.'};
+const LINKS={5:[['roster','Szereplista / OOB (4×10)'],['data','DCAP szerkesztő']],6:[['board','Playtest-futás a Játéktéren'],['data','DCAP tesztelése']],7:[['data','DCAP igazítása'],['roster','Ülések finomítása']],8:[['data','DCAP validálása'],['roster','OOB véglegesítése']],9:[['board','Főpróba-futás']],10:[['roster','AI-promptok és szerepek ellenőrzése']],11:[['roster','QR-csatlakozás (mobil)']],12:[['board','Turn 0']],13:[['board','Játékkörök'],['data','Élő adatgyűjtés (DCAP)']],14:[['data','Adatok áttekintése']],15:[['data','ODCR és gyorsjelentés']],16:[['data','AAR-vázlat']],17:[['data','Jelentés']]};
+
+/* ---------- csapatok, ülések ---------- */
+const TEAMS={K:{nm:'KÉK',sub:'Játékos csapat'},P:{nm:'PIROS',sub:'Játékos csapat'},Z:{nm:'ZÖLD',sub:'Szövetséges / semleges'},F:{nm:'FEHÉR',sub:'Irányítás (stáb)'}};
+const STD=['Parancsnok','Törzsfőnök','J2 Hírszerzés','J3 Műveletek','J4 Logisztika','J5 Tervezés','J6 CIS','StratCom','Jogi tanácsadó','Összekötő'];
+const ZF=['Nemzeti parancsnok','Törzsfőnök','J2 Hírszerzés','J3 Műveletek','J4 Logisztika','J5 Tervezés','J6 CIS','Polgári összekötő','Jogi tanácsadó','Megfigyelő'];
+const FF=[['IGA','Wargame-igazgató'],['ADJ','Adjudikátor 1'],['ADJ','Adjudikátor 2'],['FAC','Facilitátor'],['ELE','Elemző 1'],['ELE','Elemző 2'],['FOR','Forgatókönyv-tervező'],['OPF','OPFOR-vezető'],['REN','Rendezvényszervező'],['FEJ','Játékfejlesztő']];
+const ACT=['Védelem','Támadás','Felderítés','Mozgás / áttelepülés','Logisztikai biztosítás','Információs tevékenység','Polgári-katonai együttműködés'];
+const SEC=['A1','A2','A3','B1','B2','B3','C1','C2','C3'];
+const INJ=['Felderítés: ellenséges gépesített erők mozgása észlelve a B1 szektor felé.','Kommunikációs zavar a C2 szektorban; a törzsek közötti összeköttetés késik.','Menekültáradat az A2 szektor útjain; az utánpótlási útvonal torlódik.','A szövetséges kontingens előzetes egyeztetés nélkül visszavonul a C1 szektorból.','Kiberincidens a logisztikai nyilvántartó rendszerben (B3).','Időjárás-romlás: sűrű köd, a légi támogatás korlátozott.'];
+const INJ0='Turn 0 – bemelegítő vignette: határőrizeti riasztás az A1 szektorban, enyhe feszültség.';
+const FRIC=['– nincs –','Elektronikai zavarás: az összeköttetés egy körrel késik','Ellenséges felderítés: a mozgás nyomot hagy','Logisztikai zavar: a készlet csökken','Dezinformáció: hamis jelentés kerül a csatornára'];
+const RESL=['Siker','Részleges','Kudarc'];
+const START={K:'A1',P:'C3',Z:'A3'};
+
+const QP=new URLSearchParams(location.search),PH_ROOM=QP.get('room'),PH_SEAT=QP.get('seat'),IS_PHONE=!!(PH_ROOM&&PH_SEAT);
+const SB_URL='https://xaklmjaexyhcbztklyqf.supabase.co',SB_KEY='sb_publishable_KdbxMCfCt7vh3olVAoVpvQ_tJ4z8jgw';
+function randCode(){const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',b=new Uint8Array(6);crypto.getRandomValues(b);return[...b].map(x=>a[x%a.length]).join('')}
+function randKey(){const b=new Uint8Array(16);crypto.getRandomValues(b);return[...b].map(x=>x.toString(16).padStart(2,'0')).join('')}
+async function rpc(fn,args){const r=await fetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(args)});if(!r.ok){let m='';try{m=(await r.json()).message}catch(e){}throw new Error(m||('HTTP '+r.status))}const t=await r.text();return t?JSON.parse(t):null}
+function defaults(){
+  const seats=[];
+  for(const t of 'KPZF'){for(let i=0;i<10;i++){
+    const fn=t==='F'?FF[i][1]:t==='Z'?ZF[i]:STD[i], role=t==='F'?FF[i][0]:'JAT';
+    const active=t==='K'?i<5:t==='P'?i<4:t==='Z'?i<2:true;
+    const ai=(t==='K'&&i===2)||(t==='P'&&i===1)||(t==='Z'&&i===1)||(t==='F'&&i===5);
+    seats.push({id:t+i,t,i,fn,role,active,mode:ai?'ai':'human',prompt:defPrompt(t,fn,role),model:'Helyi LLM (on-prem)',auto:'Csak javasol',vis:'Saját + észlelt',joined:false});
+  }}
+  return{v:2,title:'BALTIC SHIELD 26',step:1,done:{},ticks:{},fields:{},sponsor:{},cond8:false,seats,dcap:[],runs:[],odcr:{},role:'IGA',room:randCode(),hostKey:randKey(),evSince:0};
+}
+function defPrompt(t,fn,role){
+  if(t==='F')return `Te vagy a ${fn} (${ROLES[role][0]}) szerepben dolgozó segéd-ügynök. Segíts a feladatod ellátásában a handbook szerint, de a döntés mindig az emberé. Minden megfigyelést időbélyeggel naplózz a DCAP-ba.`;
+  return `Te vagy a ${TEAMS[t].nm} csapat ${fn} szerepe. Csak a saját látóteredben lévő információt használd. Minden döntésedet indokold, a feltevéseidet jelöld, bizonytalanság esetén RFI-t fogalmazz. Javaslatodat a parancsnok hagyja jóvá.`;
+}
+let S=(function(){try{const j=JSON.parse(lsGet(KEY));if(j&&j.v===2)return j}catch(e){}return defaults()})();
+if(!S.room){S.room=randCode();S.hostKey=randKey();S.evSince=0}
+/* ---------- profil / munkamenet (js/profiles.js) ---------- */
+const SESS=(typeof WG_SESSION!=='undefined')?WG_SESSION.get():null;
+const PROF=SESS?WG_PROFILES.byId[SESS.role]:null;
+const IS_PH0=new URLSearchParams(location.search).get('room')&&new URLSearchParams(location.search).get('seat');
+if(!PROF&&!IS_PH0)location.replace('index.html');
+const okView=v=>!PROF||PROF.views.includes(v);
+const UI={view:PROF?PROF.landing:'flow',vstep:null,sel:null,phone:null,pin:null};
+const save=()=>{if(IS_PHONE)return;lsSet(KEY,JSON.stringify(S));schedulePublish()};
+function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2600)}
+
+/* ---------- terep (procedurális légi felvétel) ---------- */
+const TERR={temp:{water:[26,54,70],deep:[16,36,52],forest:[[28,52,30],[44,70,38]],field:[[132,140,74],[158,150,92],[104,120,60],[170,160,110]],rock:[122,114,100],hi:.74},
+arid:{water:[40,74,82],deep:[28,56,66],forest:[[120,106,70],[138,122,82]],field:[[200,172,120],[184,152,100],[212,188,138],[170,138,92]],rock:[128,106,86],hi:.7},
+arctic:{water:[34,56,74],deep:[22,40,58],forest:[[44,62,56],[58,78,70]],field:[[198,206,210],[176,186,192],[214,220,224],[150,160,166]],rock:[98,106,114],hi:.58}};
+function hash(x,y,s){let h=(x*374761393+y*668265263+s*2147483647)|0;h=(h^(h>>>13))*1274126177|0;return((h^(h>>>16))>>>0)/4294967295}
+function vnoise(x,y,s){const xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi,u=xf*xf*(3-2*xf),v=yf*yf*(3-2*yf);const a=hash(xi,yi,s),b=hash(xi+1,yi,s),c=hash(xi,yi+1,s),d=hash(xi+1,yi+1,s);return a+(b-a)*u+(c-a)*v+(a-b-c+d)*u*v}
+function fbm(x,y,s,o=5){let a=.5,f=1,t=0,n=0;for(let i=0;i<o;i++){t+=a*vnoise(x*f,y*f,s+i*17);n+=a;a*=.5;f*=2}return t/n}
+let TC=null;
+function genTerrain(kind){
+  const W=640,H=400,cv=$('#terrain');cv.width=W;cv.height=H;const g=cv.getContext('2d');const P=TERR[kind]||TERR.temp;
+  const img=g.createImageData(W,H),e=new Float32Array(W*H);
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++)e[y*W+x]=fbm(x/120,y/120,3,6);
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+    const k=y*W+x,el=e[k],m=fbm(x/80+40,y/80+40,9,5),hi=fbm(x/6,y/6,21,2);
+    const sx=e[y*W+Math.min(W-1,x+1)]-e[y*W+Math.max(0,x-1)],sy=e[Math.min(H-1,y+1)*W+x]-e[Math.max(0,y-1)*W+x];
+    let sh=1+(-sx-sy)*5.2;sh=Math.max(.55,Math.min(1.45,sh));
+    let c;
+    if(el<.4){const d=Math.min(1,(.4-el)*7);c=P.water.map((v,i)=>v+(P.deep[i]-v)*d);sh=1+(sh-1)*.3}
+    else if(el>P.hi){c=P.rock;const f=.85+hi*.3;c=c.map(v=>v*f)}
+    else if(m>.52){const fc=P.forest[hi>.5?1:0];const f=.8+hi*.45;c=fc.map(v=>v*f)}
+    else{const pid=Math.floor(hash(Math.floor(x/22),Math.floor(y/16),5)*P.field.length);const fc=P.field[pid];const edge=(x%22===0||y%16===0)?.82:1;const f=(.92+hi*.16)*edge;c=fc.map(v=>v*f)}
+    const o=k*4;img.data[o]=Math.max(0,Math.min(255,c[0]*sh));img.data[o+1]=Math.max(0,Math.min(255,c[1]*sh));img.data[o+2]=Math.max(0,Math.min(255,c[2]*sh));img.data[o+3]=255;
+  }
+  g.putImageData(img,0,0);
+  g.lineCap='round';g.strokeStyle='rgba(222,214,196,.6)';g.lineWidth=1.2;
+  [[0,300,160,270,300,310,460,250,640,230],[210,0,230,120,300,200,280,300,330,400],[0,90,120,120,260,70,420,110,640,80]].forEach(p=>{g.beginPath();g.moveTo(p[0],p[1]);g.bezierCurveTo(p[2],p[3],p[4],p[5],p[6],p[7]);if(p.length>8)g.bezierCurveTo(p[6]+60,p[7]-30,p[8]-80,p[9]+20,p[8],p[9]);g.stroke()});
+  for(let i=0;i<9;i++){const x=40+hash(i,1,7)*560,y=30+hash(i,2,7)*340;for(let j=0;j<14;j++){g.fillStyle=hash(i,j,8)>.5?'rgba(200,196,188,.85)':'rgba(150,92,76,.8)';g.fillRect(x+(hash(i,j,3)-.5)*18,y+(hash(i,j,4)-.5)*12,3,2)}}
+  TC=cv;
+  try{const gc=document.createElement('canvas');gc.width=gc.height=128;const gg=gc.getContext('2d');const id=gg.createImageData(128,128);for(let i=0;i<id.data.length;i+=4){const v=Math.random()*255;id.data[i]=id.data[i+1]=id.data[i+2]=v;id.data[i+3]=255}gg.putImageData(id,0,0);document.documentElement.style.setProperty('--grain',`url(${gc.toDataURL()})`)}catch(e){}
+}
+function drawMap(){const c=$('#mapc');if(!c||!TC)return;const w=c.clientWidth||600,h=c.clientHeight||400;c.width=w;c.height=h;const g=c.getContext('2d');g.drawImage(TC,0,0,TC.width,TC.height,0,0,w,h)}
+
+/* ---------- lekérdezések ---------- */
+const seatsOf=t=>S.seats.filter(s=>s.t===t);
+const decSeats=()=>S.seats.filter(s=>s.active&&s.t!=='F');
+const humanSeats=()=>S.seats.filter(s=>s.active&&s.mode==='human');
+const getF=(n,id)=>{const f=S.fields[n+':'+id];if(f!==undefined)return f;const d=(FIELDS[n]||[]).find(x=>x.id===id);return d&&d.def!==undefined?d.def:undefined};
+function cfg(){const o=String(getF(2,'objectives')||'').split('\n').map(x=>x.trim()).filter(Boolean);return{turns:Math.max(1,Math.min(8,+getF(4,'turns')||3)),adj:getF(4,'adj')||ADJM[0],rig:getF(4,'rigidity')||'—',goal:getF(2,'goal')||'—',obj:o}}
+const modeForStep=n=>(n===6||n===7)?'playtest':n===9?'rehearsal':(n===12||n===13)?'execution':null;
+const MODENAME={playtest:'Playtest',rehearsal:'Főpróba',execution:'Végrehajtás'};
+const runsOf=m=>S.runs.filter(r=>r.mode===m);
+const openRun=m=>runsOf(m).find(r=>r.status==='open');
+const lastRun=m=>runsOf(m).slice(-1)[0];
+const execRun=()=>lastRun('execution');
+const curTurn=r=>r&&r.turns.length?r.turns[r.turns.length-1]:null;
+function newRun(m){const r={id:S.runs.length+1,mode:m,status:'open',turns:[]};S.runs.push(r);return r}
+function newTurn(r){const last=curTurn(r);const i=last?last.i+1:(r.mode==='execution'?0:1);const t={i,inject:'',fric:0,phase:0,orders:{},adj:{},obs:'',t0:0,t3:0};r.turns.push(t);return t}
+function teamState(r){const st={};for(const t of 'KPZ')st[t]={sec:START[t],idx:0,res:[0,0,0]};if(!r)return st;
+  r.turns.filter(x=>x.phase===3).forEach(tn=>{for(const t of 'KPZ'){const a=tn.adj[t];if(!a)continue;const k=RESL.indexOf(a.res);st[t].idx+=[2,1,-1][k];st[t].res[k]++;const lead=Object.keys(tn.orders).filter(id=>id[0]===t).sort()[0];if(lead&&tn.orders[lead])st[t].sec=tn.orders[lead].sec}});return st}
+function activeTeams(tn){return[...new Set(Object.keys(tn.orders).map(k=>k[0]))]}
+function dataPoints(r){const T=r?r.turns.filter(t=>t.phase===3):[];const m={decisions:0,adjudication:0,time:0,observation:0};T.forEach(t=>{Object.values(t.orders).forEach(o=>{if(o.why&&o.why.trim())m.decisions++});m.adjudication+=Object.keys(t.adj).length;if(t.t0&&t.t3)m.time++;if(t.obs&&t.obs.trim())m.observation++});return m}
+const METRICS={decisions:'Döntés és indoklás',adjudication:'Elbírálási eredmény',time:'Időfelhasználás',observation:'Megfigyelés (ELE/FAC)'};
+const closedRuns=m=>runsOf(m).filter(r=>r.status==='closed'&&r.turns.some(t=>t.phase===3)).length;
+const execTurnsDone=()=>{const r=execRun();return r?r.turns.filter(t=>t.phase===3&&t.i>0).length:0};
+
+/* ---------- kapuk ---------- */
+const AUTO={
+2:[{l:'Célkitűzések száma 3–4 (ajánlott)',f:()=>{const n=cfg().obj.length;return n>=3&&n<=4},soft:1}],
+5:[{l:'OOB: a KÉK és a PIROS csapatnak van aktív helye (Játékosok nézet)',f:()=>seatsOf('K').some(s=>s.active)&&seatsOf('P').some(s=>s.active)},{l:'DCAP: legalább 3 elemzési kérdés mérőszámmal (Adat nézet)',f:()=>S.dcap.length>=3&&S.dcap.every(d=>d.metric)}],
+6:[{l:'Lezárt playtest-futás a Játéktéren (ajánlott: ≥ 2)',f:()=>closedRuns('playtest')>=1},{l:'Legalább 2 lezárt playtest-futás (ajánlott)',f:()=>closedRuns('playtest')>=2,soft:1},{l:'DCAP tesztelve: minden kérdésnél jelölve, keletkezett-e adat',f:()=>S.dcap.length>0&&S.dcap.every(d=>d.tested!==null)}],
+7:[{l:'A DCAP hiányai kezelve: nincs „hiányzik az adat” jelölés',f:()=>S.dcap.every(d=>d.tested!==false)}],
+8:[{l:'DCAP validálva: minden kérdéshez van mérőszám és igen-teszt',f:()=>S.dcap.length>=3&&S.dcap.every(d=>d.metric&&d.tested===true)}],
+9:[{l:'Lezárt főpróba-futás a Játéktéren',f:()=>closedRuns('rehearsal')>=1}],
+11:[{l:'Minden aktív emberi ülés csatlakozott (QR, mobil)',f:()=>humanSeats().every(s=>s.joined)}],
+12:[{l:'Turn 0 lefutott, az elbírálás kipróbálva',f:()=>{const r=execRun();return !!(r&&r.turns[0]&&r.turns[0].i===0&&r.turns[0].phase===3)}}],
+13:[{l:'Minden játékkör (turn 1…N) lefutott a Játéktéren',f:()=>execTurnsDone()>=cfg().turns},{l:'Minden DCAP-mérőszámhoz keletkezett adat',f:()=>{const d=dataPoints(execRun());return S.dcap.length>0&&S.dcap.every(q=>d[q.metric]>0)}}],
+15:[{l:'Minden célkitűzéshez van ODCR-sor kitöltött következtetéssel',f:()=>{const o=cfg().obj;return o.length>0&&o.every((_,i)=>(S.odcr[i]&&S.odcr[i].c||'').trim())}}]
+};
+function gate(n){
+  const st=STEPS[n-1],items=[];
+  const d=st.tasks.filter((_,i)=>S.ticks[n+':'+i]).length;
+  items.push({ok:d===st.tasks.length,l:`Szerepfeladatok kipipálva (${d}/${st.tasks.length})`});
+  (FIELDS[n]||[]).forEach(f=>{if(!f.req)return;const v=getF(n,f.id);items.push({ok:f.t==='c'?!!v:(v!==undefined&&String(v).trim()!==''),l:'Produktum: '+f.l})});
+  (AUTO[n]||[]).forEach(a=>items.push({ok:!!a.f(),l:a.l,soft:a.soft,auto:1}));
+  if(st.tp===1||(st.tp===2&&S.cond8))items.push({ok:!!S.sponsor[n],l:'Megbízói pont: a megbízó (MEG) jóváhagyása',sp:1});
+  return{items,ready:items.filter(i=>!i.soft).every(i=>i.ok)};
+}
+
+/* ---------- szimulált kör (demóhoz) ---------- */
+function genOrder(s,tn){const h=hash(s.t.charCodeAt(0)+s.i,tn.i,4);const act=ACT[Math.floor(h*ACT.length)%ACT.length],sec=SEC[Math.floor(hash(s.i,tn.i+3,6)*9)];
+  return{act,sec,why:`${s.fn}: ${act.toLowerCase()} a ${sec} szektorban, mert ez csökkenti a kockázatot a rendelkezésre álló információ alapján.`,src:s.mode==='ai'?'AI (szimulált)':'ember (demó)',at:Date.now()}}
+function autoTurn(r,upTo){
+  let tn=curTurn(r);if(!tn||tn.phase===3)tn=newTurn(r);
+  if(tn.phase===0){tn.inject=tn.inject||(r.mode==='execution'&&tn.i===0?INJ0:INJ[(tn.i-1+INJ.length)%INJ.length]);tn.phase=1;tn.t0=Date.now()-(90+Math.floor(hash(tn.i,2,2)*200))*1000}
+  if(tn.phase===1)decSeats().forEach(s=>{if(!tn.orders[s.id])tn.orders[s.id]=genOrder(s,tn)});
+  if(upTo==='orders')return tn;
+  tn.phase=2;
+  activeTeams(tn).forEach(t=>{if(!tn.adj[t]){const roll=1+Math.floor(hash(t.charCodeAt(0),tn.i,9)*6);tn.adj[t]={res:roll>=5?'Siker':roll>=3?'Részleges':'Kudarc',why:'Az indoklások és a helyzet alapján, '+cfg().adj.toLowerCase()+' módszerrel.',method:cfg().adj,roll}}});
+  tn.obs=tn.obs||'A csapatok indoklásai részletesek voltak; az információmegosztás lassú.';
+  tn.phase=3;tn.t3=tn.t0+(240+Math.floor(hash(tn.i,5,5)*200))*1000;return tn;
+}
+function synthRun(mode){const c=cfg();const r=newRun(mode);const n=mode==='execution'?c.turns+1:1;for(let k=0;k<n;k++){autoTurn(r);}r.status='closed';return r}
+function demoFill(upTo){
+  for(let n=1;n<upTo;n++){
+    const st=STEPS[n-1];st.tasks.forEach((_,i)=>S.ticks[n+':'+i]=true);
+    (FIELDS[n]||[]).forEach(f=>{const k=n+':'+f.id;if(S.fields[k]!==undefined&&S.fields[k]!=='')return;
+      S.fields[k]=f.t==='c'?true:f.t==='n'?f.def:f.t==='s'?(f.id==='method'||f.id==='formal'?f.opts[0]:f.id==='rigidity'?RIG[2]:ADJM[0]):(SAMPLE[f.id]||'Minta tartalom ('+f.l+')')});
+    if(st.tp===1||(st.tp===2&&S.cond8))S.sponsor[n]={at:Date.now()};
+  }
+  if(upTo>=6&&S.dcap.length<3)loadSampleDcap();
+  if(upTo>=7)S.dcap.forEach(d=>{d.tested=true});
+  if(upTo>=7&&!closedRuns('playtest')){synthRun('playtest');synthRun('playtest')}
+  if(upTo>=10&&!closedRuns('rehearsal'))synthRun('rehearsal');
+  if(upTo>=12)S.seats.forEach(s=>{if(s.active&&s.mode==='human')s.joined=true});
+  if(upTo>=14){S.runs=S.runs.filter(r=>r.mode!=='execution');synthRun('execution')}
+  else if(upTo===13){S.runs=S.runs.filter(r=>r.mode!=='execution');const r=newRun('execution');autoTurn(r)}
+  if(upTo>=16)cfg().obj.forEach((o,i)=>{S.odcr[i]={d:'A csapatok indoklásai alapján a koordináció a szűk keresztmetszet.',c:'A célkitűzés részben teljesült; a döntési késleltetés érdemben hatott a tempóra.',r:'A követő elemzésben a szövetséges koordinációt külön kell vizsgálni.'}});
+  for(let n=1;n<upTo;n++)S.done[n]=true;
+  for(let n=upTo;n<=18;n++)S.done[n]=false;
+  S.step=upTo;UI.vstep=null;
+}
+function loadSampleDcap(){S.dcap=[{id:1,q:'Milyen szempontok alapján döntöttek a csapatok?',metric:'decisions',tested:null},{id:2,q:'Mennyire volt kiszámítható és elfogadott az elbírálás?',metric:'adjudication',tested:null},{id:3,q:'Mennyi idő kellett a döntésekhez egy körben?',metric:'time',tested:null},{id:4,q:'Mi akadályozta az információmegosztást?',metric:'observation',tested:null}]}
+
+/* ---------- megjelenítés: segédek ---------- */
+function sym(t,sz=22){const c={K:['#9CC8F0','#1B4F8A'],P:['#F3A3A0','#A12A2A'],Z:['#A8DDB0','#237A3B'],F:['#F4F4F4','#555B66']}[t];
+  const sh={K:'<rect x="3" y="7" width="26" height="18"/><path d="M3 7l26 18M29 7L3 25" stroke-width="1.5"/>',P:'<path d="M16 2 30 16 16 30 2 16z"/>',Z:'<rect x="5" y="5" width="22" height="22"/>',F:'<circle cx="16" cy="16" r="12"/>'}[t];
+  return`<svg class="sym" viewBox="0 0 32 32" width="${sz}" height="${sz}" aria-hidden="true"><g fill="${c[0]}" stroke="${c[1]}" stroke-width="2">${sh}</g></svg>`}
+const selHtml=(id,opts,val,extra='')=>`<select id="${id}" ${extra}>${opts.map(o=>`<option ${o===val?'selected':''}>${esc(o)}</option>`).join('')}</select>`;
+const canTick=r=>S.role==='IGA'||S.role===r;
+function mdl(){return S.step}
+
+/* ---------- sín ---------- */
+function renderRail(){
+  const v=UI.vstep||S.step;let h='<div class="rg">';
+  h+='<span></span>'+[5,4,5,4].map((n,i)=>`<div class="ph" style="grid-column:span ${n}">${i+1} · ${PH[i]}</div>`).join('');
+  h+='<span class="rl">Lépés</span>'+STEPS.map(s=>`<button type="button" class="sb ${S.done[s.n]?'done':s.n===S.step?'cur':'fut'} ${s.n===v?'view':''}" data-act="goto" data-n="${s.n}" aria-label="${s.n}. lépés: ${esc(s.nm)}" title="${esc(s.nm)}">${S.done[s.n]?'✓':String(s.n).padStart(2,'0')}</button>`).join('');
+  h+='<span class="rl">Megbízói pont</span>'+STEPS.map(s=>s.tp?`<span class="dia ${s.tp===2?'cond':''}" title="${s.tp===2?'Feltételes megbízói pont':'Megbízói pont'}"></span>`:'<span></span>').join('');
+  h+='<span class="rl" style="color:var(--c-ELE)">DCAP-szál</span>'+STEPS.map(s=>`<span class="lane dc ${s.dc?'has':''} ${s.dc&&S.done[s.n]?'on':''}" title="${esc(s.dc)}"></span>`).join('');
+  h+='<span class="rl" style="color:var(--c-REN)">Rendezvény</span>'+STEPS.map(s=>`<span class="lane ev ${s.ev?'has':''} ${s.ev&&S.done[s.n]?'on':''}" title="${esc(s.ev)}"></span>`).join('');
+  $('#rail').innerHTML=h+'</div>';
+}
+function renderTabs(){
+  const s=S.step,items=[['flow','Folyamat','18 lépés · kapuk'],['roster','Játékosok',`4×10 ülés · ${S.seats.filter(x=>x.active).length} aktív`],['board','Játéktér',modeForStep(s)?MODENAME[modeForStep(s)]+' aktív':'zárolt: 6–7, 9, 12–13. lépés'],['data','Adat és elemzés',s>=15?'ODCR · jelentés':s>=5?'DCAP · adatok':'5. lépéstől']];
+  const vis=items.filter(i=>okView(i[0]));
+  $('#tabs').innerHTML=vis.map(([k,n,sub])=>`<button type="button" role="tab" class="tab" aria-selected="${UI.view===k}" data-act="tab" data-v="${k}">${n}<small>${sub}</small></button>`).join('');
+}
+
+/* ---------- 1. Folyamat ---------- */
+function gateHtml(n){
+  const st=STEPS[n-1],g=gate(n),ed=n===S.step&&!S.done[n];
+  let h=`<div class="lbl">Lezárási kapu · ${String(n).padStart(2,'0')}. lépés</div><div style="margin-top:8px">`+g.items.map(i=>`<div class="gi ${i.ok?'ok':''} ${i.soft?'soft':''}"><span class="mk">${i.ok?'✓':''}</span><span>${esc(i.l)}${i.soft?' <span class="mono" style="color:var(--mut)">(nem blokkol)</span>':''}</span></div>`).join('')+'</div>';
+  if(st.tp===2&&ed)h+=`<label class="ckl"><input type="checkbox" data-act="cond8" ${S.cond8?'checked':''}><span>A DCAP nem ad elég adatot → megbízói egyeztetés szükséges (feltételes pont)</span></label>`;
+  if(st.tp&&(st.tp===1||S.cond8)){
+    const sp=S.sponsor[n];
+    h+=`<div style="margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="chipx tp"><i class="dia" style="width:10px;height:10px"></i>Megbízói pont</span>${sp?`<span class="tg ok">Jóváhagyva ${new Date(sp.at).toLocaleTimeString('hu-HU',{hour:'2-digit',minute:'2-digit'})}</span>${ed?`<button class="btn sm" data-act="revoke" data-n="${n}" type="button">Visszavon</button>`:''}`:`<button class="btn sm" data-act="approve" data-n="${n}" type="button" ${ed&&S.role==='MEG'?'':'disabled'}>Jóváhagyás (MEG)</button>${ed&&S.role!=='MEG'?'<span style="font-size:12px;color:var(--mut)">Váltsd a szerepedet: Megbízó</span>':''}`}</div>`;
+  }
+  if(ed)h+=`<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn pri" data-act="close" type="button" ${g.ready?'':'disabled'} style="flex:1;min-height:44px">${n===18?'Folyamat lezárása':'Lépés lezárása → '+String(n+1).padStart(2,'0')}</button></div>`;
+  else if(S.done[n])h+=`<div style="margin-top:12px"><div class="tg ok" style="display:inline-block">LEZÁRVA</div> <button class="btn sm" data-act="reopen" data-n="${n}" type="button" ${S.role==='IGA'?'':'disabled'} title="Csak a Wargame-igazgató nyithatja újra">Újranyitás (IGA)</button></div>`;
+  else h+=`<div class="note" style="margin-top:12px">Előnézet: ez a lépés a(z) ${S.step}. lépés lezárása után szerkeszthető.</div>`;
+  if(n===7&&ed)h+=`<div style="margin-top:8px"><button class="btn sm" data-act="reopen" data-n="6" type="button" ${S.role==='IGA'?'':'disabled'}>↺ Újrateszt: vissza a 06. lépéshez</button></div>`;
+  return h;
+}
+function renderFlow(){
+  const n=UI.vstep||S.step,st=STEPS[n-1],ed=n===S.step&&!S.done[n],prev=STEPS[n-2],dis=ed?'':'disabled';
+  let h='<div class="flow"><div class="col">';
+  h+=`<section class="panel hud pad"><div class="shead"><div class="bign">${String(n).padStart(2,'0')}</div><div style="flex:1;min-width:200px"><div class="lbl">${n}/18 · ${PH[st.ph]} · ${st.ref}</div><h2>${esc(st.nm)}</h2><div style="color:var(--mut)">${esc(st.en)}</div></div>${st.tp?`<span class="chipx tp ${st.tp===2?'cond':''}">◆ ${st.tp===2?'Feltételes megbízói pont':'Megbízói pont'}</span>`:''}</div>
+  <div class="inp" style="margin-top:12px"><span class="lbl">Bemenet</span>${prev?`<span>◀ ${String(n-1).padStart(2,'0')} ${esc(prev.nm)}: ${esc(prev.prod)} <b style="color:${S.done[n-1]?'var(--ok)':'var(--now)'}">${S.done[n-1]?'✓ kész':'… még nincs kész'}</b></span>`:'<span>a megbízó igénye</span>'}</div></section>`;
+  h+=`<section class="panel pad"><div class="lbl" style="margin-bottom:8px">Funkciók és feladataik ebben a lépésben · egy szín = egy funkció${ed?'':''}</div><div class="tasks">`+st.tasks.map((t,i)=>{const k=n+':'+i,on=!!S.ticks[k],can=ed&&canTick(t[0]);return`<label class="task r-${t[0]} ${S.role===t[0]?'mine':''} ${ed&&!can?'dim':''}" title="${esc(ROLES[t[0]][0])}"><span class="code">${RC(t[0])}</span><span class="tx">${esc(t[1])}</span><span class="ck"><input type="checkbox" data-act="tick" data-k="${k}" ${on?'checked':''} ${can?'':'disabled'} aria-label="${esc(t[1])}"></span></label>`}).join('')+'</div>';
+  if(ed)h+=`<div style="margin-top:8px"><button class="btn sm" data-act="tickall" type="button" ${S.role==='IGA'?'':'disabled'} title="Csak a Wargame-igazgató jelölheti az összeset">Összes jelölése (IGA)</button></div>`;
+  h+='</section>';
+  if(st.dc||st.ev)h+=`<section class="panel pad" style="display:flex;gap:8px;flex-wrap:wrap">${st.dc?`<div class="thr dc"><b class="mono">ELE</b> DCAP-szál: ${esc(st.dc)}</div>`:''}${st.ev?`<div class="thr ev"><b class="mono">REN</b> Rendezvény-szál: ${esc(st.ev)}</div>`:''}</section>`;
+  h+=`<section class="prod"><div class="lbl">Produktum ▶ a következő lépés bemenete</div><div style="font-weight:600;margin-top:2px">${esc(st.prod)}</div>`;
+  (FIELDS[n]||[]).forEach(f=>{const v=getF(n,f.id),id='f_'+n+'_'+f.id;
+    if(f.t==='a')h+=`<label class="fld"><span>${esc(f.l)}${f.req?' *':''}</span><textarea id="${id}" rows="3" data-f="${n}:${f.id}" ${dis}>${esc(v||'')}</textarea></label>`;
+    else if(f.t==='t')h+=`<label class="fld"><span>${esc(f.l)}${f.req?' *':''}</span><input type="text" id="${id}" data-f="${n}:${f.id}" value="${esc(v||'')}" ${dis}></label>`;
+    else if(f.t==='n')h+=`<label class="fld"><span>${esc(f.l)} *</span><input type="number" id="${id}" min="${f.min}" max="${f.max}" data-f="${n}:${f.id}" value="${esc(v)}" ${dis} style="max-width:120px"></label>`;
+    else if(f.t==='s')h+=`<label class="fld"><span>${esc(f.l)}${f.req?' *':''}</span><select id="${id}" data-f="${n}:${f.id}" ${dis}><option value="">— válassz —</option>${f.opts.map(o=>`<option ${o===v?'selected':''}>${esc(o)}</option>`).join('')}</select></label>`;
+    else h+=`<label class="ckl"><input type="checkbox" id="${id}" data-fc="${n}:${f.id}" ${v?'checked':''} ${dis}><span>${esc(f.l)}${f.req?' *':''}</span></label>`;
+  });
+  if(!(FIELDS[n]||[]).length)h+='<div style="margin-top:8px;color:var(--mut)">Ebben a lépésben a produktum a kapcsolódó nézetekben keletkezik (lásd a jobb oldali kapcsolódásokat).</div>';
+  h+='</section></div><aside class="col">';
+  h+=`<section class="panel hud pad" id="gate">${gateHtml(n)}</section>`;
+  const lk=LINKS[n]||[];
+  h+=`<section class="panel pad"><div class="lbl">Kapcsolódások</div><div style="margin-top:8px;display:flex;flex-direction:column;gap:6px">${lk.map(([v,l])=>`<button class="btn" type="button" data-act="tab" data-v="${v}" style="justify-content:flex-start">→ ${esc(l)}</button>`).join('')||'<span style="color:var(--mut)">Ez a lépés dokumentum-jellegű, nincs külön nézete.</span>'}</div>`;
+  if(STEPS[n])h+=`<div class="kv" style="margin-top:10px"><span>Következő bemenet</span><b>${String(n+1).padStart(2,'0')} ${esc(STEPS[n].nm)}</b></div>`;
+  h+=`</section><section class="panel pad"><div class="lbl">Demó-vezérlés</div><div style="display:flex;gap:6px;margin-top:8px"><select id="ffsel" aria-label="Ugrás lépéshez" style="flex:1">${STEPS.map(s=>`<option value="${s.n}">${String(s.n).padStart(2,'0')} ${esc(s.nm)}</option>`).join('')}</select><button class="btn sm" data-act="ff" type="button">Ugrás</button></div><div style="font-size:12px;color:var(--mut);margin-top:6px">Az ugrás mintaadattal kitölti az addigi lépéseket, hogy bármelyik nézetet kipróbálhasd.</div></section></aside></div>`;
+  return h;
+}
+
+/* ---------- 2. Játékosok ---------- */
+const rosterEditable=()=>S.step>=5&&!S.done[8];
+function seatHtml(s){
+  const open=UI.sel===s.id,ed=rosterEditable(),rc=s.role==='JAT'?'':'r-'+s.role;
+  let h=`<button type="button" class="seat ${rc} ${s.active?'':'off'}" data-act="seat" data-id="${s.id}" aria-expanded="${open}" ${s.t==='F'?'':'style="--rc:var(--c-JAT)"'}><span class="nm">${esc(s.fn)}<small>${s.t==='F'?RC(s.role)+' · '+ROLES[s.role][1]:'JÁT · játékos'}</small></span>${s.active?`<span class="tg ${s.mode==='ai'?'ai':'hu'}">${s.mode==='ai'?'AI':'EMBER'}</span>${s.mode==='human'&&S.step>=11?`<span class="tg ${s.joined?'ok':'wt'}">${s.joined?'CSATL.':'VÁR'}</span>`:''}`:'<span class="tg off">INAKTÍV</span>'}</button>`;
+  if(open){
+    const url=location.origin+location.pathname+'?room='+S.room+'&seat='+s.id;
+    h+=`<div class="sdet"><label class="ckl" style="margin:0"><input type="checkbox" data-act="seatact" data-id="${s.id}" ${s.active?'checked':''} ${ed?'':'disabled'}><span>Aktív hely a játékban</span></label>`;
+    h+=`<div class="seg" role="group" aria-label="Ember vagy AI"><button type="button" class="${s.mode==='human'?'on hu':''}" data-act="seatmode" data-id="${s.id}" data-m="human" ${S.step<=10||ed?'':'disabled'}>Ember · QR</button><button type="button" class="${s.mode==='ai'?'on ai':''}" data-act="seatmode" data-id="${s.id}" data-m="ai" ${S.step<=10||ed?'':'disabled'}>AI · prompt</button></div>`;
+    if(s.mode==='human')h+=`<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><div class="qr" id="qr-${s.id}" data-url="${esc(url)}"></div><div style="flex:1;min-width:140px;display:flex;flex-direction:column;gap:6px"><div style="font-size:12.5px;color:var(--mut)">Egyedi mobilfelület erre a szerepre. A QR a képernyőn is beolvasható.</div><div class="mono" style="font-size:11px;word-break:break-all;color:var(--hu)">${esc(url)}</div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm" data-act="phone" data-id="${s.id}" type="button">Mobilnézet</button><button class="btn sm" data-act="join" data-id="${s.id}" type="button" ${s.joined?'disabled':''}>${s.joined?'Csatlakozott ✓':'Csatlakozás (szim.)'}</button></div></div></div>`;
+    else h+=`<label class="fld" style="margin:0"><span>Egyedi működési prompt</span><textarea id="pr-${s.id}" rows="5" data-sp="${s.id}" ${S.step<=10?'':'disabled'}>${esc(s.prompt)}</textarea></label><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chipx ai">${esc(s.model)}</span><span class="chipx">${esc(s.auto)}</span></div>`;
+    h+=`<details class="acc"><summary>Szerep és jogkör</summary><div class="kv"><span>Funkció</span><b>${esc(s.fn)}</b></div><div class="kv"><span>Handbook-szerep</span><b>${RC(s.role)} · ${esc(ROLES[s.role][0])}</b></div><div class="kv"><span>Döntési jog</span><b>${s.t==='F'?'irányít / elbírál':'javasol → jóváhagyás'}</b></div></details>
+    <details class="acc"><summary>Látótér (fog of war)</summary><div class="kv"><span>Információ</span><b>${esc(s.vis)}</b></div><div class="kv"><span>Csatornák</span><b>${s.t==='F'?'minden csapat (megfigyelő)':'#'+TEAMS[s.t].nm.toLowerCase()+'-törzs, #fehér'}</b></div></details>
+    <details class="acc"><summary>Autonómia és naplózás</summary><div class="kv"><span>Autonómia</span><b>${esc(s.auto)}</b></div><div class="kv"><span>Naplózás</span><b>DCAP szerint, észrevétlenül</b></div></details></div>`;
+  }
+  return h;
+}
+function renderRoster(){
+  const ed=rosterEditable();
+  let h=`<div class="note" style="margin-bottom:12px">${S.step<5?'A szereplista (OOB) a 05. Játéktervezés lépésben készül, addig csak az alapértelmezett kiosztás látható.':ed?'Szerkeszthető: az OOB a 05–08. lépés között alakítható; a 08. lépés lezárásakor véglegessé válik.':S.step<=10?'Az OOB véglegesítve (08. lépés). Az AI-promptok és a módok a 10. lépés végéig finomíthatók.':'Az OOB és a promptok zároltak. A csatlakozás állapota a 11. lépéstől követhető.'}</div><div class="roster">`;
+  for(const t of 'KPZF'){const ss=seatsOf(t),a=ss.filter(s=>s.active),hn=a.filter(s=>s.mode==='human').length;
+    h+=`<section class="panel hud team"><div class="thd">${sym(t,26)}<h3>${TEAMS[t].nm}</h3><span class="mono" style="font-size:11px;color:var(--mut)">${a.length}/10 · ${hn} E · ${a.length-hn} AI</span></div><div class="lbl" style="padding:0 4px 4px">${TEAMS[t].sub}</div>${ss.map(seatHtml).join('')}</section>`}
+  return h+'</div>';
+}
+function drawQrs(){$$('.qr').forEach(el=>{if(el.firstChild)return;try{if(typeof QRCode==='function'){new QRCode(el,{text:el.dataset.url,width:128,height:128,colorDark:'#0F1B21',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});return}}catch(e){}el.innerHTML='<div style="font:600 11px var(--f-mono);color:#222;text-align:center;padding-top:50px">QR-könyvtár nem érhető el</div>'})}
+
+/* ---------- 3. Játéktér ---------- */
+const ACS=['VÉD','TÁM','FEL','MOZ','LOG','INF','PKE'];
+const TCOL={K:'#4C8FD6',P:'#D8605C',Z:'#3FA25C'};
+function teamCard(t,r,tn){
+  const ts=teamState(r)[t],ids=tn?Object.keys(tn.orders).filter(id=>id[0]===t).sort():[];
+  let h=`<h4>${sym(t,22)}<b>${TEAMS[t].nm}</b><span class="tg ${ts.idx>=0?'ok':'off'}">index ${ts.idx>=0?'+':''}${ts.idx}</span><em>${tn?'T'+tn.i+' · '+['Helyzet','Döntések','Elbírálás','Közlés'][tn.phase]:'—'}</em></h4>`;
+  h+='<div class="sub">Döntési mátrix · aktuális kör</div>';
+  if(!ids.length)h+='<div style="color:var(--mut)">Ebben a körben még nincs rögzített döntés.</div>';
+  else{
+    const cnt=Array(7).fill(0),sc=Object.fromEntries(SEC.map(x=>[x,0]));
+    const rows=ids.map(id=>{const o=tn.orders[id],sd=S.seats.find(x=>x.id===id),k=ACT.indexOf(o.act);if(k>=0)cnt[k]++;if(sc[o.sec]!==undefined)sc[o.sec]++;
+      return`<tr title="${esc(o.why||'')}"><td>${esc(sd?sd.fn:id)}</td>${ACT.map((_,j)=>`<td class="${j===k?'on':''}">${j===k?'●':'·'}</td>`).join('')}<td class="mono">${esc(o.sec)}</td></tr>`}).join('');
+    h+=`<table class="dm" style="--tc:${TCOL[t]}"><thead><tr><th>Szerep</th>${ACS.map((a,j)=>`<th title="${esc(ACT[j])}">${a}</th>`).join('')}<th>Szekt.</th></tr></thead><tbody>${rows}</tbody><tfoot><tr><td>Σ</td>${cnt.map(c=>`<td>${c||''}</td>`).join('')}<td></td></tr></tfoot></table>`;
+    const mx=Math.max(1,...Object.values(sc));
+    h+=`<div class="sub">Szektor-eloszlás · az emblémás mező a jelenlegi pozíció</div><div class="twoc"><div class="sh" style="--tc:${TCOL[t]}">${SEC.map(x=>`<b class="${x===ts.sec?'here':''}" style="--k:${sc[x]/mx*4}" title="${x}: ${sc[x]} döntés">${sc[x]||''}</b>`).join('')}</div><div style="color:var(--mut)">${ids.length} döntés · ${Object.values(sc).filter(v=>v).length} szektor. Vezető szerep döntése adja a következő pozíciót.</div></div>`;
+  }
+  const a=tn&&tn.adj[t];
+  h+='<div class="sub">Elbírálás eredménye</div>';
+  h+=a?`<div class="res"><span class="tg ${a.res==='Siker'?'ok':a.res==='Részleges'?'wt':'off'}">${esc(a.res)}</span><span class="mono" style="color:var(--mut)">${a.method?esc(a.method):''}${a.roll!=null?' · dobás '+a.roll:''}</span>${tn.phase<3?'<span class="tg wt">közlés előtt</span>':''}</div>${a.why?`<div class="why">${esc(a.why)}</div>`:''}`:'<div style="color:var(--mut)">Még nincs elbírálva.</div>';
+  // kör-eredmény diagram
+  const done=r?r.turns.filter(x=>x.phase===3&&x.adj[t]):[];
+  h+='<div class="sub">Eredmények körönként · oszlop = hatás, vonal = kumulált index</div>';
+  if(!done.length)h+='<div style="color:var(--mut)">Még nincs lezárt kör.</div>';
+  else{
+    const W=340,H=96,pl=22,pr=6,pt=12,pb=16,d=done.map(x=>[2,1,-1][RESL.indexOf(x.adj[t].res)]);
+    let c=0;const cum=d.map(v=>c+=v),lo=Math.min(-1,...cum),hi=Math.max(2,...cum);
+    const y=v=>pt+(hi-v)/(hi-lo)*(H-pt-pb),bw=Math.min(26,(W-pl-pr)/d.length*.6),x=i=>pl+(i+.5)*(W-pl-pr)/d.length;
+    const col=v=>v>=2?'var(--ok)':v>0?'var(--now)':'var(--bad)',lt=v=>v>=2?'S':v>0?'R':'K';
+    let g=`<svg class="ch" viewBox="0 0 ${W} ${H}" role="img" aria-label="${TEAMS[t].nm} eredményei körönként">`;
+    g+=`<line x1="${pl}" x2="${W-pr}" y1="${y(0)}" y2="${y(0)}" stroke="var(--ln)"/><text x="${pl-4}" y="${y(0)+3}" text-anchor="end" font-size="9" fill="var(--mut)">0</text><text x="${pl-4}" y="${y(hi)+3}" text-anchor="end" font-size="9" fill="var(--mut)">${hi}</text><text x="${pl-4}" y="${y(lo)+3}" text-anchor="end" font-size="9" fill="var(--mut)">${lo}</text>`;
+    d.forEach((v,i)=>{const y0=y(0),y1=y(v);g+=`<rect x="${x(i)-bw/2}" y="${Math.min(y0,y1)}" width="${bw}" height="${Math.max(2,Math.abs(y1-y0))}" rx="2" fill="${col(v)}" opacity=".85"><title>T${done[i].i}: ${done[i].adj[t].res} (${v>0?'+':''}${v})</title></rect><text x="${x(i)}" y="${v>0?y(v)-3:y(v)+10}" text-anchor="middle" font-size="9" font-weight="700" fill="var(--ink)">${lt(v)}</text><text x="${x(i)}" y="${H-3}" text-anchor="middle" font-size="9" fill="var(--mut)">T${done[i].i}</text>`});
+    g+=`<polyline fill="none" stroke="var(--ac)" stroke-width="2" points="${cum.map((v,i)=>x(i)+','+y(v)).join(' ')}"/>`+cum.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v)}" r="3" fill="var(--ac)"><title>Kumulált: ${v}</title></circle>`).join('');
+    h+=g+'</svg>';
+    h+=`<div style="color:var(--mut);margin-top:2px">S = siker · R = részleges · K = kudarc &nbsp;|&nbsp; ${ts.res[0]} / ${ts.res[1]} / ${ts.res[2]}</div>`;
+  }
+  return h;
+}
+function mapHtml(r,tn){
+  const ts=teamState(r),hot=tn&&tn.inject?(tn.inject.match(/[A-C][1-3]/g)||[]):[];
+  const pos=sec=>{const c=SEC.indexOf(sec);return{x:(c%3+.5)/3*100,y:(Math.floor(c/3)+.5)/3*100,c:c%3,r:Math.floor(c/3)}};
+  let h=`<div class="mapw"><div class="mclip"><canvas id="mapc" aria-label="Terepkép"></canvas><div class="mgrid">`+SEC.map(s=>`<div class="${hot.includes(s)?'hot pulse':''}"><span>${s}</span></div>`).join('')+'</div></div>';
+  'KPZ'.split('').forEach((t,k)=>{const p=pos(ts[t].sec);
+    h+=`<button type="button" class="mk2 ${UI.pin===t?'pin':''}" data-act="mkpin" data-id="${t}" aria-label="${TEAMS[t].nm} csapat: döntési mátrix és eredmények" style="left:${p.x+(k-1)*5}%;top:${p.y+(k-1)*3}%">${sym(t,34)}<i>${TEAMS[t].nm} ${ts[t].idx>=0?'+':''}${ts[t].idx}</i></button><div class="tip c${p.c} r${p.r}" role="tooltip">${teamCard(t,r,tn)}</div>`});
+  return h+'</div>';
+}
+function renderBoard(){
+  const sm=modeForStep(S.step),active=!!sm,mode=sm||(['execution','rehearsal','playtest'].find(m=>runsOf(m).length));
+  if(!mode)return`<div class="panel hud pad"><h3>Játéktér</h3><p>A Játéktér a handbook szerint három helyen szólal meg: playtest (06–07. lépés), főpróba (09.) és a végrehajtás (12–13.). Jelenleg a(z) ${S.step}. lépésnél tartasz, ezért zárolt.</p><button class="btn" data-act="tab" data-v="flow" type="button">Vissza a folyamathoz</button></div>`;
+  let r=active?(openRun(mode)||(mode==='execution'?lastRun(mode):null)):lastRun(mode),tn=curTurn(r);const c=cfg();
+  let h='<div class="board"><div class="col">';
+  h+=`<section class="panel hud pad" style="z-index:6"><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px"><h3 style="font-size:20px">Játéktér · ${MODENAME[mode]}</h3><span class="chipx ${active?'hu':''}">${active?'aktív a(z) '+S.step+'. lépésben':'csak olvasható'}</span>${r?`<span class="chipx">${r.id}. futás</span>`:''}<span class="sp"></span><span class="chipx">${esc(c.adj)}</span><span class="chipx">${c.turns} kör</span></div>`;
+  h+=mapHtml(r,tn)+`<div class="lbl" style="margin-top:8px">A kisalakzatok az elbírálás eredményét követik · sárga mező = az injekt által érintett szektor · <b>vidd az egeret a csapatra</b> (vagy koppints rá) a kör döntési mátrixáért és eredményeiért</div></section>`;
+  h+='<section class="panel pad"><div class="lbl" style="margin-bottom:8px">Kör-napló és DCAP-adat (automatikusan, észrevétlenül)</div>';
+  const done=r?r.turns.filter(t=>t.phase===3):[];
+  h+=done.length?`<div class="scr"><table><thead><tr><th>Kör</th><th>Injekt</th><th>Eredmények</th><th>Idő</th></tr></thead><tbody>${done.map(t=>`<tr><td class="mono">T${t.i}</td><td>${esc(t.inject)}</td><td>${activeTeams(t).map(x=>`${TEAMS[x].nm}: ${t.adj[x]?esc(t.adj[x].res):'—'}`).join('<br>')}</td><td class="mono">${t.t0&&t.t3?Math.round((t.t3-t.t0)/60000)+' p':'—'}</td></tr>`).join('')}</tbody></table></div>`:'<div style="color:var(--mut)">Még nincs lezárt kör.</div>';
+  h+='</section></div><aside class="col">';
+  h+=`<section class="panel hud pad" id="turnp">${turnPanel(mode,active,r,tn)}</section></aside></div>`;
+  return h;
+}
+function turnPanel(mode,active,r,tn){
+  const c=cfg();let h='';
+  if(!active)return`<div class="note">A nézet csak olvasható: ez a futás a megfelelő lépésben (${mode==='playtest'?'06–07':mode==='rehearsal'?'09':'12–13'}.) játszható.</div>`;
+  if(!r)return`<h3 style="font-size:18px">Nincs nyitott futás</h3><p style="color:var(--mut)">${mode==='playtest'?'A playtest teljes futásokat igényel (ajánlott legalább 2).':mode==='rehearsal'?'A főpróbán a stáb begyakorolja a kör menetét.':'A végrehajtás egyetlen futás: a 12. lépésben turn 0, a 13.-ban a körök.'}</p><button class="btn pri" data-act="newrun" data-m="${mode}" type="button" ${S.role==='IGA'?'':'disabled'}>Új futás indítása (IGA)</button>${S.role==='IGA'?'':'<div style="font-size:12px;color:var(--mut);margin-top:6px">Váltsd a szerepedet: Wargame-igazgató</div>'}`;
+  if(r.status==='closed')return`<div class="note">A futás lezárva (${r.turns.filter(t=>t.phase===3).length} lezárt kör). Az adatok az Adat és elemzés nézetben láthatók.</div>`;
+  const lastDone=!tn||tn.phase===3;
+  const maxI=c.turns;
+  const canNext=mode==='execution'?(S.step===12?r.turns.length===0:(!tn||tn.i<maxI)):(!tn||tn.i<maxI);
+  if(lastDone){
+    h+=`<div class="lbl">Futás · ${r.id}</div>`;
+    if(tn)h+=`<div style="margin:6px 0 10px"><span class="tg ok">T${tn.i} lezárva</span></div>`;
+    h+=`<div style="display:flex;gap:6px;flex-wrap:wrap">${canNext?`<button class="btn pri" data-act="newturn" type="button" ${S.role==='IGA'?'':'disabled'}>${mode==='execution'&&!tn?'Turn 0 indítása':'Következő kör (T'+(tn?tn.i+1:1)+')'} (IGA)</button><button class="btn" data-act="autoturn" type="button">Teljes kör szimulálása</button>`:''}${tn?`<button class="btn" data-act="closerun" type="button" ${S.role==='IGA'?'':'disabled'}>Futás lezárása (IGA)</button>`:''}</div>`;
+    if(!canNext&&mode==='execution'&&S.step===12)h+='<div class="note" style="margin-top:10px">A turn 0 lefutott. Zárd le a 12. lépést, majd a 13. lépésben indulnak a valódi körök.</div>';
+    if(!canNext&&mode==='execution'&&S.step===13)h+='<div class="note" style="margin-top:10px">Az összes beállított kör lefutott. Zárd a futást, majd a 13. lépést.</div>';
+    return h;
+  }
+  const names=['Helyzet','Döntések','Elbírálás','Közlés'];
+  h+=`<div class="lbl">${MODENAME[mode]} · T${tn.i}</div><div class="pipe" style="margin:8px 0 12px">${names.map((x,i)=>`<span class="${i<tn.phase?'dn':i===tn.phase?'on':''}">${i+1} ${x}</span>`).join('')}</div>`;
+  if(tn.phase===0){
+    h+=`<div class="lbl">Injekt kiadása (FOR / IGA)</div><label class="fld"><span>Előre megírt injekt</span><select id="injsel">${[mode==='execution'&&tn.i===0?INJ0:null].concat(INJ).filter(Boolean).map(x=>`<option>${esc(x)}</option>`).join('')}</select></label><label class="fld"><span>OPFOR-súrlódás (OPF, az igazgató alatt)</span><select id="fricsel">${FRIC.map((x,i)=>`<option value="${i}">${esc(x)}</option>`).join('')}</select></label><div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn pri" data-act="release" type="button" ${S.role==='IGA'||S.role==='FOR'?'':'disabled'}>Injekt kiadása és kör indítása</button></div>${S.role==='IGA'||S.role==='FOR'?'':'<div style="font-size:12px;color:var(--mut);margin-top:6px">Szerep: Wargame-igazgató vagy Forgatókönyv-tervező</div>'}`;
+  }else if(tn.phase===1){
+    h+=`<div class="note" style="margin-bottom:8px">${esc(tn.inject)}${tn.fric?'<br><b>Súrlódás:</b> '+esc(FRIC[tn.fric]):''}</div>`;
+    const ds=decSeats(),sub=ds.filter(s=>tn.orders[s.id]).length;
+    h+=`<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span class="lbl">Csak a játékosok döntenek · indoklás kötelező</span><span class="mono" style="font-size:12px">${sub}/${ds.length}</span></div><div style="display:flex;flex-direction:column;gap:6px;max-height:420px;overflow:auto">`;
+    ds.forEach(s=>{const o=tn.orders[s.id];h+=`<div class="ord"><div class="r1">${sym(s.t,18)}<b style="flex:1;font-size:13px">${esc(s.fn)}</b><span class="tg ${s.mode==='ai'?'ai':'hu'}">${s.mode==='ai'?'AI':'EMBER'}</span></div>`;
+      if(o)h+=`<div style="font-size:12.5px"><b>${esc(o.act)}</b> · ${esc(o.sec)} <span class="tg ok">BEKÜLDVE</span><div style="color:var(--mut)">${esc(o.why)}</div></div>`;
+      else h+=`<div class="r2"><select id="oa-${s.id}">${ACT.map(a=>`<option>${esc(a)}</option>`).join('')}</select><select id="os-${s.id}">${SEC.map(a=>`<option>${a}</option>`).join('')}</select></div><input type="text" id="ow-${s.id}" placeholder="Indoklás (miért ezt döntötted?)"><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm" data-act="order" data-id="${s.id}" type="button">Beküld</button>${s.mode==='human'?`<button class="btn sm" data-act="phone" data-id="${s.id}" type="button">Mobilnézet</button>`:`<button class="btn sm" data-act="aiorder" data-id="${s.id}" type="button">AI-javaslat</button>`}</div>`;
+      h+='</div>'});
+    h+=`</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px"><button class="btn" data-act="fillorders" type="button">Hiányzók kitöltése (demó)</button><button class="btn pri" data-act="toadj" type="button" ${ds.length&&sub===ds.length?'':'disabled'}>Tovább az elbírálásra</button></div>`;
+  }else if(tn.phase===2){
+    const ts=activeTeams(tn);
+    h+=`<div class="lbl" style="margin-bottom:6px">Elbírálás · ${esc(c.adj)} (ADJ) · időben és érthetően</div>`;
+    ts.forEach(t=>{const a=tn.adj[t],os=Object.entries(tn.orders).filter(([k])=>k[0]===t);
+      h+=`<div class="ord" style="margin-bottom:8px"><div class="r1">${sym(t,20)}<b style="flex:1">${TEAMS[t].nm}</b><span class="mono" style="font-size:11px">${os.length} döntés</span></div><div style="font-size:12px;color:var(--mut)">${os.map(([k,o])=>esc(o.act)+' '+esc(o.sec)).join(' · ')}</div>`;
+      if(a)h+=`<div><span class="tg ok">${esc(a.res.toUpperCase())}</span> <span style="font-size:12.5px">${esc(a.why)}</span>${a.roll?` <span class="mono" style="font-size:11px">d6=${a.roll}</span>`:''}</div>`;
+      else h+=`<div class="r2" style="grid-template-columns:1fr auto"><select id="ar-${t}">${RESL.map(x=>`<option>${x}</option>`).join('')}</select><button class="btn sm" data-act="die" data-t="${t}" type="button" title="Tartalék-módszer: kockadobás">d6</button></div><input type="text" id="aw-${t}" placeholder="Indoklás az eredményhez"><button class="btn sm" data-act="adj" data-t="${t}" type="button" ${S.role==='ADJ'||S.role==='IGA'?'':'disabled'}>Elbírálás rögzítése (ADJ)</button>`;
+      h+='</div>'});
+    h+=`<div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn pri" data-act="finalize" type="button" ${ts.every(t=>tn.adj[t])?'':'disabled'}>Közlés és kör lezárása</button></div>${S.role==='ADJ'||S.role==='IGA'?'':'<div style="font-size:12px;color:var(--mut);margin-top:6px">Szerep: Adjudikátor</div>'}`;
+  }
+  h+=`<label class="fld"><span>Megfigyelés (ELE / FAC – ODCR „Observation”)</span><textarea id="obs" rows="2" data-obs="1">${esc(tn.obs)}</textarea></label>`;
+  return h;
+}
+
+/* ---------- 4. Adat és elemzés ---------- */
+function bars(r){const ts=teamState(r);return'KPZ'.split('').map(t=>{const x=ts[t].res,tot=x[0]+x[1]+x[2]||1;return`<div style="display:flex;align-items:center;gap:8px;margin:4px 0">${sym(t,18)}<span style="width:56px;font-size:12px;font-weight:600">${TEAMS[t].nm}</span><div class="sc" style="flex:1"><i style="width:${x[0]/tot*100}%;background:var(--ok)"></i><i style="width:${x[1]/tot*100}%;background:var(--now)"></i><i style="width:${x[2]/tot*100}%;background:var(--bad)"></i></div><span class="mono" style="font-size:11px">${x[0]}/${x[1]}/${x[2]}</span></div>`}).join('')}
+function odcrObs(i,r){const ds=r?r.turns.filter(t=>t.phase===3&&t.i>0):[];const d=dataPoints(r);const ts=teamState(r);const tot=['K','P','Z'].reduce((a,t)=>[a[0]+ts[t].res[0],a[1]+ts[t].res[1],a[2]+ts[t].res[2]],[0,0,0]);return`${ds.length} kör, ${d.decisions} indokolt döntés; elbírálások: ${tot[0]} siker, ${tot[1]} részleges, ${tot[2]} kudarc; ${d.observation} megfigyelés.`}
+function quickReport(){const c=cfg(),r=execRun(),d=dataPoints(r),hn=S.seats.filter(s=>s.active&&s.mode==='human').length,an=S.seats.filter(s=>s.active&&s.mode==='ai').length;
+  return`GYORSJELENTÉS – ${S.title} (${VER})\n\nGenezis: ${getF(1,'problem')||'—'}\nCél: ${c.goal}\nMódszertan: ${c.rig}; elbírálás: ${c.adj}; ${execTurnsDone()}/${c.turns} kör; ${hn} ember és ${an} AI szereplő.\nAdat: ${d.decisions} indokolt döntés, ${d.adjudication} elbírálás, ${d.observation} megfigyelés.\n\nMegállapítások (ODCR):\n`+c.obj.map((o,i)=>`${i+1}. ${o}\n   Megfigyelés: ${odcrObs(i,r)}\n   Következtetés: ${(S.odcr[i]&&S.odcr[i].c)||'—'}\n   Javaslat: ${(S.odcr[i]&&S.odcr[i].r)||'—'}`).join('\n')+'\n'}
+function renderData(){
+  const s=S.step,dEd=s>=5&&!S.done[8],tEd=s>=6&&s<=8&&!S.done[8],ex=execRun(),dp=dataPoints(ex),pt=lastRun('playtest');
+  let h='<div class="dgrid"><div class="col">';
+  h+=`<section class="panel hud pad"><h3 style="font-size:20px;margin-bottom:6px">DCAP · adatgyűjtési és elemzési terv</h3><div class="note" style="margin-bottom:10px">${s<5?'A DCAP a 05. lépésben készül (ELE).':dEd?'05: elkészítés · 06: tesztelés playtesten · 07: igazítás · 08: validálás.':'A DCAP lezárva (08. lépés).'}</div>`;
+  h+=S.dcap.length?`<div class="scr"><table><thead><tr><th>Elemzési kérdés</th><th>Mérőszám</th><th>Teszt</th><th></th></tr></thead><tbody>${S.dcap.map(q=>`<tr><td>${esc(q.q)}</td><td><select data-act="dmetric" data-id="${q.id}" aria-label="Mérőszám" ${dEd?'':'disabled'}>${Object.entries(METRICS).map(([k,v])=>`<option value="${k}" ${q.metric===k?'selected':''}>${esc(v)}</option>`).join('')}</select></td><td><div class="tri"><button type="button" class="${q.tested===true?'on okk':''}" data-act="dtest" data-id="${q.id}" data-v="1" ${tEd?'':'disabled'}>VAN ADAT</button><button type="button" class="${q.tested===false?'on bad':''}" data-act="dtest" data-id="${q.id}" data-v="0" ${tEd?'':'disabled'}>HIÁNYZIK</button></div></td><td>${dEd?`<button class="btn sm" data-act="ddel" data-id="${q.id}" type="button" aria-label="Törlés">✕</button>`:''}</td></tr>`).join('')}</tbody></table></div>`:'<div style="color:var(--mut)">Még nincs elemzési kérdés.</div>';
+  if(dEd)h+=`<div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap"><input type="text" id="dq" placeholder="Új elemzési kérdés" style="flex:1;min-width:180px"><select id="dm">${Object.entries(METRICS).map(([k,v])=>`<option value="${k}">${esc(v)}</option>`).join('')}</select><button class="btn" data-act="dadd" type="button">Hozzáad</button><button class="btn" data-act="dsample" type="button">Minta-DCAP</button></div>`;
+  h+='</section>';
+  h+=`<section class="panel pad"><h3 style="font-size:18px;margin-bottom:8px">Összegyűjtött adat</h3><div class="kv"><span>Forrás</span><b>${ex?'Végrehajtás':pt?'Utolsó playtest':'—'}</b></div>`+Object.entries(METRICS).map(([k,v])=>{const n=(ex?dataPoints(ex):pt?dataPoints(pt):{})[k]||0;return`<div class="kv"><span>${v}</span><b class="mono">${n}</b></div>`}).join('')+`<div class="lbl" style="margin-top:12px">Elbírálási eredmények: siker / részleges / kudarc</div>${bars(ex||pt)}</section>`;
+  h+='</div><div class="col">';
+  const odEd=s===15&&!S.done[15];
+  h+=`<section class="panel hud pad"><h3 style="font-size:20px;margin-bottom:6px">ODCR · utóelemzés</h3>${s<15?'<div class="note">A 15. lépéstől (Utóelemzés) szerkeszthető. Az Observation oszlop már most látja az adatot.</div>':''}`;
+  const c=cfg();
+  h+=c.obj.length?c.obj.map((o,i)=>{const v=S.odcr[i]||{};return`<div class="ord" style="margin-top:8px"><b>${i+1}. ${esc(o)}</b><div style="font-size:12.5px;color:var(--mut)"><b>O</b> ${esc(odcrObs(i,ex))}</div><textarea rows="2" placeholder="Discussion" data-odcr="${i}:d" ${odEd?'':'disabled'}>${esc(v.d||'')}</textarea><textarea rows="2" placeholder="Conclusion *" data-odcr="${i}:c" ${odEd?'':'disabled'}>${esc(v.c||'')}</textarea><textarea rows="2" placeholder="Recommendation" data-odcr="${i}:r" ${odEd?'':'disabled'}>${esc(v.r||'')}</textarea></div>`}).join(''):'<div style="color:var(--mut);margin-top:8px">A célkitűzések a 02. lépésben keletkeznek; az ODCR ezekhez a célkitűzésekhez kötődik.</div>';
+  h+='</section>';
+  h+=`<section class="panel pad"><h3 style="font-size:18px;margin-bottom:8px">Gyorsjelentés (15) · AAR-vázlat (16)</h3><textarea id="rep" rows="12" readonly class="mono" style="font-size:12px">${esc(quickReport())}</textarea><div style="margin-top:8px"><button class="btn sm" data-act="copy" type="button">Szöveg másolása</button></div></section></div></div>`;
+  return h;
+}
+
+/* ---------- mobil játékosfelület ---------- */
+function phoneHtml(id,full){
+  const s=S.seats.find(x=>x.id===id);if(!s)return'<p>Ismeretlen hely.</p>';
+  const m=modeForStep(S.step),r=m?openRun(m):null,tn=curTurn(r);
+  let h=`<div style="display:flex;align-items:center;gap:10px">${sym(s.t,34)}<div style="flex:1"><div class="lbl">${TEAMS[s.t].nm} · ${s.mode==='ai'?'AI':'Ember'}</div><b style="font-size:18px">${esc(s.fn)}</b></div>${full?'':`<button class="btn sm" data-act="phoneclose" type="button" aria-label="Bezár">✕</button>`}</div>`;
+  h+=`<div class="chipx" style="align-self:flex-start">${S.step}/18 · ${esc(STEPS[S.step-1].nm)}</div>`;
+  if(!s.active)return h+'<div class="note">Ez a hely most nem aktív.</div>';
+  if(!tn||!r)return h+'<div class="note">Várakozás a játék indítására. A felület a playtest, főpróba és végrehajtás során aktív.</div>';
+  if(tn.phase===0)h+='<div class="note">A kör még nem indult. Várj az injektre.</div>';
+  else{h+=`<div class="note"><b>T${tn.i} helyzet:</b> ${esc(tn.inject)}</div>`;
+    const o=tn.orders[id];
+    if(tn.phase===1&&!o)h+=`<label class="fld"><span>Akció</span><select id="p-act">${ACT.map(a=>`<option>${esc(a)}</option>`).join('')}</select></label><label class="fld"><span>Szektor</span><select id="p-sec">${SEC.map(a=>`<option>${a}</option>`).join('')}</select></label><label class="fld"><span>Indoklás *</span><textarea id="p-why" rows="3"></textarea></label><button class="btn pri" data-act="pphone" data-id="${id}" type="button" style="min-height:48px">Döntés beküldése</button>`;
+    else if(o)h+=`<div class="ord"><span class="tg ok" style="align-self:flex-start">BEKÜLDVE</span><b>${esc(o.act)} · ${esc(o.sec)}</b><span style="color:var(--mut);font-size:13px">${esc(o.why)}</span></div>`;
+    if(tn.phase===2)h+='<div class="note">Az elbírálás folyamatban van.</div>';
+    if(tn.phase===3&&s.t!=='F'&&tn.adj[s.t])h+=`<div class="ord"><b>Közölt eredmény: ${esc(tn.adj[s.t].res)}</b><span style="font-size:13px;color:var(--mut)">${esc(tn.adj[s.t].why)}</span></div>`}
+  return h;
+}
+function openPhone(id){UI.phone=id;const m=$('#phoneModal');m.innerHTML=`<div class="phone" role="dialog" aria-label="Játékos mobilnézet">${phoneHtml(id,false)}</div>`;m.hidden=false}
+function refreshPhone(){if(UI.phone&&!$('#phoneModal').hidden)$('#phoneModal .phone').innerHTML=phoneHtml(UI.phone,false)}
+
+/* ---------- fő render ---------- */
+function render(){
+  if(PROF&&!okView(UI.view))UI.view=PROF.landing;
+  renderRail();renderTabs();
+  const v=$('#view');
+  v.innerHTML=UI.view==='flow'?renderFlow():UI.view==='roster'?renderRoster():UI.view==='board'?renderBoard():renderData();
+  if(UI.view==='roster')drawQrs();
+  if(UI.view==='board')requestAnimationFrame(drawMap);
+  if(PROF){S.role=PROF.id;$('#who').textContent=PROF.nm+(SESS.name?' · '+SESS.name:'')}
+  save();
+}
+function refreshGate(){const g=$('#gate');if(g){const n=UI.vstep||S.step;g.innerHTML=gateHtml(n)}save()}
+
+/* ---------- események ---------- */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b||b.tagName==='INPUT'||b.tagName==='SELECT')return;
+  const a=b.dataset.act,id=b.dataset.id,n=+b.dataset.n;
+  switch(a){
+    case'tab':if(!okView(b.dataset.v))break;UI.view=b.dataset.v;render();window.scrollTo({top:0});break;
+    case'goto':if(!okView('flow'))break;UI.vstep=n;UI.view='flow';render();break;
+    case'tickall':{const st=STEPS[S.step-1];st.tasks.forEach((_,i)=>S.ticks[S.step+':'+i]=true);render();break}
+    case'approve':S.sponsor[n]={at:Date.now()};render();toast('Megbízói jóváhagyás rögzítve');break;
+    case'revoke':delete S.sponsor[n];render();break;
+    case'close':{const g=gate(S.step);if(!g.ready)return;S.done[S.step]=true;if(S.step<18)S.step++;UI.vstep=null;render();toast(S.done[18]?'A folyamat lezárult':'Lépés lezárva – a produktum a következő lépés bemenete');window.scrollTo({top:0});break}
+    case'reopen':{for(let k=n;k<=18;k++)S.done[k]=false;S.step=n;UI.vstep=null;render();toast(n+'. lépés újranyitva');break}
+    case'ff':{demoFill(+$('#ffsel').value);render();toast('Demó: az addigi lépések mintaadattal kitöltve');break}
+    case'reset':if(b.dataset.sure){S=defaults();UI.vstep=null;UI.sel=null;render();$('#gtitle').value=S.title;toast('Új játék indítva')}else{b.dataset.sure=1;b.textContent='Biztos? Kattints újra';setTimeout(()=>{b.dataset.sure='';b.textContent='Új játék'},3000)}break;
+    case'seat':UI.sel=UI.sel===id?null:id;render();break;
+    case'seatmode':{const s=S.seats.find(x=>x.id===id);s.mode=b.dataset.m;s.joined=false;render();break}
+    case'join':{S.seats.find(x=>x.id===id).joined=true;render();refreshGate();break}
+    case'phone':openPhone(id);break;
+    case'phoneclose':$('#phoneModal').hidden=true;UI.phone=null;break;
+    case'pphone':{const w=$('#p-why').value.trim();if(!w){toast('Az indoklás kötelező');return}const tn=curTurn(openRun(modeForStep(S.step)));if(tn&&tn.phase===1){tn.orders[id]={act:$('#p-act').value,sec:$('#p-sec').value,why:w,src:'ember (mobil)',at:Date.now()};save();refreshPhone();if(UI.view==='board')render()}break}
+    case'pphoneR':phoneSubmit();break;
+    case'newrun':newRun(b.dataset.m);render();break;
+    case'logout':WG_SESSION.clear();location.assign('index.html');break;
+    case'mkpin':UI.pin=UI.pin===id?null:id;render();break;
+    case'newturn':{const r=openRun(modeForStep(S.step));newTurn(r);render();break}
+    case'autoturn':{const m=modeForStep(S.step);let r=openRun(m);if(!r)r=newRun(m);autoTurn(r);render();break}
+    case'closerun':{const r=openRun(modeForStep(S.step));if(r){r.status='closed';}render();refreshGate();toast('Futás lezárva');break}
+    case'release':{const tn=curTurn(openRun(modeForStep(S.step)));tn.inject=$('#injsel').value;tn.fric=+$('#fricsel').value;tn.phase=1;tn.t0=Date.now();render();break}
+    case'order':{const tn=curTurn(openRun(modeForStep(S.step)));const w=$('#ow-'+id).value.trim();if(!w){toast('Az indoklás kötelező');return}tn.orders[id]={act:$('#oa-'+id).value,sec:$('#os-'+id).value,why:w,src:'ember',at:Date.now()};render();break}
+    case'aiorder':{const tn=curTurn(openRun(modeForStep(S.step)));tn.orders[id]=genOrder(S.seats.find(x=>x.id===id),tn);render();toast('AI-javaslat rögzítve (szimulált, a valódi LLM a következő verzióban)');break}
+    case'fillorders':{const tn=curTurn(openRun(modeForStep(S.step)));decSeats().forEach(s=>{if(!tn.orders[s.id])tn.orders[s.id]=genOrder(s,tn)});render();break}
+    case'toadj':{curTurn(openRun(modeForStep(S.step))).phase=2;render();break}
+    case'die':{const tn=curTurn(openRun(modeForStep(S.step)));const t=b.dataset.t;const roll=1+Math.floor(Math.random()*6);const res=roll>=5?'Siker':roll>=3?'Részleges':'Kudarc';const sel=$('#ar-'+t);sel.value=res;const w=$('#aw-'+t);if(!w.value)w.value='Tartalék-módszer: d6='+roll+'.';toast('d6 = '+roll+' → '+res);UI.roll=UI.roll||{};UI.roll[t]=roll;break}
+    case'adj':{const tn=curTurn(openRun(modeForStep(S.step)));const t=b.dataset.t;tn.adj[t]={res:$('#ar-'+t).value,why:$('#aw-'+t).value.trim()||'—',method:cfg().adj,roll:(UI.roll&&UI.roll[t])||0};if(UI.roll)delete UI.roll[t];render();break}
+    case'finalize':{const tn=curTurn(openRun(modeForStep(S.step)));tn.phase=3;tn.t3=Date.now();render();refreshGate();toast('Eredmény közölve, adat naplózva a DCAP szerint');break}
+    case'dadd':{const q=$('#dq').value.trim();if(!q){toast('Írj be egy elemzési kérdést');return}S.dcap.push({id:Date.now(),q,metric:$('#dm').value,tested:null});render();break}
+    case'dsample':loadSampleDcap();render();break;
+    case'ddel':S.dcap=S.dcap.filter(x=>x.id!=id);render();break;
+    case'dtest':{const q=S.dcap.find(x=>x.id==id);const v=b.dataset.v==='1';q.tested=q.tested===v?null:v;render();break}
+    case'copy':{const t=$('#rep').value;const ok=()=>toast('Másolva');const fb=()=>{$('#rep').select();toast('Jelöld ki és másold (Ctrl+C)')};try{navigator.clipboard.writeText(t).then(ok,fb)}catch(x){fb()}break}
+  }
+});
+document.addEventListener('change',e=>{
+  const t=e.target,d=t.dataset;
+  if(d.act==='tick'){S.ticks[d.k]=t.checked;refreshGate();return}
+  if(d.act==='cond8'){S.cond8=t.checked;refreshGate();return}
+  if(d.act==='seatact'){S.seats.find(x=>x.id===d.id).active=t.checked;render();return}
+  if(d.act==='dmetric'){S.dcap.find(x=>x.id==d.id).metric=t.value;render();return}
+  if(d.fc){S.fields[d.fc]=t.checked;refreshGate();return}
+  if(d.f&&t.tagName==='SELECT'){S.fields[d.f]=t.value;refreshGate();return}
+  if(t.id==='role'){S.role=t.value;render();return}
+  if(t.id==='terr'){lsSet('wgs-terr',t.value);genTerrain(t.value);drawMap();return}
+});
+document.addEventListener('input',e=>{
+  const t=e.target,d=t.dataset;
+  if(d.f&&t.tagName!=='SELECT'){S.fields[d.f]=t.value;clearTimeout(input.t);input.t=setTimeout(refreshGate,250);return}
+  if(d.sp){S.seats.find(x=>x.id===d.sp).prompt=t.value;save();return}
+  if(d.obs){const tn=curTurn(openRun(modeForStep(S.step)));if(tn){tn.obs=t.value;save()}return}
+  if(d.odcr){const[i,k]=d.odcr.split(':');S.odcr[i]=S.odcr[i]||{};S.odcr[i][k]=t.value;save();return}
+  if(t.id==='gtitle'){S.title=t.value;save()}
+});
+function input(){}
+let rzt;window.addEventListener('resize',()=>{clearTimeout(rzt);rzt=setTimeout(drawMap,150)});
+$('#themeBtn').addEventListener('click',()=>{const cur=document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');const nx=cur==='dark'?'light':'dark';document.documentElement.dataset.theme=nx;lsSet('wgs-theme',nx)});
+$('#bgfile').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const cv=$('#terrain');cv.width=1280;cv.height=800;const g=cv.getContext('2d');const sc=Math.max(1280/im.width,800/im.height);g.drawImage(im,(1280-im.width*sc)/2,(800-im.height*sc)/2,im.width*sc,im.height*sc);TC=cv;drawMap();toast('Háttérkép beállítva (csak ebben a munkamenetben)')};im.src=fr.result};fr.readAsDataURL(f)});
+$('#phoneModal').addEventListener('click',e=>{if(e.target.id==='phoneModal'){e.currentTarget.hidden=true;UI.phone=null}});
+
+
+/* ---------- élő szinkron (Supabase) ---------- */
+function keepRender(fn){const kept={};$$('#view input[id],#view textarea[id],#view select[id]').forEach(e=>{if(e.type==='checkbox')kept[e.id]=[e.checked];else kept[e.id]=[e.value]});const fid=document.activeElement&&document.activeElement.id;fn();Object.entries(kept).forEach(([id,v])=>{const e=document.getElementById(id);if(!e)return;if(e.type==='checkbox')e.checked=v[0];else if(e.tagName==='SELECT'){if([...e.options].some(o=>o.value===v[0]||o.text===v[0]))e.value=v[0]}else if(e.type!=='file')e.value=v[0]});if(fid){const e=document.getElementById(fid);if(e&&e.focus)e.focus()}}
+function setSync(ok,msg){const c=$('#sync');if(!c)return;c.textContent=msg;c.className='chipx '+(ok?'hu':'')}
+function phoneSnap(){const m=modeForStep(S.step),r=m?(openRun(m)||(m==='execution'?lastRun(m):null)):null,tn=curTurn(r),seats={};S.seats.forEach(x=>seats[x.id]={fn:x.fn,t:x.t,a:x.active?1:0,m:x.mode});
+  return{title:S.title,step:S.step,stepName:STEPS[S.step-1].nm,mode:m,seats,turn:tn?{i:tn.i,phase:tn.phase,inject:tn.inject,fric:tn.fric,orders:Object.fromEntries(Object.entries(tn.orders).map(([k,o])=>[k,{act:o.act,sec:o.sec,why:o.why}])),adj:Object.fromEntries(Object.entries(tn.adj).map(([k,a])=>[k,{res:a.res,why:a.why}]))}:null}}
+let pubT=null,pubLast='';
+function schedulePublish(){if(IS_PHONE)return;clearTimeout(pubT);pubT=setTimeout(publishNow,400)}
+async function publishNow(){const sn=phoneSnap(),js=JSON.stringify(sn);if(js===pubLast)return;try{await rpc('wg_put_state',{p_room:S.room,p_key:S.hostKey,p_state:sn});pubLast=js;setSync(1,'Szoba '+S.room+' · élő')}catch(e){setSync(0,'Szinkron hiba');console.warn(e)}}
+function applyEvents(evs){let ch=false;for(const ev of evs){S.evSince=Math.max(S.evSince||0,ev.id);const p=ev.payload||{};const seat=S.seats.find(x=>x.id===p.seat);if(!seat)continue;
+  if(ev.kind==='join'&&!seat.joined){seat.joined=true;ch=true}
+  if(ev.kind==='order'){const m=modeForStep(S.step),r=m&&openRun(m),tn=curTurn(r);if(tn&&tn.phase===1&&seat.active&&seat.t!=='F'&&!tn.orders[seat.id]&&String(p.why||'').trim()&&ACT.includes(p.act)&&SEC.includes(p.sec)){tn.orders[seat.id]={act:p.act,sec:p.sec,why:String(p.why).slice(0,300),src:'ember (mobil)',at:Date.now()};ch=true}}}
+  return ch}
+let polling=false;
+async function pollHost(){if(polling)return;polling=true;try{const evs=await rpc('wg_poll_events',{p_room:S.room,p_key:S.hostKey,p_since:S.evSince||0});if(evs&&evs.length){const ch=applyEvents(evs);save();if(ch){keepRender(render);refreshPhone();toast('Telefonról érkezett művelet')}}}catch(e){}polling=false}
+function startHostSync(){publishNow();setInterval(pollHost,2500);setInterval(()=>{pubLast='';publishNow()},30000)}
+
+/* ---------- telefonos játékosoldal (külön eszközön) ---------- */
+const PEND={};let phLast='',phSnap=null;
+function phoneRemote(sn,id){
+  const s=sn.seats&&sn.seats[id];if(!s)return'<div class="note">Ismeretlen hely ehhez a szobához.</div>';
+  const tn=sn.turn;let h=`<div style="display:flex;align-items:center;gap:10px">${sym(s.t,34)}<div style="flex:1"><div class="lbl">${TEAMS[s.t].nm} · ${s.m==='ai'?'AI':'Ember'}</div><b style="font-size:18px">${esc(s.fn)}</b></div></div><div class="chipx" style="align-self:flex-start">${sn.step}/18 · ${esc(sn.stepName)}</div>`;
+  if(!s.a)return h+'<div class="note">Ez a hely most nem aktív.</div>';
+  if(s.t==='F')return h+'<div class="note">Irányítói (Fehér) hely: a stáb a gazdagép felületén dolgozik.</div>';
+  if(s.m==='ai')return h+'<div class="note">Ez a hely AI-ügynökhöz van rendelve, itt nincs emberi döntés.</div>';
+  if(!sn.mode||!tn)return h+'<div class="note">Várakozás a játék indítására. A felület a playtest, főpróba és végrehajtás alatt aktív.</div>';
+  if(tn.phase===0)return h+'<div class="note">A T'+tn.i+' kör még nem indult. Várj az injektre.</div>';
+  h+=`<div class="note"><b>T${tn.i} helyzet:</b> ${esc(tn.inject)}${tn.fric?'<br><b>Súrlódás:</b> '+esc(FRIC[tn.fric]):''}</div>`;
+  const o=tn.orders[id]||PEND[id+':'+tn.i];
+  if(o)h+=`<div class="ord"><span class="tg ok" style="align-self:flex-start">BEKÜLDVE</span><b>${esc(o.act)} · ${esc(o.sec)}</b><span style="color:var(--mut);font-size:13px">${esc(o.why)}</span></div>`;
+  else if(tn.phase===1)h+=`<label class="fld"><span>Akció</span><select id="p-act">${ACT.map(a=>`<option>${esc(a)}</option>`).join('')}</select></label><label class="fld"><span>Szektor</span><select id="p-sec">${SEC.map(a=>`<option>${a}</option>`).join('')}</select></label><label class="fld"><span>Indoklás *</span><textarea id="p-why" rows="3"></textarea></label><button class="btn pri" data-act="pphoneR" type="button" style="min-height:48px">Döntés beküldése</button><div id="p-err" style="color:var(--bad);font-size:13px"></div>`;
+  else if(tn.phase===2)h+='<div class="note">Az elbírálás folyamatban van.</div>';
+  if(tn.phase===3&&tn.adj[s.t])h+=`<div class="ord"><b>Közölt eredmény: ${esc(tn.adj[s.t].res)}</b><span style="font-size:13px;color:var(--mut)">${esc(tn.adj[s.t].why)}</span></div>`;
+  return h;
+}
+function drawPhone(){const el=$('#phoneModal .phone');if(!el)return;const js=JSON.stringify(phSnap);if(js===phLast)return;phLast=js;const kept={};$$('#phoneModal [id]').forEach(e=>kept[e.id]=e.value);el.innerHTML=`<div class="lbl" style="text-align:center">${esc(phSnap.title||'Wargame Studio')} · szoba ${esc(PH_ROOM)}</div>`+phoneRemote(phSnap,PH_SEAT);Object.entries(kept).forEach(([id,v])=>{const e=document.getElementById(id);if(e&&e.tagName!=='BUTTON')e.value=v})}
+async function phoneTick(){try{const sn=await rpc('wg_get_state',{p_room:PH_ROOM});if(!sn||!sn.seats){phSnap=null;$('#phoneModal .phone').innerHTML='<div class="note">A szoba nem található. Ellenőrizd a QR-kódot, vagy kérd a gazdagéptől az új kódot.</div>';return}phSnap=sn;drawPhone()}catch(e){const el=$('#phoneModal .phone');if(el&&!phSnap)el.innerHTML='<div class="note">A szerver nem érhető el. Próbáld újra.</div>'}}
+function startPhoneMode(){
+  $('#app').hidden=true;const m=$('#phoneModal');m.hidden=false;m.style.background='transparent';
+  m.innerHTML='<div class="phone" style="max-height:none;width:min(420px,100%)"><div class="note">Csatlakozás…</div></div>';
+  rpc('wg_post_event',{p_room:PH_ROOM,p_kind:'join',p_payload:{seat:PH_SEAT}}).catch(()=>{});
+  phoneTick();setInterval(phoneTick,2000);
+}
+async function phoneSubmit(){const w=($('#p-why')||{}).value||'';const err=$('#p-err');if(!w.trim()){if(err)err.textContent='Az indoklás kötelező.';return}
+  const tn=phSnap&&phSnap.turn;if(!tn)return;const o={act:$('#p-act').value,sec:$('#p-sec').value,why:w.trim().slice(0,300)};
+  try{await rpc('wg_post_event',{p_room:PH_ROOM,p_kind:'order',p_payload:Object.assign({seat:PH_SEAT},o)});PEND[PH_SEAT+':'+tn.i]=o;phLast='';drawPhone()}catch(e){if(err)err.textContent='Nem sikerült elküldeni: '+e.message}}
+
+/* ---------- indulás ---------- */
+(function init(){
+  const th=lsGet('wgs-theme');if(th)document.documentElement.dataset.theme=th;
+  if(PROF)S.role=PROF.id;
+  const tr=lsGet('wgs-terr')||'temp';$('#terr').value=tr;genTerrain(tr);
+  $('#gtitle').value=S.title;
+  if(IS_PHONE){startPhoneMode();return}
+  render();startHostSync();
+})();
+</script>
+</body>
+</html>
