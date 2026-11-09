@@ -42,6 +42,8 @@
     },
     save: function (o) {
       var rec = { role: o.role, name: (o.name || '').trim().slice(0, 60), at: Date.now() };
+      /* DEMÓ: minden új belépés tiszta lappal indul – az előző játék adatai törlődnek */
+      try { localStorage.removeItem('wgd-state-v0.3'); } catch (e) {}
       try { sessionStorage.setItem(KEY, JSON.stringify(rec)); } catch (e) {}
       try { localStorage.setItem(LAST, o.role); } catch (e) {}
       return rec;
