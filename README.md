@@ -36,3 +36,4 @@ A telefonos szinkron Supabase-adatai (`wg_rooms`, `wg_events`) 3 nap után autom
 - **v0.3.0-dev (2026-11-09):** új belépő oldal (gránát + mintázat + szerep legördülő), profilkonfiguráció, profil-alapú nézetek, a v0.2.2 demó beemelve `app.html`-ként.
 
 - **v0.5.0-dev (2026-11-09)** – Új játék üres (nincs előző scenario/opció). Importálható Scenario-csomag (JSON), Scenario-fejlesztő nézet, Scenario Brief gomb minden szerepnek (telefonon is), csapatonkénti válaszlehetőségek és injektek a scenarióból, 5. lépés kapuja, naplózás, sablon + minta (`scenarios/`).
+- **v0.5.0-dev (2026-11-09)** – `scenario-szerkeszto_v1.0_2026-11-09.html`: önálló űrlapos Scenario-szerkesztő (élő JSON-előnézet, letöltés, betöltés, ellenőrzés), a fő program színvilágával; a Scenario nézetből is elérhető.

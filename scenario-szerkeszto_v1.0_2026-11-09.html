@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Wargame Studio – Scenario-szerkesztő</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* Wargame Studio Scenario-szerkesztő v1.0 · 2026-11-09 – a fő program színvilágával */
+:root{--bg:#E8EEEC;--glass:rgba(247,250,249,.9);--glass2:rgba(255,255,255,.96);--ink:#0F1B21;--mut:#41545C;--ln:rgba(15,27,33,.18);--ln2:rgba(15,27,33,.08);--ac:#1B5C78;--ac-t:rgba(27,92,120,.12);--ok:#1E7A3C;--bad:#B3262D;--on-rc:#fff;--tk:#4C8FD6;--tp:#D8605C;--tz:#3FA25C;
+--f-sans:'IBM Plex Sans',system-ui,sans-serif;--f-cond:'IBM Plex Sans Condensed','IBM Plex Sans',sans-serif;--f-mono:'IBM Plex Mono',ui-monospace,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#091014;--glass:rgba(12,20,26,.88);--glass2:rgba(20,31,39,.94);--ink:#E7EFF3;--mut:#9DB1BB;--ln:rgba(160,190,205,.22);--ln2:rgba(160,190,205,.1);--ac:#72BAD8;--ac-t:rgba(114,186,216,.14);--ok:#5CC274;--bad:#FF8085;--on-rc:#091014;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#091014;--glass:rgba(12,20,26,.88);--glass2:rgba(20,31,39,.94);--ink:#E7EFF3;--mut:#9DB1BB;--ln:rgba(160,190,205,.22);--ln2:rgba(160,190,205,.1);--ac:#72BAD8;--ac-t:rgba(114,186,216,.14);--ok:#5CC274;--bad:#FF8085;--on-rc:#091014;color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 var(--f-sans);-webkit-font-smoothing:antialiased;padding-block:0 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+background-image:radial-gradient(1200px 500px at 85% -10%,var(--ac-t),transparent 60%),repeating-linear-gradient(0deg,var(--ln2) 0 1px,transparent 1px 64px),repeating-linear-gradient(90deg,var(--ln2) 0 1px,transparent 1px 64px)}
+.wrap{max-width:1180px;margin:0 auto}
+header{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:16px 0}
+header b{font:700 18px var(--f-cond);letter-spacing:.08em;text-transform:uppercase}header small{display:block;font:500 11px var(--f-mono);color:var(--mut)}
+.sp{flex:1}.bar small{display:block;font:500 11px var(--f-mono);color:var(--mut)}
+h2,h3{margin:0;font-family:var(--f-cond);text-transform:uppercase;letter-spacing:.03em}
+h3{font-size:18px}
+.lbl{font:600 11px/1.2 var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--mut)}
+.panel{background:var(--glass);border:1px solid var(--ln);border-radius:10px;padding:16px;min-width:0;backdrop-filter:blur(10px)}
+.grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:12px;align-items:start}
+.col{display:flex;flex-direction:column;gap:12px;min-width:0}
+@media (max-width:980px){.grid{grid-template-columns:minmax(0,1fr)}}
+.fld{display:flex;flex-direction:column;gap:4px;margin-top:10px;min-width:0}.fld>span{font:600 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+input,select,textarea,button{font:inherit;color:var(--ink)}
+input[type=text],input[type=number],select,textarea{background:var(--glass2);border:1px solid var(--ln);border-radius:7px;padding:7px 9px;min-height:36px;width:100%;min-width:0}
+textarea{resize:vertical;line-height:1.45}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+.btn{background:var(--glass2);border:1px solid var(--ln);border-radius:7px;min-height:36px;padding:0 12px;font-weight:600;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:hover{border-color:var(--ac)}.btn.pri{background:var(--ac);border-color:var(--ac);color:var(--on-rc)}.btn.sm{min-height:30px;padding:0 9px;font-size:12px}.btn:disabled{opacity:.55;cursor:not-allowed}
+.row{display:flex;gap:6px;flex-wrap:wrap}
+.two{display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:8px}.three{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+.team{border:1px solid var(--ln);border-left:4px solid var(--tc);border-radius:8px;padding:10px;margin-top:10px;background:var(--glass2)}
+.team h4{margin:0;font:700 14px var(--f-cond);letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.team h4 i{width:12px;height:12px;border-radius:3px;background:var(--tc);display:inline-block}
+.opt{display:grid;grid-template-columns:72px minmax(0,1.1fr) minmax(0,1.6fr) 34px;gap:6px;margin-top:6px;align-items:start}
+.inj{display:grid;grid-template-columns:78px 78px minmax(0,1fr) 34px;gap:6px;margin-top:6px;align-items:start}
+.dc{display:grid;grid-template-columns:150px minmax(0,1fr) 34px;gap:6px;margin-top:6px;align-items:start}
+.opt textarea,.inj textarea,.dc textarea{min-height:36px}
+.x{min-height:36px;padding:0;justify-content:center;color:var(--bad)}
+@media (max-width:620px){.opt,.inj,.dc{grid-template-columns:minmax(0,1fr) 34px}.opt>*:nth-child(1),.opt>*:nth-child(2),.opt>*:nth-child(3){grid-column:1}.opt>.x{grid-column:2;grid-row:1}.inj>*:nth-child(1),.inj>*:nth-child(2),.inj>*:nth-child(3){grid-column:1}.inj>.x{grid-column:2;grid-row:1}.dc>*:nth-child(1),.dc>*:nth-child(2){grid-column:1}.dc>.x{grid-column:2;grid-row:1}.two,.three{grid-template-columns:minmax(0,1fr)}}
+.gi{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-top:1px solid var(--ln2);font-size:13px}.gi:first-child{border-top:0}
+.mk{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--ln);display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex:none;margin-top:1px}
+.gi.ok .mk{background:var(--ok);border-color:var(--ok);color:var(--on-rc)}.gi.soft .mk{border-style:dashed}
+.note{background:var(--ac-t);border:1px solid var(--ln2);border-radius:8px;padding:9px 11px;font-size:12.5px;color:var(--mut)}
+pre{margin:0;font:500 11.5px/1.5 var(--f-mono);white-space:pre-wrap;word-break:break-word;max-height:520px;overflow:auto;background:var(--glass2);border:1px solid var(--ln);border-radius:8px;padding:10px}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:8px;font-weight:600;z-index:80;max-width:90vw}
+.mono{font-family:var(--f-mono)}
+.bar{position:sticky;top:0;z-index:20;background:var(--glass);border-bottom:1px solid var(--ln);backdrop-filter:blur(10px);margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px)));padding:8px max(16px,env(safe-area-inset-left,0px))}
+</style>
+</head>
+<body>
+<div class="bar"><div class="wrap" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+<div><b>Wargame Studio</b><small>Scenario-szerkesztő v1.0 · 2026-11-09</small></div><div class="sp"></div>
+<label class="btn sm" for="imp" style="cursor:pointer">Betöltés (JSON)</label><input type="file" id="imp" accept=".json,application/json" hidden>
+<button class="btn sm" id="blank" type="button">Új, üres</button>
+<button class="btn sm" id="copy" type="button">JSON másolása</button>
+<button class="btn sm pri" id="dl" type="button">JSON letöltése</button>
+<button class="btn sm" id="theme" type="button">Téma</button>
+</div></div>
+<div class="wrap"><header><div><h2 style="font-size:22px">Scenario-csomag szerkesztő</h2><small class="mono" style="color:var(--mut)">Töltsd ki az űrlapot → a jobb oldalon élőben épül a JSON → töltsd le, majd a Wargame Studio Scenario nézetében töltsd be.</small></div></header>
+<div class="grid"><div class="col" id="left"></div><div class="col"><section class="panel" style="position:sticky;top:64px"><h3 style="margin-bottom:8px">Ellenőrzés</h3><div id="chk"></div><div class="note" style="margin-top:10px">A „nem blokkol” tételek ajánlottak; a Wargame Studio 5. lépés kapuja a kötelező tételeket kéri.</div><h3 style="margin:14px 0 8px">JSON előnézet</h3><pre id="out"></pre></section></div></div></div>
+<div class="toast" id="toast" hidden></div>
+<script>
+const SEC=['A1','A2','A3','B1','B2','B3','C1','C2','C3'],RIG=['Szeminárium','Matrix wargame','Szabad Kriegsspiel','Merev Kriegsspiel','Szimuláció'],ADJM=['Szakértői ítélet','Konszenzus','Analitikus támogatással','Szabályalapú'],FORMAL=['Informális','Formális (MoA)'];
+const METRICS={decisions:'decisions – döntés és indoklás',adjudication:'adjudication – elbírálási eredmény',time:'time – időfelhasználás',observation:'observation – megfigyelés'};
+const BR=[['situation','Helyzet *',4],['background','Háttér',4],['mission','Küldetés *',3],['mandate','Mandátum / szabályok',4],['assumptions','Feltevések',3],['constraints','Korlátok',3],['adjudication','Elbírálási szempontok (csak irányítás)',4]];
+const FL=[['problem','Probléma (a megbízó kérdése)',2],['outcome','Elvárt kimenet',2],['goal','Cél',2],['objectives','Célkitűzések – soronként egy (3–4 ajánlott)',4],['expected','Elvárt eredmények',2],['milestones','Mérföldkövek',2],['constraints','Korlátok',2],['research','Kutatás / hasonló játékok',2],['scenario','Forgatókönyv-összefoglaló',3],['eventplan','Rendezvényterv',2]];
+const TM={K:['KÉK','--tk','C3'],P:['PIROS','--tp','A1'],Z:['ZÖLD','--tz','A3']};
+const today=()=>new Date().toISOString().slice(0,10);
+const blank=()=>({schema:'wargame-studio-scenario',v:1,title:'',version:'1.0',date:today(),author:'',source:'Scenario-szerkesztő',brief:Object.fromEntries(BR.map(b=>[b[0],''])),fields:Object.fromEntries(FL.map(f=>[f[0],''])),design:{turns:3,rigidity:RIG[1],adj:ADJM[0],formal:FORMAL[0]},teams:{K:{sub:'',start:'',options:[]},P:{sub:'',start:'',options:[]},Z:{sub:'',start:'',options:[]}},sectors:{},injects:[],friction:[],dcap:[]});
+let D=blank();try{const s=localStorage.getItem('wgs-scn-editor');if(s)D=Object.assign(blank(),JSON.parse(s))}catch(e){}
+const $=s=>document.querySelector(s),esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2400)}
+const T=(p,v,ph)=>`<input type="text" data-p="${p}" value="${esc(v)}" ${ph?`placeholder="${esc(ph)}"`:''}>`;
+const A=(p,v,r)=>`<textarea rows="${r||3}" data-p="${p}">${esc(v)}</textarea>`;
+const SELO=(p,v,list,empty)=>`<select data-p="${p}">${empty!==undefined?`<option value="">${esc(empty)}</option>`:''}${list.map(x=>`<option ${x===v?'selected':''}>${x}</option>`).join('')}</select>`;
+function build(){
+  let h=`<section class="panel"><h3>Alapadatok</h3><div class="two"><label class="fld"><span>Scenario neve *</span>${T('title',D.title)}</label><label class="fld"><span>Verzió</span>${T('version',D.version)}</label></div><div class="three"><label class="fld"><span>Szerző</span>${T('author',D.author)}</label><label class="fld"><span>Dátum</span>${T('date',D.date)}</label></div></section>`;
+  h+=`<section class="panel"><h3>Scenario Brief</h3>`+BR.map(b=>`<label class="fld"><span>${b[1]}</span>${A('brief.'+b[0],D.brief[b[0]],b[2])}</label>`).join('')+`</section>`;
+  h+=`<section class="panel"><h3>Játéktervezési mezők</h3><div class="note" style="margin-top:8px">A Wargame Studióban betöltéskor az üres lépésmezőket töltik elő.</div>`+FL.map(f=>`<label class="fld"><span>${f[1]}</span>${A('fields.'+f[0],D.fields[f[0]],f[2])}</label>`).join('')+`<div class="three" style="margin-top:4px"><label class="fld"><span>Játékkörök száma (1–8)</span><input type="number" min="1" max="8" data-p="design.turns" value="${D.design.turns}"></label><label class="fld"><span>Merevségi skála</span>${SELO('design.rigidity',D.design.rigidity,RIG)}</label><label class="fld"><span>Elbírálási módszer</span>${SELO('design.adj',D.design.adj,ADJM)}</label><label class="fld"><span>Megállapodás</span>${SELO('design.formal',D.design.formal,FORMAL)}</label></div></section>`;
+  h+=`<section class="panel"><h3>Csapatok és válaszlehetőségek</h3><div class="note" style="margin-top:8px">Rövidítés (max. 5 betű) · megnevezés (max. 80 karakter) · indoklás-sablon a <span class="mono">{sec}</span> helyőrzővel. Az egyéni opció a programban mindig elérhető.</div>`;
+  for(const t of 'KPZ'){const tm=TM[t],x=D.teams[t];h+=`<div class="team" style="--tc:var(${tm[1]})"><h4><i></i>${tm[0]}</h4><div class="two"><label class="fld"><span>Megnevezés</span>${T(`teams.${t}.sub`,x.sub,'pl. ENSZ békefenntartó erő')}</label><label class="fld"><span>Kezdő szektor</span>${SELO(`teams.${t}.start`,x.start,SEC,'alap ('+tm[2]+')')}</label></div><div class="lbl" style="margin-top:10px">Válaszlehetőségek (${x.options.length}/12)</div>`+x.options.map((o,i)=>`<div class="opt"><input type="text" maxlength="5" data-p="teams.${t}.options.${i}.abbr" value="${esc(o.abbr)}" placeholder="RÖV" aria-label="Rövidítés"><input type="text" maxlength="80" data-p="teams.${t}.options.${i}.label" value="${esc(o.label)}" placeholder="Megnevezés" aria-label="Megnevezés"><textarea rows="1" maxlength="300" data-p="teams.${t}.options.${i}.rat" placeholder="Indoklás-sablon ({sec})" aria-label="Indoklás-sablon">${esc(o.rat||'')}</textarea><button class="btn x" type="button" data-del="teams.${t}.options.${i}" aria-label="Törlés">✕</button></div>`).join('')+`<div style="margin-top:8px"><button class="btn sm" type="button" data-add="opt:${t}" ${x.options.length>=12?'disabled':''}>+ Válaszlehetőség</button></div></div>`}
+  h+='</section>';
+  h+=`<section class="panel"><h3>Injektek</h3><div class="note" style="margin-top:8px">Kör: 0 = Turn 0 (bemelegítő), 1–12 = a megfelelő kör, üres = bármikor kiadható.</div><div class="lbl" style="margin-top:10px">Injektek (${D.injects.length}/40)</div>`+D.injects.map((o,i)=>`<div class="inj"><input type="number" min="0" max="12" data-p="injects.${i}.turn" value="${o.turn==null?'':o.turn}" placeholder="kör" aria-label="Kör"><select data-p="injects.${i}.sector" aria-label="Szektor"><option value="">–</option>${SEC.map(s=>`<option ${s===o.sector?'selected':''}>${s}</option>`).join('')}</select><textarea rows="2" maxlength="400" data-p="injects.${i}.text" placeholder="Az injekt szövege" aria-label="Szöveg">${esc(o.text)}</textarea><button class="btn x" type="button" data-del="injects.${i}" aria-label="Törlés">✕</button></div>`).join('')+`<div style="margin-top:8px"><button class="btn sm" type="button" data-add="inj" ${D.injects.length>=40?'disabled':''}>+ Injekt</button></div></section>`;
+  h+=`<section class="panel"><h3>Súrlódás, szektorok, DCAP</h3><label class="fld"><span>OPFOR-súrlódás – soronként egy (max. 10)</span><textarea rows="3" data-list="friction">${esc(D.friction.join('\n'))}</textarea></label><div class="lbl" style="margin-top:12px">Szektorok leírása</div><div class="three">`+SEC.map(s=>`<label class="fld"><span>${s}</span>${T('sectors.'+s,D.sectors[s]||'')}</label>`).join('')+`</div><div class="lbl" style="margin-top:14px">DCAP-kérdések (${D.dcap.length}/10)</div>`+D.dcap.map((o,i)=>`<div class="dc"><select data-p="dcap.${i}.metric" aria-label="Mérőszám">${Object.keys(METRICS).map(k=>`<option value="${k}" ${k===o.metric?'selected':''}>${METRICS[k]}</option>`).join('')}</select><textarea rows="2" maxlength="200" data-p="dcap.${i}.q" placeholder="Elemzési kérdés" aria-label="Kérdés">${esc(o.q)}</textarea><button class="btn x" type="button" data-del="dcap.${i}" aria-label="Törlés">✕</button></div>`).join('')+`<div style="margin-top:8px"><button class="btn sm" type="button" data-add="dcap" ${D.dcap.length>=10?'disabled':''}>+ DCAP-kérdés</button></div></section>`;
+  $('#left').innerHTML=h;upd();
+}
+function setP(path,v){const a=path.split('.');let o=D;for(let i=0;i<a.length-1;i++)o=o[a[i]];const k=a[a.length-1];
+  if(path==='design.turns'){v=Math.max(1,Math.min(8,parseInt(v,10)||3))}
+  if(/\.turn$/.test(path)){const n=parseInt(v,10);v=Number.isInteger(n)&&n>=0&&n<=12?n:null}
+  if(/^sectors\./.test(path)){if(v.trim())o[k]=v.slice(0,200);else delete o[k];return}
+  o[k]=v}
+function out(){const c=JSON.parse(JSON.stringify(D));
+  c.title=c.title.trim();c.teams&&'KPZ'.split('').forEach(t=>{c.teams[t].options=c.teams[t].options.filter(o=>o.label.trim()).map(o=>{const r={abbr:(o.abbr||o.label.replace(/[^A-Za-zÁ-ű]/g,'').slice(0,3)).toUpperCase().slice(0,5),label:o.label.trim().slice(0,80)};if((o.rat||'').trim())r.rat=o.rat.trim().slice(0,300);return r})});
+  c.injects=c.injects.filter(o=>o.text.trim()).map(o=>({turn:o.turn,sector:o.sector||'',text:o.text.trim()}));
+  c.dcap=c.dcap.filter(o=>o.q.trim()).map(o=>({q:o.q.trim(),metric:o.metric}));
+  c.friction=c.friction.filter(x=>x.trim());Object.keys(c.fields).forEach(k=>{if(!c.fields[k].trim())delete c.fields[k]});return c}
+function checks(){const c=out(),L=[],a=(ok,l,hard)=>L.push([!!ok,l,!!hard]);
+  a(c.title,'A scenario neve megadva',1);a(c.brief.situation.trim()&&c.brief.mission.trim(),'Brief: helyzet és küldetés megadva',1);
+  a(['K','P'].every(t=>c.teams[t].options.length>=3),'KÉK és PIROS csapat: legalább 3 válaszlehetőség',1);a(c.injects.length>=1,'Legalább 1 injekt megadva',1);
+  a(c.injects.some(x=>x.turn===0),'Van Turn 0 (bemelegítő) injekt');a(c.injects.length>=c.design.turns,'Az injektek száma ≥ a tervezett körök száma ('+c.design.turns+')');
+  a(c.teams.Z.options.length>=3,'ZÖLD csapat: legalább 3 válaszlehetőség (ha játszik)');a(c.brief.adjudication.trim(),'Elbírálási szempontok megadva');a(c.dcap.length>=3,'Legalább 3 DCAP-kérdés');
+  return {L,c}}
+function upd(){const {L,c}=checks();$('#chk').innerHTML=L.map(([ok,l,h])=>`<div class="gi ${ok?'ok':''} ${h?'':'soft'}"><span class="mk">${ok?'✓':''}</span><span>${esc(l)}${h?'':' <span class="mono" style="color:var(--mut)">(nem blokkol)</span>'}</span></div>`).join('');
+  $('#out').textContent=JSON.stringify(c,null,1);$('#dl').dataset.ready=L.filter(x=>x[2]).every(x=>x[0])?1:'';try{localStorage.setItem('wgs-scn-editor',JSON.stringify(D))}catch(e){}}
+document.addEventListener('input',e=>{const t=e.target;if(t.dataset.p){setP(t.dataset.p,t.value);upd()}else if(t.dataset.list){D.friction=t.value.split('\n').slice(0,10).map(x=>x.slice(0,120));upd()}});
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.add){const k=b.dataset.add;if(k.startsWith('opt:')){const t=k.slice(4);if(D.teams[t].options.length<12)D.teams[t].options.push({abbr:'',label:'',rat:''})}else if(k==='inj')D.injects.push({turn:D.injects.length?Math.min(12,Math.max(...D.injects.map(x=>x.turn==null?0:x.turn))+1):0,sector:'',text:''});else if(k==='dcap')D.dcap.push({q:'',metric:'decisions'});build();return}
+  if(b.dataset.del){const a=b.dataset.del.split('.'),i=+a.pop();let o=D;a.forEach(k=>o=o[k]);o.splice(i,1);build();return}});
+function fname(){const c=out();return 'scenario_'+(c.title.replace(/[^A-Za-z0-9Á-ű]+/g,'-').replace(/^-|-$/g,'').slice(0,40)||'nev')+'_v'+c.version+'_'+c.date+'.json'}
+$('#dl').onclick=()=>{const {L,c}=checks();if(!c.title){toast('Adj nevet a scenarionak');return}const bl=new Blob([JSON.stringify(c,null,1)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download=fname();document.body.appendChild(a);a.click();a.remove();toast(L.filter(x=>x[2]&&!x[0]).length?'Letöltve – de a kötelező ellenőrzés még hiányos':'Letöltve: '+a.download)};
+$('#copy').onclick=()=>{const tx=JSON.stringify(out(),null,1);try{navigator.clipboard.writeText(tx).then(()=>toast('JSON a vágólapon'),fb)}catch(e){fb()}function fb(){const r=document.createRange();r.selectNodeContents($('#out'));getSelection().removeAllRanges();getSelection().addRange(r);toast('Jelöld ki és másold (Ctrl+C)')}};
+$('#blank').onclick=function(){if(this.dataset.s){D=blank();this.dataset.s='';this.textContent='Új, üres';build();toast('Üres sablon')}else{this.dataset.s=1;this.textContent='Biztos? Kattints újra';setTimeout(()=>{this.dataset.s='';this.textContent='Új, üres'},3000)}};
+$('#imp').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f)return;const r=new FileReader();r.onload=()=>{try{const j=JSON.parse(r.result);if(j.schema!=='wargame-studio-scenario')throw new Error('nem scenario-fájl');const b=blank();D=Object.assign(b,j);D.brief=Object.assign(b.brief,j.brief);D.fields=Object.assign(b.fields,j.fields);D.design=Object.assign(b.design,j.design);D.teams={K:Object.assign({sub:'',start:'',options:[]},(j.teams||{}).K),P:Object.assign({sub:'',start:'',options:[]},(j.teams||{}).P),Z:Object.assign({sub:'',start:'',options:[]},(j.teams||{}).Z)};'KPZ'.split('').forEach(t=>D.teams[t].options=(D.teams[t].options||[]).map(o=>typeof o==='string'?{abbr:'',label:o,rat:''}:o));D.injects=(j.injects||[]).map(o=>({turn:o.turn==null?null:o.turn,sector:o.sector||'',text:o.text||''}));D.friction=j.friction||[];D.dcap=j.dcap||[];D.sectors=j.sectors||{};delete D.simulation;build();toast('Betöltve: '+(D.title||f.name))}catch(er){toast('Érvénytelen fájl: '+er.message)}};r.readAsText(f)};
+$('#theme').onclick=()=>{const cur=document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=cur==='dark'?'light':'dark'};
+build();
+</script>
+</body>
+</html>
