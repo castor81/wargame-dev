@@ -130,6 +130,11 @@ input[type=text],input[type=number]{width:100%}
 .thd h3{font-size:16px;flex:1}
 .seat{display:flex;align-items:center;gap:8px;width:100%;min-height:44px;border:1px solid var(--ln);border-radius:8px;background:var(--glass2);padding:0 10px;text-align:left;border-left:5px solid var(--rc,var(--ln))}
 .seat.off{opacity:.5;border-left-color:var(--ln)}
+.seat.st-ok{background:color-mix(in srgb,var(--ok) 20%,var(--glass2));border-color:color-mix(in srgb,var(--ok) 55%,var(--ln))}
+.seat.st-bad{background:color-mix(in srgb,var(--bad) 17%,var(--glass2));border-color:color-mix(in srgb,var(--bad) 50%,var(--ln))}
+.tg.bad{color:var(--bad);background:color-mix(in srgb,var(--bad) 16%,transparent)}
+.lg{display:inline-flex;align-items:center;gap:6px;margin-right:14px;font-size:12px;color:var(--mut)}.lg i{width:14px;height:14px;border-radius:4px;display:inline-block}
+.lg .g{background:color-mix(in srgb,var(--ok) 45%,transparent);border:1px solid var(--ok)}.lg .r{background:color-mix(in srgb,var(--bad) 40%,transparent);border:1px solid var(--bad)}
 .seat[aria-expanded=true]{border-color:var(--ac)}
 .seat .nm{flex:1;min-width:0;font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .seat .nm small{display:block;font:500 11px var(--f-mono);color:var(--mut)}
@@ -214,7 +219,7 @@ th{font:600 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;col
   <header class="panel hud top">
     <div class="brand">
       <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 28 9v14L16 30 4 23V9z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 20 16 8l7 12M11.5 16h9" fill="none" stroke="var(--ac)" stroke-width="2"/></svg>
-      <div><b>Wargame Studio</b><small>DEV v0.3.0 · 2026-11-09</small></div>
+      <div><b>Wargame Studio</b><small>DEV v0.3.1 · 2026-11-09</small></div>
     </div>
     <div class="vsep"></div>
     <div><div class="lbl">Játék</div><input type="text" id="gtitle" aria-label="Játék címe" style="min-height:30px;width:210px;font-weight:600"></div>
@@ -241,7 +246,7 @@ th{font:600 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;col
 /* ---------- segédek ---------- */
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const KEY='wgd-state-v0.3', VER='v0.3.0 · 2026-11-09';
+const KEY='wgd-state-v0.3', VER='v0.3.1 · 2026-11-09';
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
 const lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
 
@@ -304,6 +309,12 @@ const TEAMS={K:{nm:'KÉK',sub:'Játékos csapat'},P:{nm:'PIROS',sub:'Játékos c
 const STD=['Parancsnok','Törzsfőnök','J2 Hírszerzés','J3 Műveletek','J4 Logisztika','J5 Tervezés','J6 CIS','StratCom','Jogi tanácsadó','Összekötő'];
 const ZF=['Nemzeti parancsnok','Törzsfőnök','J2 Hírszerzés','J3 Műveletek','J4 Logisztika','J5 Tervezés','J6 CIS','Polgári összekötő','Jogi tanácsadó','Megfigyelő'];
 const FF=[['IGA','Wargame-igazgató'],['ADJ','Adjudikátor 1'],['ADJ','Adjudikátor 2'],['FAC','Facilitátor'],['ELE','Elemző 1'],['ELE','Elemző 2'],['FOR','Forgatókönyv-tervező'],['OPF','OPFOR-vezető'],['REN','Rendezvényszervező'],['FEJ','Játékfejlesztő']];
+const CUST='__custom';
+const actSel=id=>`<select id="${id}" data-act="actsel">${ACT.map(a=>`<option>${esc(a)}</option>`).join('')}<option value="${CUST}">✎ Egyéni opció…</option></select><input type="text" id="${id}-c" maxlength="80" placeholder="Saját akció megnevezése" hidden>`;
+const readAct=id=>{const e=document.getElementById(id);if(!e)return null;if(e.value!==CUST)return{act:e.value};const t=((document.getElementById(id+'-c')||{}).value||'').trim();return t?{act:t.slice(0,80),custom:true}:null};
+const syncAct=()=>document.querySelectorAll('select[data-act=actsel]').forEach(e=>{const c=document.getElementById(e.id+'-c');if(c)c.hidden=e.value!==CUST});
+const seatOk=s=>s.mode==='human'?!!s.joined:!!String(s.prompt||'').trim();
+const seatTag=s=>s.mode==='human'?(s.joined?['ok','CSATL.']:['bad','NINCS CSATL.']):(seatOk(s)?['ok','PROMPT ✓']:['bad','NINCS PROMPT']);
 const ACT=['Védelem','Támadás','Felderítés','Mozgás / áttelepülés','Logisztikai biztosítás','Információs tevékenység','Polgári-katonai együttműködés'];
 const SEC=['A1','A2','A3','B1','B2','B3','C1','C2','C3'];
 const INJ=['Felderítés: ellenséges gépesített erők mozgása észlelve a B1 szektor felé.','Kommunikációs zavar a C2 szektorban; a törzsek közötti összeköttetés késik.','Menekültáradat az A2 szektor útjain; az utánpótlási útvonal torlódik.','A szövetséges kontingens előzetes egyeztetés nélkül visszavonul a C1 szektorból.','Kiberincidens a logisztikai nyilvántartó rendszerben (B3).','Időjárás-romlás: sűrű köd, a légi támogatás korlátozott.'];
@@ -526,7 +537,8 @@ function renderFlow(){
 const rosterEditable=()=>S.step>=5&&!S.done[8];
 function seatHtml(s){
   const open=UI.sel===s.id,ed=rosterEditable(),rc=s.role==='JAT'?'':'r-'+s.role;
-  let h=`<button type="button" class="seat ${rc} ${s.active?'':'off'}" data-act="seat" data-id="${s.id}" aria-expanded="${open}" ${s.t==='F'?'':'style="--rc:var(--c-JAT)"'}><span class="nm">${esc(s.fn)}<small>${s.t==='F'?RC(s.role)+' · '+ROLES[s.role][1]:'JÁT · játékos'}</small></span>${s.active?`<span class="tg ${s.mode==='ai'?'ai':'hu'}">${s.mode==='ai'?'AI':'EMBER'}</span>${s.mode==='human'&&S.step>=11?`<span class="tg ${s.joined?'ok':'wt'}">${s.joined?'CSATL.':'VÁR'}</span>`:''}`:'<span class="tg off">INAKTÍV</span>'}</button>`;
+  const stt=s.active?seatTag(s):null;
+  let h=`<button type="button" class="seat ${rc} ${s.active?'':'off'} ${s.active?(seatOk(s)?'st-ok':'st-bad'):''}" data-act="seat" data-id="${s.id}" aria-expanded="${open}" ${s.t==='F'?'':'style="--rc:var(--c-JAT)"'}><span class="nm">${esc(s.fn)}<small>${s.t==='F'?RC(s.role)+' · '+ROLES[s.role][1]:'JÁT · játékos'}</small></span>${s.active?`<span class="tg ${s.mode==='ai'?'ai':'hu'}">${s.mode==='ai'?'AI':'EMBER'}</span><span class="tg stg ${stt[0]}">${stt[1]}</span>`:'<span class="tg off">INAKTÍV</span>'}</button>`;
   if(open){
     const url=location.origin+location.pathname+'?room='+S.room+'&seat='+s.id;
     h+=`<div class="sdet"><label class="ckl" style="margin:0"><input type="checkbox" data-act="seatact" data-id="${s.id}" ${s.active?'checked':''} ${ed?'':'disabled'}><span>Aktív hely a játékban</span></label>`;
@@ -542,6 +554,7 @@ function seatHtml(s){
 function renderRoster(){
   const ed=rosterEditable();
   let h=`<div class="note" style="margin-bottom:12px">${S.step<5?'A szereplista (OOB) a 05. Játéktervezés lépésben készül, addig csak az alapértelmezett kiosztás látható.':ed?'Szerkeszthető: az OOB a 05–08. lépés között alakítható; a 08. lépés lezárásakor véglegessé válik.':S.step<=10?'Az OOB véglegesítve (08. lépés). Az AI-promptok és a módok a 10. lépés végéig finomíthatók.':'Az OOB és a promptok zároltak. A csatlakozás állapota a 11. lépéstől követhető.'}</div><div class="roster">`;
+  h+=`<div style="margin:-4px 0 12px;grid-column:1/-1"><span class="lg"><i class="g"></i>zöld: ember csatlakozott (QR) · AI-hoz működési prompt van megadva</span><span class="lg"><i class="r"></i>piros: még nincs csatlakozás · hiányzik a prompt</span></div>`;
   for(const t of 'KPZF'){const ss=seatsOf(t),a=ss.filter(s=>s.active),hn=a.filter(s=>s.mode==='human').length;
     h+=`<section class="panel hud team"><div class="thd">${sym(t,26)}<h3>${TEAMS[t].nm}</h3><span class="mono" style="font-size:11px;color:var(--mut)">${a.length}/10 · ${hn} E · ${a.length-hn} AI</span></div><div class="lbl" style="padding:0 4px 4px">${TEAMS[t].sub}</div>${ss.map(seatHtml).join('')}</section>`}
   return h+'</div>';
@@ -549,7 +562,7 @@ function renderRoster(){
 function drawQrs(){$$('.qr').forEach(el=>{if(el.firstChild)return;try{if(typeof QRCode==='function'){new QRCode(el,{text:el.dataset.url,width:128,height:128,colorDark:'#0F1B21',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});return}}catch(e){}el.innerHTML='<div style="font:600 11px var(--f-mono);color:#222;text-align:center;padding-top:50px">QR-könyvtár nem érhető el</div>'})}
 
 /* ---------- 3. Játéktér ---------- */
-const ACS=['VÉD','TÁM','FEL','MOZ','LOG','INF','PKE'];
+const ACS=['VÉD','TÁM','FEL','MOZ','LOG','INF','PKE','EGY'];
 const TCOL={K:'#4C8FD6',P:'#D8605C',Z:'#3FA25C'};
 function teamCard(t,r,tn){
   const ts=teamState(r)[t],ids=tn?Object.keys(tn.orders).filter(id=>id[0]===t).sort():[];
@@ -557,10 +570,10 @@ function teamCard(t,r,tn){
   h+='<div class="sub">Döntési mátrix · aktuális kör</div>';
   if(!ids.length)h+='<div style="color:var(--mut)">Ebben a körben még nincs rögzített döntés.</div>';
   else{
-    const cnt=Array(7).fill(0),sc=Object.fromEntries(SEC.map(x=>[x,0]));
-    const rows=ids.map(id=>{const o=tn.orders[id],sd=S.seats.find(x=>x.id===id),k=ACT.indexOf(o.act);if(k>=0)cnt[k]++;if(sc[o.sec]!==undefined)sc[o.sec]++;
-      return`<tr title="${esc(o.why||'')}"><td>${esc(sd?sd.fn:id)}</td>${ACT.map((_,j)=>`<td class="${j===k?'on':''}">${j===k?'●':'·'}</td>`).join('')}<td class="mono">${esc(o.sec)}</td></tr>`}).join('');
-    h+=`<table class="dm" style="--tc:${TCOL[t]}"><thead><tr><th>Szerep</th>${ACS.map((a,j)=>`<th title="${esc(ACT[j])}">${a}</th>`).join('')}<th>Szekt.</th></tr></thead><tbody>${rows}</tbody><tfoot><tr><td>Σ</td>${cnt.map(c=>`<td>${c||''}</td>`).join('')}<td></td></tr></tfoot></table>`;
+    const cnt=Array(8).fill(0),cust=[],sc=Object.fromEntries(SEC.map(x=>[x,0]));
+    const rows=ids.map(id=>{const o=tn.orders[id],sd=S.seats.find(x=>x.id===id),k0=ACT.indexOf(o.act),k=k0>=0?k0:7;cnt[k]++;if(k0<0)cust.push((sd?sd.fn:id)+': '+o.act);if(sc[o.sec]!==undefined)sc[o.sec]++;
+      return`<tr title="${esc(o.why||'')}"><td>${esc(sd?sd.fn:id)}</td>${ACS.map((_,j)=>`<td class="${j===k?'on':''}">${j===k?'●':'·'}</td>`).join('')}<td class="mono">${esc(o.sec)}</td></tr>`}).join('');
+    h+=`<table class="dm" style="--tc:${TCOL[t]}"><thead><tr><th>Szerep</th>${ACS.map((a,j)=>`<th title="${esc(j<7?ACT[j]:'Egyéni opció (szabad szöveg)')}">${a}</th>`).join('')}<th>Szekt.</th></tr></thead><tbody>${rows}</tbody><tfoot><tr><td>Σ</td>${cnt.map(c=>`<td>${c||''}</td>`).join('')}<td></td></tr></tfoot></table>${cust.length?`<div style="color:var(--mut);margin-top:3px">${cust.map(c=>'✎ '+esc(c)).join('<br>')}</div>`:''}`;
     const mx=Math.max(1,...Object.values(sc));
     h+=`<div class="sub">Szektor-eloszlás · az emblémás mező a jelenlegi pozíció</div><div class="twoc"><div class="sh" style="--tc:${TCOL[t]}">${SEC.map(x=>`<b class="${x===ts.sec?'here':''}" style="--k:${sc[x]/mx*4}" title="${x}: ${sc[x]} döntés">${sc[x]||''}</b>`).join('')}</div><div style="color:var(--mut)">${ids.length} döntés · ${Object.values(sc).filter(v=>v).length} szektor. Vezető szerep döntése adja a következő pozíciót.</div></div>`;
   }
@@ -632,15 +645,15 @@ function turnPanel(mode,active,r,tn){
     const ds=decSeats(),sub=ds.filter(s=>tn.orders[s.id]).length;
     h+=`<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span class="lbl">Csak a játékosok döntenek · indoklás kötelező</span><span class="mono" style="font-size:12px">${sub}/${ds.length}</span></div><div style="display:flex;flex-direction:column;gap:6px;max-height:420px;overflow:auto">`;
     ds.forEach(s=>{const o=tn.orders[s.id];h+=`<div class="ord"><div class="r1">${sym(s.t,18)}<b style="flex:1;font-size:13px">${esc(s.fn)}</b><span class="tg ${s.mode==='ai'?'ai':'hu'}">${s.mode==='ai'?'AI':'EMBER'}</span></div>`;
-      if(o)h+=`<div style="font-size:12.5px"><b>${esc(o.act)}</b> · ${esc(o.sec)} <span class="tg ok">BEKÜLDVE</span><div style="color:var(--mut)">${esc(o.why)}</div></div>`;
-      else h+=`<div class="r2"><select id="oa-${s.id}">${ACT.map(a=>`<option>${esc(a)}</option>`).join('')}</select><select id="os-${s.id}">${SEC.map(a=>`<option>${a}</option>`).join('')}</select></div><input type="text" id="ow-${s.id}" placeholder="Indoklás (miért ezt döntötted?)"><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm" data-act="order" data-id="${s.id}" type="button">Beküld</button>${s.mode==='human'?`<button class="btn sm" data-act="phone" data-id="${s.id}" type="button">Mobilnézet</button>`:`<button class="btn sm" data-act="aiorder" data-id="${s.id}" type="button">AI-javaslat</button>`}</div>`;
+      if(o)h+=`<div style="font-size:12.5px"><b>${o.custom?'✎ ':''}${esc(o.act)}</b> · ${esc(o.sec)} <span class="tg ok">BEKÜLDVE</span><div style="color:var(--mut)">${esc(o.why)}</div></div>`;
+      else h+=`<div class="r2">${actSel('oa-'+s.id)}<select id="os-${s.id}">${SEC.map(a=>`<option>${a}</option>`).join('')}</select></div><input type="text" id="ow-${s.id}" placeholder="Indoklás (miért ezt döntötted?)"><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm" data-act="order" data-id="${s.id}" type="button">Beküld</button>${s.mode==='human'?`<button class="btn sm" data-act="phone" data-id="${s.id}" type="button">Mobilnézet</button>`:`<button class="btn sm" data-act="aiorder" data-id="${s.id}" type="button">AI-javaslat</button>`}</div>`;
       h+='</div>'});
     h+=`</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px"><button class="btn" data-act="fillorders" type="button">Hiányzók kitöltése (demó)</button><button class="btn pri" data-act="toadj" type="button" ${ds.length&&sub===ds.length?'':'disabled'}>Tovább az elbírálásra</button></div>`;
   }else if(tn.phase===2){
     const ts=activeTeams(tn);
     h+=`<div class="lbl" style="margin-bottom:6px">Elbírálás · ${esc(c.adj)} (ADJ) · időben és érthetően</div>`;
     ts.forEach(t=>{const a=tn.adj[t],os=Object.entries(tn.orders).filter(([k])=>k[0]===t);
-      h+=`<div class="ord" style="margin-bottom:8px"><div class="r1">${sym(t,20)}<b style="flex:1">${TEAMS[t].nm}</b><span class="mono" style="font-size:11px">${os.length} döntés</span></div><div style="font-size:12px;color:var(--mut)">${os.map(([k,o])=>esc(o.act)+' '+esc(o.sec)).join(' · ')}</div>`;
+      h+=`<div class="ord" style="margin-bottom:8px"><div class="r1">${sym(t,20)}<b style="flex:1">${TEAMS[t].nm}</b><span class="mono" style="font-size:11px">${os.length} döntés</span></div><div style="font-size:12px;color:var(--mut)">${os.map(([k,o])=>(o.custom?'✎ ':'')+esc(o.act)+' '+esc(o.sec)).join(' · ')}</div>`;
       if(a)h+=`<div><span class="tg ok">${esc(a.res.toUpperCase())}</span> <span style="font-size:12.5px">${esc(a.why)}</span>${a.roll?` <span class="mono" style="font-size:11px">d6=${a.roll}</span>`:''}</div>`;
       else h+=`<div class="r2" style="grid-template-columns:1fr auto"><select id="ar-${t}">${RESL.map(x=>`<option>${x}</option>`).join('')}</select><button class="btn sm" data-act="die" data-t="${t}" type="button" title="Tartalék-módszer: kockadobás">d6</button></div><input type="text" id="aw-${t}" placeholder="Indoklás az eredményhez"><button class="btn sm" data-act="adj" data-t="${t}" type="button" ${S.role==='ADJ'||S.role==='IGA'?'':'disabled'}>Elbírálás rögzítése (ADJ)</button>`;
       h+='</div>'});
@@ -684,8 +697,8 @@ function phoneHtml(id,full){
   if(tn.phase===0)h+='<div class="note">A kör még nem indult. Várj az injektre.</div>';
   else{h+=`<div class="note"><b>T${tn.i} helyzet:</b> ${esc(tn.inject)}</div>`;
     const o=tn.orders[id];
-    if(tn.phase===1&&!o)h+=`<label class="fld"><span>Akció</span><select id="p-act">${ACT.map(a=>`<option>${esc(a)}</option>`).join('')}</select></label><label class="fld"><span>Szektor</span><select id="p-sec">${SEC.map(a=>`<option>${a}</option>`).join('')}</select></label><label class="fld"><span>Indoklás *</span><textarea id="p-why" rows="3"></textarea></label><button class="btn pri" data-act="pphone" data-id="${id}" type="button" style="min-height:48px">Döntés beküldése</button>`;
-    else if(o)h+=`<div class="ord"><span class="tg ok" style="align-self:flex-start">BEKÜLDVE</span><b>${esc(o.act)} · ${esc(o.sec)}</b><span style="color:var(--mut);font-size:13px">${esc(o.why)}</span></div>`;
+    if(tn.phase===1&&!o)h+=`<label class="fld"><span>Akció</span>${actSel('p-act')}</label><label class="fld"><span>Szektor</span><select id="p-sec">${SEC.map(a=>`<option>${a}</option>`).join('')}</select></label><label class="fld"><span>Indoklás *</span><textarea id="p-why" rows="3"></textarea></label><button class="btn pri" data-act="pphone" data-id="${id}" type="button" style="min-height:48px">Döntés beküldése</button>`;
+    else if(o)h+=`<div class="ord"><span class="tg ok" style="align-self:flex-start">BEKÜLDVE</span><b>${o.custom?'✎ ':''}${esc(o.act)} · ${esc(o.sec)}</b><span style="color:var(--mut);font-size:13px">${esc(o.why)}</span></div>`;
     if(tn.phase===2)h+='<div class="note">Az elbírálás folyamatban van.</div>';
     if(tn.phase===3&&s.t!=='F'&&tn.adj[s.t])h+=`<div class="ord"><b>Közölt eredmény: ${esc(tn.adj[s.t].res)}</b><span style="font-size:13px;color:var(--mut)">${esc(tn.adj[s.t].why)}</span></div>`}
   return h;
@@ -725,7 +738,7 @@ document.addEventListener('click',e=>{
     case'join':{S.seats.find(x=>x.id===id).joined=true;render();refreshGate();break}
     case'phone':openPhone(id);break;
     case'phoneclose':$('#phoneModal').hidden=true;UI.phone=null;break;
-    case'pphone':{const w=$('#p-why').value.trim();if(!w){toast('Az indoklás kötelező');return}const tn=curTurn(openRun(modeForStep(S.step)));if(tn&&tn.phase===1){tn.orders[id]={act:$('#p-act').value,sec:$('#p-sec').value,why:w,src:'ember (mobil)',at:Date.now()};save();refreshPhone();if(UI.view==='board')render()}break}
+    case'pphone':{const w=$('#p-why').value.trim();if(!w){toast('Az indoklás kötelező');return}const tn=curTurn(openRun(modeForStep(S.step)));if(tn&&tn.phase===1){const ca=readAct('p-act');if(!ca){toast('Add meg az egyéni akciót');return}tn.orders[id]=Object.assign(ca,{sec:$('#p-sec').value,why:w,src:'ember (mobil)',at:Date.now()});save();refreshPhone();if(UI.view==='board')render()}break}
     case'pphoneR':phoneSubmit();break;
     case'newrun':newRun(b.dataset.m);render();break;
     case'logout':WG_SESSION.clear();location.assign('index.html');break;
@@ -734,7 +747,7 @@ document.addEventListener('click',e=>{
     case'autoturn':{const m=modeForStep(S.step);let r=openRun(m);if(!r)r=newRun(m);autoTurn(r);render();break}
     case'closerun':{const r=openRun(modeForStep(S.step));if(r){r.status='closed';}render();refreshGate();toast('Futás lezárva');break}
     case'release':{const tn=curTurn(openRun(modeForStep(S.step)));tn.inject=$('#injsel').value;tn.fric=+$('#fricsel').value;tn.phase=1;tn.t0=Date.now();render();break}
-    case'order':{const tn=curTurn(openRun(modeForStep(S.step)));const w=$('#ow-'+id).value.trim();if(!w){toast('Az indoklás kötelező');return}tn.orders[id]={act:$('#oa-'+id).value,sec:$('#os-'+id).value,why:w,src:'ember',at:Date.now()};render();break}
+    case'order':{const tn=curTurn(openRun(modeForStep(S.step)));const w=$('#ow-'+id).value.trim();if(!w){toast('Az indoklás kötelező');return}const ca=readAct('oa-'+id);if(!ca){toast('Add meg az egyéni akciót');return}tn.orders[id]=Object.assign(ca,{sec:$('#os-'+id).value,why:w,src:'ember',at:Date.now()});render();break}
     case'aiorder':{const tn=curTurn(openRun(modeForStep(S.step)));tn.orders[id]=genOrder(S.seats.find(x=>x.id===id),tn);render();toast('AI-javaslat rögzítve (szimulált, a valódi LLM a következő verzióban)');break}
     case'fillorders':{const tn=curTurn(openRun(modeForStep(S.step)));decSeats().forEach(s=>{if(!tn.orders[s.id])tn.orders[s.id]=genOrder(s,tn)});render();break}
     case'toadj':{curTurn(openRun(modeForStep(S.step))).phase=2;render();break}
@@ -750,6 +763,7 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('change',e=>{
   const t=e.target,d=t.dataset;
+  if(d.act==='actsel'){syncAct();const c=document.getElementById(t.id+'-c');if(c&&!c.hidden)c.focus();return}
   if(d.act==='tick'){S.ticks[d.k]=t.checked;refreshGate();return}
   if(d.act==='cond8'){S.cond8=t.checked;refreshGate();return}
   if(d.act==='seatact'){S.seats.find(x=>x.id===d.id).active=t.checked;render();return}
@@ -762,7 +776,7 @@ document.addEventListener('change',e=>{
 document.addEventListener('input',e=>{
   const t=e.target,d=t.dataset;
   if(d.f&&t.tagName!=='SELECT'){S.fields[d.f]=t.value;clearTimeout(input.t);input.t=setTimeout(refreshGate,250);return}
-  if(d.sp){S.seats.find(x=>x.id===d.sp).prompt=t.value;save();return}
+  if(d.sp){const sd=S.seats.find(x=>x.id===d.sp);sd.prompt=t.value;save();const bt=document.querySelector('.seat[data-id="'+sd.id+'"]');if(bt){bt.classList.toggle('st-ok',seatOk(sd));bt.classList.toggle('st-bad',!seatOk(sd));const g=bt.querySelector('.stg');if(g){const q=seatTag(sd);g.className='tg stg '+q[0];g.textContent=q[1]}}return}
   if(d.obs){const tn=curTurn(openRun(modeForStep(S.step)));if(tn){tn.obs=t.value;save()}return}
   if(d.odcr){const[i,k]=d.odcr.split(':');S.odcr[i]=S.odcr[i]||{};S.odcr[i][k]=t.value;save();return}
   if(t.id==='gtitle'){S.title=t.value;save()}
@@ -778,13 +792,13 @@ $('#phoneModal').addEventListener('click',e=>{if(e.target.id==='phoneModal'){e.c
 function keepRender(fn){const kept={};$$('#view input[id],#view textarea[id],#view select[id]').forEach(e=>{if(e.type==='checkbox')kept[e.id]=[e.checked];else kept[e.id]=[e.value]});const fid=document.activeElement&&document.activeElement.id;fn();Object.entries(kept).forEach(([id,v])=>{const e=document.getElementById(id);if(!e)return;if(e.type==='checkbox')e.checked=v[0];else if(e.tagName==='SELECT'){if([...e.options].some(o=>o.value===v[0]||o.text===v[0]))e.value=v[0]}else if(e.type!=='file')e.value=v[0]});if(fid){const e=document.getElementById(fid);if(e&&e.focus)e.focus()}}
 function setSync(ok,msg){const c=$('#sync');if(!c)return;c.textContent=msg;c.className='chipx '+(ok?'hu':'')}
 function phoneSnap(){const m=modeForStep(S.step),r=m?(openRun(m)||(m==='execution'?lastRun(m):null)):null,tn=curTurn(r),seats={};S.seats.forEach(x=>seats[x.id]={fn:x.fn,t:x.t,a:x.active?1:0,m:x.mode});
-  return{title:S.title,step:S.step,stepName:STEPS[S.step-1].nm,mode:m,seats,turn:tn?{i:tn.i,phase:tn.phase,inject:tn.inject,fric:tn.fric,orders:Object.fromEntries(Object.entries(tn.orders).map(([k,o])=>[k,{act:o.act,sec:o.sec,why:o.why}])),adj:Object.fromEntries(Object.entries(tn.adj).map(([k,a])=>[k,{res:a.res,why:a.why}]))}:null}}
+  return{title:S.title,step:S.step,stepName:STEPS[S.step-1].nm,mode:m,seats,turn:tn?{i:tn.i,phase:tn.phase,inject:tn.inject,fric:tn.fric,orders:Object.fromEntries(Object.entries(tn.orders).map(([k,o])=>[k,{act:o.act,custom:!!o.custom,sec:o.sec,why:o.why}])),adj:Object.fromEntries(Object.entries(tn.adj).map(([k,a])=>[k,{res:a.res,why:a.why}]))}:null}}
 let pubT=null,pubLast='';
 function schedulePublish(){if(IS_PHONE)return;clearTimeout(pubT);pubT=setTimeout(publishNow,400)}
 async function publishNow(){const sn=phoneSnap(),js=JSON.stringify(sn);if(js===pubLast)return;try{await rpc('wg_put_state',{p_room:S.room,p_key:S.hostKey,p_state:sn});pubLast=js;setSync(1,'Szoba '+S.room+' · élő')}catch(e){setSync(0,'Szinkron hiba');console.warn(e)}}
 function applyEvents(evs){let ch=false;for(const ev of evs){S.evSince=Math.max(S.evSince||0,ev.id);const p=ev.payload||{};const seat=S.seats.find(x=>x.id===p.seat);if(!seat)continue;
   if(ev.kind==='join'&&!seat.joined){seat.joined=true;ch=true}
-  if(ev.kind==='order'){const m=modeForStep(S.step),r=m&&openRun(m),tn=curTurn(r);if(tn&&tn.phase===1&&seat.active&&seat.t!=='F'&&!tn.orders[seat.id]&&String(p.why||'').trim()&&ACT.includes(p.act)&&SEC.includes(p.sec)){tn.orders[seat.id]={act:p.act,sec:p.sec,why:String(p.why).slice(0,300),src:'ember (mobil)',at:Date.now()};ch=true}}}
+  if(ev.kind==='order'){const m=modeForStep(S.step),r=m&&openRun(m),tn=curTurn(r);if(tn&&tn.phase===1&&seat.active&&seat.t!=='F'&&!tn.orders[seat.id]&&String(p.why||'').trim()&&((ACT.includes(p.act))||(p.custom===true&&typeof p.act==='string'&&p.act.trim()&&p.act.length<=80))&&SEC.includes(p.sec)){tn.orders[seat.id]={act:String(p.act).slice(0,80),custom:!ACT.includes(p.act),sec:p.sec,why:String(p.why).slice(0,300),src:'ember (mobil)',at:Date.now()};ch=true}}}
   return ch}
 let polling=false;
 async function pollHost(){if(polling)return;polling=true;try{const evs=await rpc('wg_poll_events',{p_room:S.room,p_key:S.hostKey,p_since:S.evSince||0});if(evs&&evs.length){const ch=applyEvents(evs);save();if(ch){keepRender(render);refreshPhone();toast('Telefonról érkezett művelet')}}}catch(e){}polling=false}
@@ -802,13 +816,13 @@ function phoneRemote(sn,id){
   if(tn.phase===0)return h+'<div class="note">A T'+tn.i+' kör még nem indult. Várj az injektre.</div>';
   h+=`<div class="note"><b>T${tn.i} helyzet:</b> ${esc(tn.inject)}${tn.fric?'<br><b>Súrlódás:</b> '+esc(FRIC[tn.fric]):''}</div>`;
   const o=tn.orders[id]||PEND[id+':'+tn.i];
-  if(o)h+=`<div class="ord"><span class="tg ok" style="align-self:flex-start">BEKÜLDVE</span><b>${esc(o.act)} · ${esc(o.sec)}</b><span style="color:var(--mut);font-size:13px">${esc(o.why)}</span></div>`;
-  else if(tn.phase===1)h+=`<label class="fld"><span>Akció</span><select id="p-act">${ACT.map(a=>`<option>${esc(a)}</option>`).join('')}</select></label><label class="fld"><span>Szektor</span><select id="p-sec">${SEC.map(a=>`<option>${a}</option>`).join('')}</select></label><label class="fld"><span>Indoklás *</span><textarea id="p-why" rows="3"></textarea></label><button class="btn pri" data-act="pphoneR" type="button" style="min-height:48px">Döntés beküldése</button><div id="p-err" style="color:var(--bad);font-size:13px"></div>`;
+  if(o)h+=`<div class="ord"><span class="tg ok" style="align-self:flex-start">BEKÜLDVE</span><b>${o.custom?'✎ ':''}${esc(o.act)} · ${esc(o.sec)}</b><span style="color:var(--mut);font-size:13px">${esc(o.why)}</span></div>`;
+  else if(tn.phase===1)h+=`<label class="fld"><span>Akció</span>${actSel('p-act')}</label><label class="fld"><span>Szektor</span><select id="p-sec">${SEC.map(a=>`<option>${a}</option>`).join('')}</select></label><label class="fld"><span>Indoklás *</span><textarea id="p-why" rows="3"></textarea></label><button class="btn pri" data-act="pphoneR" type="button" style="min-height:48px">Döntés beküldése</button><div id="p-err" style="color:var(--bad);font-size:13px"></div>`;
   else if(tn.phase===2)h+='<div class="note">Az elbírálás folyamatban van.</div>';
   if(tn.phase===3&&tn.adj[s.t])h+=`<div class="ord"><b>Közölt eredmény: ${esc(tn.adj[s.t].res)}</b><span style="font-size:13px;color:var(--mut)">${esc(tn.adj[s.t].why)}</span></div>`;
   return h;
 }
-function drawPhone(){const el=$('#phoneModal .phone');if(!el)return;const js=JSON.stringify(phSnap);if(js===phLast)return;phLast=js;const kept={};$$('#phoneModal [id]').forEach(e=>kept[e.id]=e.value);el.innerHTML=`<div class="lbl" style="text-align:center">${esc(phSnap.title||'Wargame Studio')} · szoba ${esc(PH_ROOM)}</div>`+phoneRemote(phSnap,PH_SEAT);Object.entries(kept).forEach(([id,v])=>{const e=document.getElementById(id);if(e&&e.tagName!=='BUTTON')e.value=v})}
+function drawPhone(){const el=$('#phoneModal .phone');if(!el)return;const js=JSON.stringify(phSnap);if(js===phLast)return;phLast=js;const kept={};$$('#phoneModal [id]').forEach(e=>kept[e.id]=e.value);el.innerHTML=`<div class="lbl" style="text-align:center">${esc(phSnap.title||'Wargame Studio')} · szoba ${esc(PH_ROOM)}</div>`+phoneRemote(phSnap,PH_SEAT);Object.entries(kept).forEach(([id,v])=>{const e=document.getElementById(id);if(e&&e.tagName!=='BUTTON')e.value=v});syncAct()}
 async function phoneTick(){try{const sn=await rpc('wg_get_state',{p_room:PH_ROOM});if(!sn||!sn.seats){phSnap=null;$('#phoneModal .phone').innerHTML='<div class="note">A szoba nem található. Ellenőrizd a QR-kódot, vagy kérd a gazdagéptől az új kódot.</div>';return}phSnap=sn;drawPhone()}catch(e){const el=$('#phoneModal .phone');if(el&&!phSnap)el.innerHTML='<div class="note">A szerver nem érhető el. Próbáld újra.</div>'}}
 function startPhoneMode(){
   $('#app').hidden=true;const m=$('#phoneModal');m.hidden=false;m.style.background='transparent';
@@ -817,7 +831,7 @@ function startPhoneMode(){
   phoneTick();setInterval(phoneTick,2000);
 }
 async function phoneSubmit(){const w=($('#p-why')||{}).value||'';const err=$('#p-err');if(!w.trim()){if(err)err.textContent='Az indoklás kötelező.';return}
-  const tn=phSnap&&phSnap.turn;if(!tn)return;const o={act:$('#p-act').value,sec:$('#p-sec').value,why:w.trim().slice(0,300)};
+  const tn=phSnap&&phSnap.turn;if(!tn)return;const ca=readAct('p-act');if(!ca){if(err)err.textContent='Add meg az egyéni akciót.';return}const o=Object.assign(ca,{sec:$('#p-sec').value,why:w.trim().slice(0,300)});
   try{await rpc('wg_post_event',{p_room:PH_ROOM,p_kind:'order',p_payload:Object.assign({seat:PH_SEAT},o)});PEND[PH_SEAT+':'+tn.i]=o;phLast='';drawPhone()}catch(e){if(err)err.textContent='Nem sikerült elküldeni: '+e.message}}
 
 /* ---------- indulás ---------- */

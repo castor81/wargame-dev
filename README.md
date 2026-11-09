@@ -1,6 +1,6 @@
 # Wargame Studio – fejlesztési vonal (wargame-dev)
 
-**Jelenlegi verzió:** v0.3.0-dev (2026-11-09)
+**Jelenlegi verzió:** v0.3.1-dev (2026-11-09)
 
 A NATO Wargaming Handbook alapú Wargame Studio külön fejlesztési ága. A stabil demó (v0.2.x) a `castor81/wargame` repóban marad.
 
@@ -21,4 +21,5 @@ A belépés után a munkamenet (`sessionStorage`) a kiválasztott szerepkört t�
 - A profil szerinti nézetkorlátozás kliensoldali, nem biztonsági határ.
 
 ## Változásnapló
+- **v0.3.1-dev (2026-11-09):** Játékosok nézet: az ülések átlátszó zöld/piros színezése (ember: QR-csatlakozás, AI: működési prompt megadva/hiányzik, élő frissítéssel); a döntésekben egyéni akció is megadható (szabad szöveg, mobilon is), a szektor továbbra is fix választólista; a döntési mátrix új „EGY” oszlopot kapott.
 - **v0.3.0-dev (2026-11-09):** új belépő oldal (gránát + mintázat + szerep legördülő), profilkonfiguráció, profil-alapú nézetek, a v0.2.2 demó beemelve `app.html`-ként.
