@@ -1,0 +1,320 @@
+{
+ "schema": "wargame-studio-scenario",
+ "v": 1,
+ "title": "ENSZ békeművelet – Észak-völgy (VII. fejezet)",
+ "version": "1.0",
+ "date": "2026-11-09",
+ "author": "Mintaforgatókönyv (generált, fiktív)",
+ "source": "mintafájl: pso-eszak-volgy_v1.0_2026-11-09.json",
+ "brief": {
+  "situation": "Fiktív Aldória Észak-völgy tartományában két fél között tűzszünet van érvényben. Az ENSZ Biztonsági Tanácsa az Alapokmány VII. fejezete alapján (a béke fenyegetésének megállapítása, 39. cikk) robusztus mandátumot adott a békefenntartó missziónak. A tűzszüneti vonal mentén a feszültség nő, civil falvak és menekültútvonalak vannak a térségben.",
+  "background": "A konfliktus etnikai és erőforrás-vitákból ered. A vendéglátó állam hatóságai hozzájárultak a misszió jelenlétéhez, de a végrehajtó képességük korlátozott. Humanitárius szervezetek működnek a tartományban (osztópont az A3 szektorban). A szembenálló fegyveres csoport az A1–B1 hegyvidéken állomásozik.",
+  "mission": "Fenntartani a tűzszünetet, megvédeni a civileket (POC), biztosítani a humanitárius hozzáférést és támogatni a vendéglátó állam hatóságait, a mandátum és a ROE keretein belül.",
+  "mandate": "VII. fejezet szerinti felhatalmazás: ideiglenes intézkedések (40. cikk), nem katonai intézkedések (41. cikk), erőalkalmazás a mandátum és a ROE szerint (42. cikk); önvédelem (51. cikk). Elvek: hozzájárulás, pártatlanság, a lehető legkisebb erőalkalmazás, arányosság; a civilek védelme elsőbbséget élvez.",
+  "assumptions": "A vendéglátó állam hozzájárulása fennmarad; a hozzájáruló nemzetek tartalékai korlátozottan állnak rendelkezésre; a felek nyilvános kommunikációja befolyásolja a lakosság bizalmát.",
+  "constraints": "Korlátozott erők (egy zászlóalj-szintű kontingens), a ROE kártya szerinti erőalkalmazás, az érintett civilek védelme, nyelvi és kulturális akadályok.",
+  "adjudication": "Az elbírálás szempontjai: a mandátum- és ROE-megfelelés, az arányosság, a civilek kockázata, a döntés hatása a küldetésre és a koordináció minősége. Siker: a hatás eléri a célt a keretek között; részleges: jogszerű, de korlátozott vagy késő hatás; kudarc: a cél nem teljesül, vagy a keretek sérülnek."
+ },
+ "fields": {
+  "problem": "Hogyan tartható fenn a tűzszünet, és hogyan védhetők meg a civilek az Észak-völgy tartományban (Aldória, fiktív), ha az ENSZ Biztonsági Tanácsa az Alapokmány VII. fejezete alapján robusztus mandátumot adott a békefenntartó missziónak?",
+  "outcome": "A döntési alternatívák (39–43. és 51. cikk szerinti eszközök) és következményeik feltárása; javaslatok a mandátum- és ROE-értelmezésre.",
+  "goal": "Az ENSZ-erő döntéshozatalának vizsgálata VII. fejezeti mandátum alatt, korlátozott erőforrásokkal.",
+  "objectives": "Értékelni a 40–42. cikk szerinti eszközök fokozatos és arányos alkalmazását\nFeltárni a civilek védelmének (POC) és a humanitárius hozzáférésnek az akadályait\nVizsgálni az ENSZ-erő, a vendéglátó állam és a humanitárius szervezetek koordinációját",
+  "expected": "Döntési minták és tanulságok a mandátum értelmezéséről; ajánlások a ROE- és koordinációs eljárásokra.",
+  "milestones": "Behatárolás, 2 playtest, főpróba, játék (turn 0–5), hot-wash, AAR, jelentés",
+  "constraints": "2 nap, 5 játékkör + turn 0, osztályozatlan (fiktív) adatok, mobilról csatlakozó játékosok",
+  "research": "Az ENSZ Alapokmány VII. fejezete (39–51. cikk); békefenntartás elvei; POC-irányelvek; ROE-minták; hasonló békeműveleti játékok.",
+  "scenario": "Fiktív Aldória, Észak-völgy tartomány. KÉK: ENSZ-erő (Force HQ a C3 szektorban); PIROS: szembenálló fegyveres csoport (A1–B1 hegyvidék); ZÖLD: vendéglátó állam hatóságai és humanitárius szervezetek (A3 osztópont). B2: pufferzóna, A2: menekültútvonalak, C2: határátkelő. Injektek: tűzszüneti vonal megsértése, konvoj feltartása, menekültáradat, embargó-megkerülés, járőrtámadás, dezinformáció.",
+  "eventplan": "Helyszín: gyakorlóterem, két adjudikátori asztal, zárt hálózat; QR-os mobil csatlakozás; étkezés és szállás a helyszínen; fiktív, osztályozatlan adatok.",
+  "bugs": "A 41. cikk szerinti (nem katonai) opció kevésbé kidolgozott; az injekt-kiadás lassú; az elbírálási lap nem különítette el a POC-eredményt.",
+  "refine": "Körönként 25 perc döntési idő; az elbírálási lap kiegészítve POC- és ROE-szempontokkal; a 41. cikk opciójához példák.",
+  "invite": "Meghívó és tájékoztató melléklet kiküldve (fiktív misszió, VII. fejezeti háttér).",
+  "rehearse": "Az adjudikátorok és a facilitátorok begyakorolták a kör menetét és a ROE-alapú elbírálást.",
+  "readahead": "Háttéranyag: Alapokmány VII. fejezet kivonat, a mandátum, a ROE-kártya; 10 nappal a játék előtt.",
+  "setup": "Az eszközök, a kijelzők és a hálózat rendben; az IT végponttól végpontig tesztelve.",
+  "hotwash": "A játékosok szerint a ROE-értelmezés és az információmegosztás volt a szűk keresztmetszet; a nem katonai eszközök alulhasználtak.",
+  "aar": "A célok többsége részben teljesült; fő tanulság a koordináció és a ROE-értelmezés egységesítése.",
+  "eval": "A szabályok működtek; a DCAP megfigyelési mérőszáma finomításra szorul; az elbírálási lap POC-szempontokkal bővült.",
+  "report": "Végső jelentés a követő felhasználásra összeállítva.",
+  "archive": "Archívum: wargame-tár; felhasználó: békeműveleti tervezési csoport.",
+  "integr": "A megállapítások beépülnek a következő békeműveleti tervezési és kiképzési ciklusba."
+ },
+ "design": {
+  "turns": 5,
+  "rigidity": "Matrix wargame",
+  "adj": "Analitikus támogatással",
+  "formal": "Formális (MoA)"
+ },
+ "teams": {
+  "K": {
+   "sub": "ENSZ békefenntartó erő (Force HQ)",
+   "start": "C3",
+   "options": [
+    {
+     "abbr": "JEL",
+     "label": "Helyzetmegállapítás és jelentés az SZT-nek (39. cikk)",
+     "rat": "Helyzetmegállapítás: a(z) {sec} szektorban észlelt fenyegetés a nemzetközi béke és biztonság megsértése (39. cikk); jelentés az SZT-nek és a Force HQ-nak, RFI-vel a hiányzó információra."
+    },
+    {
+     "abbr": "IDE",
+     "label": "Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk)",
+     "rat": "Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) {sec} szektorban, a felek jogainak sérelme nélkül."
+    },
+    {
+     "abbr": "SZA",
+     "label": "Nem katonai eszközök: embargó-, szankcióellenőrzés (41. cikk)",
+     "rat": "Nem katonai intézkedés (41. cikk): az embargó- és szankciós előírások ellenőrzése a(z) {sec} szektorban; a szállítmány megállítása erőalkalmazás nélkül."
+    },
+    {
+     "abbr": "ERŐ",
+     "label": "Erőalkalmazás a mandátum és a ROE szerint (42. cikk)",
+     "rat": "Erőalkalmazás (42. cikk) a mandátum és a ROE keretében a(z) {sec} szektorban: arányos, a lehető legkisebb mértékű, előzetes figyelmeztetéssel; a civil áldozatok kockázata mérlegelve."
+    },
+    {
+     "abbr": "ERB",
+     "label": "Erőbiztosítás, ROE- és támogatási egyeztetés (43. cikk)",
+     "rat": "Erőbiztosítás (43. cikk): a hozzájáruló nemzetek tartalékának és a ROE-értelmezésnek az egyeztetése a(z) {sec} szektor érdekében."
+    },
+    {
+     "abbr": "POC",
+     "label": "Civilek védelme, humanitárius hozzáférés biztosítása",
+     "rat": "Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) {sec} szektorban; a konvoj kísérése, a menekültek mozgásának rendezése."
+    },
+    {
+     "abbr": "TÁR",
+     "label": "Tárgyalás, közvetítés a felek között",
+     "rat": "Közvetítés: a felek vezetőinek bevonása a(z) {sec} szektorban; a tűzszünet betartásának és az ellenőrzőpontok kérdésének megvitatása."
+    },
+    {
+     "abbr": "VÉD",
+     "label": "Önvédelem, jogos védelem (51. cikk)",
+     "rat": "Önvédelem (51. cikk) és a mandátum védelme: a(z) {sec} szektorban támadás érte az állományt; azonnali, arányos védelmi intézkedés, utólagos jelentéssel."
+    }
+   ]
+  },
+  "P": {
+   "sub": "Szembenálló fegyveres csoport",
+   "start": "A1",
+   "options": [
+    {
+     "abbr": "TŰZ",
+     "label": "Tűzszünet betartása, erők visszavonása",
+     "rat": "A csoport vezetése a(z) {sec} szektorban betartja a tűzszünetet és visszavonja az előretolt egységeit, hogy elkerülje a nemzetközi nyomást."
+    },
+    {
+     "abbr": "TÁM",
+     "label": "Támadó akció a tűzszüneti vonalon túl",
+     "rat": "Támadó akció a(z) {sec} szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét."
+    },
+    {
+     "abbr": "BIZ",
+     "label": "Állások megerősítése, védelem",
+     "rat": "Állások megerősítése a(z) {sec} szektorban; a csoport védekezésre rendezkedik be, és időt nyer a tárgyalásokhoz."
+    },
+    {
+     "abbr": "TÁR",
+     "label": "Tárgyalási készség jelzése, közvetítő bevonása",
+     "rat": "A csoport tárgyalási készséget jelez a(z) {sec} szektorban, közvetítőt von be, és nyomást gyakorol a vendéglátó államra."
+    },
+    {
+     "abbr": "ELL",
+     "label": "Utánpótlás és fegyverszállítás szervezése",
+     "rat": "Utánpótlás és szállítás szervezése a(z) {sec} szektoron át; az embargó megkerülése, a készletek feltöltése."
+    },
+    {
+     "abbr": "INF",
+     "label": "Propaganda, dezinformáció a helyi médiában",
+     "rat": "Információs kampány a(z) {sec} szektorban: a misszió hitelének rombolása, a helyi lakosság bizalmának befolyásolása."
+    }
+   ]
+  },
+  "Z": {
+   "sub": "Vendéglátó állam hatóságai, humanitárius szervezetek",
+   "start": "A3",
+   "options": [
+    {
+     "abbr": "HOZ",
+     "label": "Hozzájárulás megerősítése, szabad mozgás biztosítása",
+     "rat": "A hatóságok megerősítik a hozzájárulást és szabad mozgást biztosítanak a(z) {sec} szektorban az ENSZ-erőnek és a konvojoknak."
+    },
+    {
+     "abbr": "HUM",
+     "label": "Humanitárius segélyek szétosztása",
+     "rat": "Segélyszállítmányok szétosztása a(z) {sec} szektorban, a konvojok kísérésének egyeztetésével."
+    },
+    {
+     "abbr": "MEN",
+     "label": "Menekültek befogadása és regisztrálása",
+     "rat": "Menekültek befogadása és regisztrálása a(z) {sec} szektorban, tábor és ellátás szervezése."
+    },
+    {
+     "abbr": "JOG",
+     "label": "Jogi és közigazgatási intézkedések",
+     "rat": "Ellenőrzőpontok, engedélyek és jogi eljárások rendezése a(z) {sec} szektorban a humanitárius hozzáférés érdekében."
+    },
+    {
+     "abbr": "KOO",
+     "label": "Koordináció az ENSZ-erővel és a szervezetekkel",
+     "rat": "Koordinációs egyeztetés a Force HQ-val és a szervezetekkel a(z) {sec} szektor helyzetéről."
+    },
+    {
+     "abbr": "KOM",
+     "label": "Tájékoztatás, kommunikáció a lakossággal",
+     "rat": "Tájékoztató kampány a(z) {sec} szektorban a lakosság számára a misszió szerepéről és a biztonsági helyzetről."
+    }
+   ]
+  }
+ },
+ "sectors": {
+  "A1": "Hegyi erdő, a szembenálló fegyveres csoport körzete",
+  "A2": "Menekültútvonalak, települések",
+  "A3": "Mezőgazdasági terület, humanitárius osztópont",
+  "B1": "Tűzszüneti vonal, civil falvak",
+  "B2": "Pufferzóna (fennsík)",
+  "B3": "Járőrútvonal, nyílt terep",
+  "C1": "Erdős dombvidék",
+  "C2": "Határátkelő",
+  "C3": "ENSZ Force HQ és támogató bázis"
+ },
+ "injects": [
+  {
+   "turn": 0,
+   "sector": "A1",
+   "text": "Turn 0 – bemelegítő vignette: a tűzszüneti vonalon feszültség; az ENSZ-járőr a PIROS erők mozgását észleli az A1 szektorban."
+  },
+  {
+   "turn": 1,
+   "sector": "B1",
+   "text": "A PIROS erők átlépték a tűzszüneti vonalat a B1 szektorban; civil falvak kerültek veszélybe (a béke fenyegetése, 39. cikk)."
+  },
+  {
+   "turn": 2,
+   "sector": "A3",
+   "text": "Az A3 szektorban ellenőrzőponton feltartottak egy humanitárius konvojt; élelmiszer- és gyógyszerhiány alakul ki."
+  },
+  {
+   "turn": 3,
+   "sector": "A2",
+   "text": "Menekültáradat az A2 szektor útjain; a beáramlás akadályozza az ENSZ-erő mozgását és a konvojokat."
+  },
+  {
+   "turn": 4,
+   "sector": "C2",
+   "text": "Embargót sértő fegyverszállítmány észlelve a C2 határátkelőnél (a 41. cikk szerinti intézkedések hatóköre)."
+  },
+  {
+   "turn": 5,
+   "sector": "B3",
+   "text": "Támadás érte az ENSZ-járőrt a B3 szektorban; sérültek; azonnali ROE-döntés szükséges (42. és 51. cikk)."
+  },
+  {
+   "turn": null,
+   "sector": "",
+   "text": "Dezinformációs kampány: hamis hír a civil áldozatokról; a helyi lakosság bizalma és a hozzáférés romlik."
+  }
+ ],
+ "friction": [
+  "Nyelvi és kulturális akadály a tárgyalásokon",
+  "Összeköttetési zavar (rádió, műhold)",
+  "Mandátum- és ROE-értelmezési vita a hozzájáruló nemzetek között",
+  "Dezinformáció a helyi médiában"
+ ],
+ "dcap": [
+  {
+   "q": "Milyen mandátum- és ROE-értelmezés alapján döntöttek a csapatok az erőalkalmazásról (40–42., 51. cikk)?",
+   "metric": "decisions"
+  },
+  {
+   "q": "Hogyan alakult a civilek védelmének és a humanitárius hozzáférésnek az eredménye körönként?",
+   "metric": "adjudication"
+  },
+  {
+   "q": "Mennyi idő kellett a döntésekhez a kritikus injekteknél (ROE-döntés, konvoj)?",
+   "metric": "time"
+  },
+  {
+   "q": "Mi akadályozta a koordinációt az ENSZ-erő, a vendéglátó állam és a humanitárius szervezetek között?",
+   "metric": "observation"
+  }
+ ],
+ "simulation": {
+  "note": "Csak a szimulált teszthez (nem része a scenario-sémának).",
+  "plan": {
+   "K": [
+    0,
+    1,
+    5,
+    6,
+    2,
+    7
+   ],
+   "P": [
+    2,
+    1,
+    4,
+    5,
+    4,
+    1
+   ],
+   "Z": [
+    4,
+    0,
+    1,
+    2,
+    3,
+    5
+   ]
+  },
+  "results": {
+   "K": [
+    "Siker",
+    "Részleges",
+    "Siker",
+    "Részleges",
+    "Siker",
+    "Részleges"
+   ],
+   "P": [
+    "Részleges",
+    "Kudarc",
+    "Részleges",
+    "Részleges",
+    "Kudarc",
+    "Kudarc"
+   ],
+   "Z": [
+    "Részleges",
+    "Siker",
+    "Részleges",
+    "Siker",
+    "Siker",
+    "Részleges"
+   ]
+  },
+  "observations": [
+   "Turn 0: a csapatok megismerték az eszközöket; a VII. fejezeti mandátum értelmezése eltért a KÉK törzsben.",
+   "A tűzszüneti vonal megsértése után a KÉK a 40. cikk szerinti ideiglenes intézkedéseket választotta; a PIROS részben alkalmazkodott, a ZÖLD információja késett.",
+   "A humanitárius konvoj feltartása: a POC és a hozzáférés együttes kezelése koordinációs hiányt mutatott a KÉK és a ZÖLD között.",
+   "Menekültáradat: a mozgás és a POC ütközött; a tárgyalás a PIROS felé időt nyert, de a ROE-értelmezés vitát váltott ki.",
+   "Embargó-megkerülés: a 41. cikk szerinti nem katonai eszközök hatékonynak bizonyultak, a PIROS utánpótlási kísérlete kudarcot vallott.",
+   "Járőrtámadás: az önvédelem (51. cikk) és a mandátum szerinti erőalkalmazás (42. cikk) határa vitás volt; az arányosság indoklása gyenge."
+  ],
+  "odcr": [
+   [
+    "A 40. és 42. cikk szerinti eszközök fokozatos alkalmazása ott volt eredményes, ahol a döntés előzetes figyelmeztetéssel és arányosan történt.",
+    "A KÉK csapat az ideiglenes intézkedéseket és a POC-t eredményesebben használta, mint az erőalkalmazást; az arányosság indoklása több körben gyenge volt.",
+    "A ROE-kártyát döntési támogató eljárásrenddel kell kiegészíteni."
+   ],
+   [
+    "A civilek védelmét a koordinációs késedelem és az információhiány akadályozta; a humanitárius hozzáférés a ZÖLD és a KÉK közös döntésein múlt.",
+    "A cél részben teljesült: a POC-döntések a körök többségében sikeresek voltak, de a konvoj-feltartás és a menekültáradat ütközött.",
+    "Közös POC- és konvoj-koordinációs cella kialakítása az ENSZ-erő, a hatóságok és a szervezetek között."
+   ],
+   [
+    "A koordináció a legfőbb szűk keresztmetszet; az információ a ZÖLD felé késve jutott el.",
+    "A cél részben teljesült; a koordináció erősíthető, de nem volt egyértelmű közös helyzetkép.",
+    "Közös helyzetkép (COP) és rendszeres egyeztetés a követő gyakorlatokon."
+   ]
+  ]
+ }
+}

@@ -202,6 +202,8 @@ th{font:600 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;col
 .tri button.on{background:var(--ac-t);color:var(--ac)}.tri button.on.bad{background:color-mix(in srgb,var(--bad) 16%,transparent);color:var(--bad)}.tri button.on.okk{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
 .scrim{position:fixed;inset:0;z-index:50;background:rgba(5,10,14,.7);display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
 .phone{width:min(380px,100%);background:var(--bg);border:8px solid #11181d;border-radius:34px;min-height:640px;max-height:92vh;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px;position:relative}
+.brief{width:min(760px,100%);background:var(--bg);border:1px solid var(--ln);border-radius:14px;max-height:92vh;overflow:auto;padding:20px;display:flex;flex-direction:column;gap:4px;color:var(--ink)}
+.gi.soft .mk{border-style:dashed}
 .foot{font:500 11px/1.5 var(--f-mono);color:var(--mut);padding:4px 2px 14px}
 .toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:8px;font-weight:600;z-index:80;max-width:90vw}
 .sym{flex:none}
@@ -219,14 +221,14 @@ th{font:600 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;col
   <header class="panel hud top">
     <div class="brand">
       <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 28 9v14L16 30 4 23V9z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 20 16 8l7 12M11.5 16h9" fill="none" stroke="var(--ac)" stroke-width="2"/></svg>
-      <div><b>Wargame Studio</b><small>DEV v0.4.0 · 2026-11-09</small></div>
+      <div><b>Wargame Studio</b><small>DEV v0.5.0 · 2026-11-09</small></div>
     </div>
     <div class="vsep"></div>
     <div><div class="lbl">Játék</div><input type="text" id="gtitle" aria-label="Játék címe" style="min-height:30px;width:210px;font-weight:600"></div>
     <div class="sp"></div>
     <span class="chipx" id="sync" title="Élő szinkron a telefonos nézetekkel">Szinkron…</span>
     <span class="chipx hu" id="who" title="Bejelentkezett profil"></span><button class="btn sm" data-act="logout" type="button">Kilépés</button>
-    <label class="ctl">Forgatókönyv <select id="pack" aria-label="Forgatókönyv-csomag"><option value="std">Alap (Baltic Shield)</option><option value="pso">ENSZ békeművelet (VII. fejezet)</option></select></label>
+    <button class="btn sm pri" id="briefBtn" data-act="brief" type="button" title="A betöltött scenario áttekintése (minden szerep számára)">Scenario Brief</button>
     <label class="ctl">Térkép <select id="terr" aria-label="Térkép"><option value="default">Alaptérkép (légi felvétel)</option><option value="custom" disabled>Feltöltött szelvény</option><option value="temp">Mérsékelt</option><option value="arid">Száraz</option><option value="arctic">Hegyvidéki</option></select></label>
     <button class="btn sm" id="themeBtn" type="button">Téma</button>
     <label class="btn sm" for="bgfile" style="cursor:pointer" title="Térképszelvény feltöltése a térképrács alá (kép: JPG/PNG/WebP)">Térképszelvény…</label><input type="file" id="bgfile" accept="image/*" hidden>
@@ -240,6 +242,7 @@ th{font:600 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;col
 </div>
 
 <div class="scrim" id="phoneModal" hidden></div>
+<div class="scrim" id="briefModal" hidden></div>
 <div class="toast" id="toast" role="status" hidden></div>
 
 <script>
@@ -247,7 +250,7 @@ th{font:600 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;col
 /* ---------- segédek ---------- */
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const KEY='wgd-state-v0.3', VER='v0.4.0 · 2026-11-09';
+const KEY='wgd-state-v0.3', VER='v0.5.0 · 2026-11-09';
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
 const lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
 
@@ -303,7 +306,7 @@ const FIELDS={
 18:[A('archive','Archivált tudás: hol tárolva, ki használja',1),A('integr','Beépítés a további kampányba',1),C('archived','A tudás archiválva',1)]
 };
 const SAMPLE={problem:'Hogyan befolyásolja a szövetséges utánpótlási lánc késleltetése a védelmi műveletek tempóját?',outcome:'A kritikus függőségek és a döntési alternatívák feltárása.',goal:'A logisztikai függőségek feltárása védelmi forgatókönyvben.',objectives:'Azonosítani a kritikus utánpótlási útvonalakat\nFeltárni a döntési késleltetés hatását\nÉrtékelni a szövetséges koordinációt',expected:'Rangsorolt függőségi lista; ajánlások a tervezőknek.',milestones:'Behatárolás, főpróba, játék, jelentés',constraints:'3 nap, 3 játékkör, osztályozatlan adatok',research:'Hasonló logisztikai wargame-ek, erők és harcrend-mintái.',scenario:'Szomszédos államok közötti válság; 3 vignette a 3×3 szektorrácson.',eventplan:'Helyszín: gyakorlóterem, zárt hálózat, étkezés a helyszínen.',bugs:'A körök időzítése szoros; az injekt-kiadás lassú.',refine:'Körönként 25 perc döntési idő; egyszerűsített elbírálási lap.',invite:'Meghívó és tájékoztató melléklet kiküldve.',rehearse:'Az elbírálók és facilitátorok begyakorolták a kör menetét.',readahead:'Háttéranyag és szabálykivonat, 10 nappal a játék előtt.',setup:'Az eszközök és a hálózat rendben.',hotwash:'A játékosok szerint az információmegosztás volt a szűk keresztmetszet.',aar:'A célok 2/3-a teljesült; a koordináció a fő tanulság.',eval:'A szabályok működtek; a DCAP két mérőszáma finomításra szorul.',report:'Végső jelentés a követő felhasználásra összeállítva.',archive:'Archívum: intranet / wargame-tár; felhasználó: tervezési osztály.',integr:'A megállapítások beépülnek a következő tervezési ciklusba.'};
-const LINKS={5:[['roster','Szereplista / OOB (4×10)'],['data','DCAP szerkesztő']],6:[['board','Playtest-futás a Játéktéren'],['data','DCAP tesztelése']],7:[['data','DCAP igazítása'],['roster','Ülések finomítása']],8:[['data','DCAP validálása'],['roster','OOB véglegesítése']],9:[['board','Főpróba-futás']],10:[['roster','AI-promptok és szerepek ellenőrzése']],11:[['roster','QR-csatlakozás (mobil)']],12:[['board','Turn 0']],13:[['board','Játékkörök'],['data','Élő adatgyűjtés (DCAP)']],14:[['data','Adatok áttekintése']],15:[['data','ODCR és gyorsjelentés']],16:[['data','AAR-vázlat']],17:[['data','Jelentés']]};
+const LINKS={1:[['scn','Scenario-fejlesztő: kész scenario betöltése']],5:[['scn','Scenario-fejlesztő és Scenario Brief'],['roster','Szereplista / OOB (4×10)'],['data','DCAP szerkesztő']],6:[['board','Playtest-futás a Játéktéren'],['data','DCAP tesztelése']],7:[['data','DCAP igazítása'],['roster','Ülések finomítása']],8:[['data','DCAP validálása'],['roster','OOB véglegesítése']],9:[['board','Főpróba-futás']],10:[['roster','AI-promptok és szerepek ellenőrzése']],11:[['roster','QR-csatlakozás (mobil)']],12:[['board','Turn 0']],13:[['board','Játékkörök'],['data','Élő adatgyűjtés (DCAP)']],14:[['data','Adatok áttekintése']],15:[['data','ODCR és gyorsjelentés']],16:[['data','AAR-vázlat']],17:[['data','Jelentés']]};
 
 /* ---------- csapatok, ülések ---------- */
 const TEAMS={K:{nm:'KÉK',sub:'Játékos csapat'},P:{nm:'PIROS',sub:'Játékos csapat'},Z:{nm:'ZÖLD',sub:'Szövetséges / semleges'},F:{nm:'FEHÉR',sub:'Irányítás (stáb)'}};
@@ -311,19 +314,22 @@ const STD=['Parancsnok','Törzsfőnök','J2 Hírszerzés','J3 Műveletek','J4 Lo
 const ZF=['Nemzeti parancsnok','Törzsfőnök','J2 Hírszerzés','J3 Műveletek','J4 Logisztika','J5 Tervezés','J6 CIS','Polgári összekötő','Jogi tanácsadó','Megfigyelő'];
 const FF=[['IGA','Wargame-igazgató'],['ADJ','Adjudikátor 1'],['ADJ','Adjudikátor 2'],['FAC','Facilitátor'],['ELE','Elemző 1'],['ELE','Elemző 2'],['FOR','Forgatókönyv-tervező'],['OPF','OPFOR-vezető'],['REN','Rendezvényszervező'],['FEJ','Játékfejlesztő']];
 const CUST='__custom';
-const actSel=id=>`<select id="${id}" data-act="actsel">${ACT.map(a=>`<option>${esc(a)}</option>`).join('')}<option value="${CUST}">✎ Egyéni opció…</option></select><input type="text" id="${id}-c" maxlength="80" placeholder="Saját akció megnevezése" hidden>`;
+const actSel=(id,list)=>`<select id="${id}" data-act="actsel">${(list||[]).map(a=>`<option>${esc(a)}</option>`).join('')}<option value="${CUST}">✎ Egyéni opció…</option></select><input type="text" id="${id}-c" maxlength="80" placeholder="Saját akció megnevezése" hidden>`;
 const readAct=id=>{const e=document.getElementById(id);if(!e)return null;if(e.value!==CUST)return{act:e.value};const t=((document.getElementById(id+'-c')||{}).value||'').trim();return t?{act:t.slice(0,80),custom:true}:null};
 const syncAct=()=>document.querySelectorAll('select[data-act=actsel]').forEach(e=>{const c=document.getElementById(e.id+'-c');if(c)c.hidden=e.value!==CUST});
 const seatOk=s=>s.mode==='human'?!!s.joined:!!String(s.prompt||'').trim();
 const seatTag=s=>s.mode==='human'?(s.joined?['ok','CSATL.']:['bad','NINCS CSATL.']):(seatOk(s)?['ok','PROMPT ✓']:['bad','NINCS PROMPT']);
-let ACT=['Védelem','Támadás','Felderítés','Mozgás / áttelepülés','Logisztikai biztosítás','Információs tevékenység','Polgári-katonai együttműködés'];
+var SCN=null;
+const NOINJ='Nincs előre megírt injekt – a játékirányítás szabad szöveggel adja ki a helyzetet.';
+const OPT=t=>((SCN&&SCN.teams&&SCN.teams[t]&&SCN.teams[t].options)||[]);
+const OPL=t=>OPT(t).map(o=>o.label);
+const injList=()=>(SCN&&SCN.injects)||[];
+const injLabel=x=>(x.turn==null?'bármikor':'T'+x.turn)+(x.sector?' · '+x.sector:'')+': '+x.text;
+function injFor(i){const L=injList();let x=L.find(z=>z.turn===i);if(!x){const f=L.filter(z=>z.turn==null);if(f.length)x=f[(Math.max(i,1)-1)%f.length]}return x||null}
 const SEC=['A1','A2','A3','B1','B2','B3','C1','C2','C3'];
-let INJ=['Felderítés: ellenséges gépesített erők mozgása észlelve a B1 szektor felé.','Kommunikációs zavar a C2 szektorban; a törzsek közötti összeköttetés késik.','Menekültáradat az A2 szektor útjain; az utánpótlási útvonal torlódik.','A szövetséges kontingens előzetes egyeztetés nélkül visszavonul a C1 szektorból.','Kiberincidens a logisztikai nyilvántartó rendszerben (B3).','Időjárás-romlás: sűrű köd, a légi támogatás korlátozott.'];
-let INJ0='Turn 0 – bemelegítő vignette: határőrizeti riasztás az A1 szektorban, enyhe feszültség.';
-let FRIC=['– nincs –','Elektronikai zavarás: az összeköttetés egy körrel késik','Ellenséges felderítés: a mozgás nyomot hagy','Logisztikai zavar: a készlet csökken','Dezinformáció: hamis jelentés kerül a csatornára'];
+let FRIC=['– nincs –'];
 const RESL=['Siker','Részleges','Kudarc'];
 let START={K:'A1',P:'C3',Z:'A3'};
-var PACK=lsGet('wgs-pack')||'std';
 
 const QP=new URLSearchParams(location.search),PH_ROOM=QP.get('room'),PH_SEAT=QP.get('seat'),IS_PHONE=!!(PH_ROOM&&PH_SEAT);
 const SB_URL='https://xaklmjaexyhcbztklyqf.supabase.co',SB_KEY='sb_publishable_KdbxMCfCt7vh3olVAoVpvQ_tJ4z8jgw';
@@ -338,15 +344,15 @@ function defaults(){
     const ai=(t==='K'&&i===2)||(t==='P'&&i===1)||(t==='Z'&&i===1)||(t==='F'&&i===5);
     seats.push({id:t+i,t,i,fn,role,active,mode:ai?'ai':'human',prompt:defPrompt(t,fn,role),model:'Helyi LLM (on-prem)',auto:'Csak javasol',vis:'Saját + észlelt',joined:false});
   }}
-  return{v:2,pack:PACK,log:[],title:PACK==='pso'?'ENSZ BKM – ÉSZAK-VÖLGY 26':'BALTIC SHIELD 26',step:1,done:{},ticks:{},fields:{},sponsor:{},cond8:false,seats,dcap:[],runs:[],odcr:{},role:'IGA',room:randCode(),hostKey:randKey(),evSince:0};
+  return{v:2,scn:null,log:[],title:'Új játék',step:1,done:{},ticks:{},fields:{},sponsor:{},cond8:false,seats,dcap:[],runs:[],odcr:{},role:'IGA',room:randCode(),hostKey:randKey(),evSince:0};
 }
 function defPrompt(t,fn,role){
   if(t==='F')return `Te vagy a ${fn} (${ROLES[role][0]}) szerepben dolgozó segéd-ügynök. Segíts a feladatod ellátásában a handbook szerint, de a döntés mindig az emberé. Minden megfigyelést időbélyeggel naplózz a DCAP-ba.`;
-  return `Te vagy a ${TEAMS[t].nm} csapat ${fn} szerepe. Csak a saját látóteredben lévő információt használd. Minden döntésedet indokold, a feltevéseidet jelöld, bizonytalanság esetén RFI-t fogalmazz. Javaslatodat a parancsnok hagyja jóvá.${PACK==='pso'?' Forgatókönyv: ENSZ békeművelet az Alapokmány VII. fejezete (39–51. cikk) alapján; tartsd be a mandátumot, a ROE-t, a pártatlanság és az arányos erőalkalmazás elvét; a civilek védelme elsőbbséget élvez.':''}`;
+  return `Te vagy a ${TEAMS[t].nm} csapat ${fn} szerepe. Csak a saját látóteredben lévő információt használd. Minden döntésedet indokold, a feltevéseidet jelöld, bizonytalanság esetén RFI-t fogalmazz. Javaslatodat a parancsnok hagyja jóvá.${SCN?' Scenario: '+SCN.title+'.'+(SCN.brief.mandate?' Mandátum és szabályok: '+SCN.brief.mandate.replace(/\s+/g,' ').slice(0,400):''):''}`;
 }
 let S=(function(){try{const j=JSON.parse(lsGet(KEY));if(j&&j.v===2)return j}catch(e){}return defaults()})();
 if(!S.room){S.room=randCode();S.hostKey=randKey();S.evSince=0}
-if(!S.log)S.log=[];if(!S.pack)S.pack='std';PACK=S.pack;
+if(!S.log)S.log=[];if(S.scn===undefined)S.scn=null;delete S.pack;
 /* ---------- profil / munkamenet (js/profiles.js) ---------- */
 const SESS=(typeof WG_SESSION!=='undefined')?WG_SESSION.get():null;
 const PROF=SESS?WG_PROFILES.byId[SESS.role]:null;
@@ -388,7 +394,7 @@ function genTerrain(kind){
   try{const gc=document.createElement('canvas');gc.width=gc.height=128;const gg=gc.getContext('2d');const id=gg.createImageData(128,128);for(let i=0;i<id.data.length;i+=4){const v=Math.random()*255;id.data[i]=id.data[i+1]=id.data[i+2]=v;id.data[i+3]=255}gg.putImageData(id,0,0);document.documentElement.style.setProperty('--grain',`url(${gc.toDataURL()})`)}catch(e){}
 }
 let MAP=null,MAR=1.5;
-const idb=(m,k,v)=>new Promise(res=>{try{const o=indexedDB.open('wgd-map',1);o.onupgradeneeded=()=>o.result.createObjectStore('k');o.onsuccess=()=>{const db=o.result,st=db.transaction('k',m==='get'?'readonly':'readwrite').objectStore('k'),rq=m==='get'?st.get(k):st.put(v,k);rq.onsuccess=()=>res(rq.result||null);rq.onerror=()=>res(null)};o.onerror=()=>res(null)}catch(e){res(null)}});
+const idb=(m,k,v)=>new Promise(res=>{try{const o=indexedDB.open('wgd-map',1);o.onupgradeneeded=()=>o.result.createObjectStore('k');o.onsuccess=()=>{const db=o.result,st=db.transaction('k',m==='get'?'readonly':'readwrite').objectStore('k'),rq=m==='get'?st.get(k):m==='del'?st.delete(k):st.put(v,k);rq.onsuccess=()=>res(rq.result||null);rq.onerror=()=>res(null)};o.onerror=()=>res(null)}catch(e){res(null)}});
 function setMapImg(src,done){const im=new Image();im.onload=()=>{MAP=im;MAR=Math.max(1.1,Math.min(2.4,im.naturalWidth/im.naturalHeight));done&&done(true);refreshMap()};im.onerror=()=>{MAP=null;MAR=1.5;done&&done(false);refreshMap()};im.src=src}
 function refreshMap(){document.querySelectorAll('.mapw').forEach(m=>m.style.aspectRatio=MAR);drawMap()}
 async function setMapSource(kind){
@@ -424,7 +430,7 @@ const execTurnsDone=()=>{const r=execRun();return r?r.turns.filter(t=>t.phase===
 /* ---------- kapuk ---------- */
 const AUTO={
 2:[{l:'Célkitűzések száma 3–4 (ajánlott)',f:()=>{const n=cfg().obj.length;return n>=3&&n<=4},soft:1}],
-5:[{l:'OOB: a KÉK és a PIROS csapatnak van aktív helye (Játékosok nézet)',f:()=>seatsOf('K').some(s=>s.active)&&seatsOf('P').some(s=>s.active)},{l:'DCAP: legalább 3 elemzési kérdés mérőszámmal (Adat nézet)',f:()=>S.dcap.length>=3&&S.dcap.every(d=>d.metric)}],
+5:[{l:'Scenario betöltve és kész a Brief (Scenario nézet: név, helyzet, küldetés, ≥3 opció KÉK/PIROS, injekt)',f:()=>scnReady()},{l:'OOB: a KÉK és a PIROS csapatnak van aktív helye (Játékosok nézet)',f:()=>seatsOf('K').some(s=>s.active)&&seatsOf('P').some(s=>s.active)},{l:'DCAP: legalább 3 elemzési kérdés mérőszámmal (Adat nézet)',f:()=>S.dcap.length>=3&&S.dcap.every(d=>d.metric)}],
 6:[{l:'Lezárt playtest-futás a Játéktéren (ajánlott: ≥ 2)',f:()=>closedRuns('playtest')>=1},{l:'Legalább 2 lezárt playtest-futás (ajánlott)',f:()=>closedRuns('playtest')>=2,soft:1},{l:'DCAP tesztelve: minden kérdésnél jelölve, keletkezett-e adat',f:()=>S.dcap.length>0&&S.dcap.every(d=>d.tested!==null)}],
 7:[{l:'A DCAP hiányai kezelve: nincs „hiányzik az adat” jelölés',f:()=>S.dcap.every(d=>d.tested!==false)}],
 8:[{l:'DCAP validálva: minden kérdéshez van mérőszám és igen-teszt',f:()=>S.dcap.length>=3&&S.dcap.every(d=>d.metric&&d.tested===true)}],
@@ -445,16 +451,20 @@ function gate(n){
 }
 
 /* ---------- szimulált kör (demóhoz) ---------- */
-function genOrder(s,tn){if(PACK==='pso')return psoOrder(s,tn);const h=hash(s.t.charCodeAt(0)+s.i,tn.i,4);const act=ACT[Math.floor(h*ACT.length)%ACT.length],sec=SEC[Math.floor(hash(s.i,tn.i+3,6)*9)];
-  return{act,sec,why:`${s.fn}: ${act.toLowerCase()} a ${sec} szektorban, mert ez csökkenti a kockázatot a rendelkezésre álló információ alapján.`,src:s.mode==='ai'?'AI (szimulált)':'ember (demó)',at:Date.now()}}
+function genOrder(s,tn,pi){
+  const ol=OPT(s.t),i=Math.max(0,tn.i),h=hash(s.t.charCodeAt(0)+s.i,tn.i,4);
+  const k=ol.length?(pi!=null?((pi%ol.length)+ol.length)%ol.length:Math.floor(h*ol.length)%ol.length):-1;
+  const sec=SEC[Math.floor(hash(s.i,tn.i+3,6)*9)],act=k>=0?ol[k].label:'Egyéni döntés (nincs scenario-opció)';
+  const why=k>=0&&ol[k].rat?s.fn+': '+ol[k].rat.replace(/\{sec\}/g,sec):`${s.fn}: ${act.toLowerCase()} a ${sec} szektorban, mert ez csökkenti a kockázatot a rendelkezésre álló információ alapján.`;
+  const o={act,sec,why,src:s.mode==='ai'?'AI (szimulált)':'ember ('+(LOGNOW!==null?'szimulált':'demó')+')',at:lnow()};if(k<0)o.custom=true;return o}
 function autoTurn(r,upTo){
   let tn=curTurn(r);if(!tn||tn.phase===3)tn=newTurn(r);
-  if(tn.phase===0){tn.inject=tn.inject||(r.mode==='execution'&&tn.i===0?INJ0:INJ[(tn.i-1+INJ.length)%INJ.length]);tn.phase=1;tn.t0=Date.now()-(90+Math.floor(hash(tn.i,2,2)*200))*1000}
+  if(tn.phase===0){tn.inject=tn.inject||(injFor(tn.i)?injFor(tn.i).text:NOINJ);tn.phase=1;tn.t0=Date.now()-(90+Math.floor(hash(tn.i,2,2)*200))*1000}
   if(tn.phase===1)decSeats().forEach(s=>{if(!tn.orders[s.id])tn.orders[s.id]=genOrder(s,tn)});
   if(upTo==='orders')return tn;
   tn.phase=2;
-  activeTeams(tn).forEach(t=>{if(!tn.adj[t]){const roll=1+Math.floor(hash(t.charCodeAt(0),tn.i,9)*6);tn.adj[t]=PACK==='pso'?psoAdj(t,tn.i):{res:roll>=5?'Siker':roll>=3?'Részleges':'Kudarc',why:'Az indoklások és a helyzet alapján, '+cfg().adj.toLowerCase()+' módszerrel.',method:cfg().adj,roll}}});
-  tn.obs=tn.obs||(PACK==='pso'?psoObs(tn.i):'A csapatok indoklásai részletesek voltak; az információmegosztás lassú.');
+  activeTeams(tn).forEach(t=>{if(!tn.adj[t]){const roll=1+Math.floor(hash(t.charCodeAt(0),tn.i,9)*6);tn.adj[t]={res:roll>=5?'Siker':roll>=3?'Részleges':'Kudarc',why:'Az indoklások és a helyzet alapján, '+cfg().adj.toLowerCase()+' módszerrel.',method:cfg().adj,roll}}});
+  tn.obs=tn.obs||'A csapatok indoklásai részletesek voltak; az információmegosztás lassú.';
   tn.phase=3;tn.t3=tn.t0+(240+Math.floor(hash(tn.i,5,5)*200))*1000;return tn;
 }
 function synthRun(mode){const c=cfg();const r=newRun(mode);const n=mode==='execution'?c.turns+1:1;for(let k=0;k<n;k++){autoTurn(r);}r.status='closed';return r}
@@ -477,7 +487,7 @@ function demoFill(upTo){
   for(let n=upTo;n<=18;n++)S.done[n]=false;
   S.step=upTo;UI.vstep=null;
 }
-function loadSampleDcap(){if(PACK==='pso'&&PACKS.pso.dcap){S.dcap=PACKS.pso.dcap.map((d,i)=>({id:i+1,q:d[0],metric:d[1],tested:null}));return}S.dcap=[{id:1,q:'Milyen szempontok alapján döntöttek a csapatok?',metric:'decisions',tested:null},{id:2,q:'Mennyire volt kiszámítható és elfogadott az elbírálás?',metric:'adjudication',tested:null},{id:3,q:'Mennyi idő kellett a döntésekhez egy körben?',metric:'time',tested:null},{id:4,q:'Mi akadályozta az információmegosztást?',metric:'observation',tested:null}]}
+function loadSampleDcap(){if(SCN&&SCN.dcap.length){S.dcap=SCN.dcap.map((d,i)=>({id:i+1,q:d.q,metric:d.metric,tested:null}));return}S.dcap=[{id:1,q:'Milyen szempontok alapján döntöttek a csapatok?',metric:'decisions',tested:null},{id:2,q:'Mennyire volt kiszámítható és elfogadott az elbírálás?',metric:'adjudication',tested:null},{id:3,q:'Mennyi idő kellett a döntésekhez egy körben?',metric:'time',tested:null},{id:4,q:'Mi akadályozta az információmegosztást?',metric:'observation',tested:null}]}
 
 /* ---------- megjelenítés: segédek ---------- */
 function sym(t,sz=22){const c={K:['#9CC8F0','#1B4F8A'],P:['#F3A3A0','#A12A2A'],Z:['#A8DDB0','#237A3B'],F:['#F4F4F4','#555B66']}[t];
@@ -498,7 +508,7 @@ function renderRail(){
   $('#rail').innerHTML=h+'</div>';
 }
 function renderTabs(){
-  const s=S.step,items=[['flow','Folyamat','18 lépés · kapuk'],['roster','Játékosok',`4×10 ülés · ${S.seats.filter(x=>x.active).length} aktív`],['board','Játéktér',modeForStep(s)?MODENAME[modeForStep(s)]+' aktív':'zárolt: 6–7, 9, 12–13. lépés'],['data','Adat és elemzés',s>=15?'ODCR · jelentés':s>=5?'DCAP · adatok':'5. lépéstől']];
+  const s=S.step,items=[['flow','Folyamat','18 lépés · kapuk'],['roster','Játékosok',`4×10 ülés · ${S.seats.filter(x=>x.active).length} aktív`],['board','Játéktér',modeForStep(s)?MODENAME[modeForStep(s)]+' aktív':'zárolt: 6–7, 9, 12–13. lépés'],['scn','Scenario',S.scn?('v'+S.scn.version+' · '+S.scn.injects.length+' injekt'):'nincs betöltve'],['data','Adat és elemzés',s>=15?'ODCR · jelentés':s>=5?'DCAP · adatok':'5. lépéstől']];
   const vis=items.filter(i=>okView(i[0]));
   $('#tabs').innerHTML=vis.map(([k,n,sub])=>`<button type="button" role="tab" class="tab" aria-selected="${UI.view===k}" data-act="tab" data-v="${k}">${n}<small>${sub}</small></button>`).join('');
 }
@@ -574,7 +584,6 @@ function renderRoster(){
 function drawQrs(){$$('.qr').forEach(el=>{if(el.firstChild)return;try{if(typeof QRCode==='function'){new QRCode(el,{text:el.dataset.url,width:128,height:128,colorDark:'#0F1B21',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});return}}catch(e){}el.innerHTML='<div style="font:600 11px var(--f-mono);color:#222;text-align:center;padding-top:50px">QR-könyvtár nem érhető el</div>'})}
 
 /* ---------- 3. Játéktér ---------- */
-let ACS=['VÉD','TÁM','FEL','MOZ','LOG','INF','PKE','EGY'];
 const TCOL={K:'#4C8FD6',P:'#D8605C',Z:'#3FA25C'};
 function teamCard(t,r,tn){
   const ts=teamState(r)[t],ids=tn?Object.keys(tn.orders).filter(id=>id[0]===t).sort():[];
@@ -582,10 +591,10 @@ function teamCard(t,r,tn){
   h+='<div class="sub">Döntési mátrix · aktuális kör</div>';
   if(!ids.length)h+='<div style="color:var(--mut)">Ebben a körben még nincs rögzített döntés.</div>';
   else{
-    const cnt=Array(8).fill(0),cust=[],sc=Object.fromEntries(SEC.map(x=>[x,0]));
-    const rows=ids.map(id=>{const o=tn.orders[id],sd=S.seats.find(x=>x.id===id),k0=ACT.indexOf(o.act),k=k0>=0?k0:7;cnt[k]++;if(k0<0)cust.push((sd?sd.fn:id)+': '+o.act);if(sc[o.sec]!==undefined)sc[o.sec]++;
+    const ol=OPT(t),ACS=ol.map(o=>o.abbr).concat(['EGY']),cnt=Array(ACS.length).fill(0),cust=[],sc=Object.fromEntries(SEC.map(x=>[x,0]));
+    const rows=ids.map(id=>{const o=tn.orders[id],sd=S.seats.find(x=>x.id===id),k0=ol.findIndex(z=>z.label===o.act),k=k0>=0?k0:ol.length;cnt[k]++;if(k0<0)cust.push((sd?sd.fn:id)+': '+o.act);if(sc[o.sec]!==undefined)sc[o.sec]++;
       return`<tr title="${esc(o.why||'')}"><td>${esc(sd?sd.fn:id)}</td>${ACS.map((_,j)=>`<td class="${j===k?'on':''}">${j===k?'●':'·'}</td>`).join('')}<td class="mono">${esc(o.sec)}</td></tr>`}).join('');
-    h+=`<table class="dm" style="--tc:${TCOL[t]}"><thead><tr><th>Szerep</th>${ACS.map((a,j)=>`<th title="${esc(j<7?ACT[j]:'Egyéni opció (szabad szöveg)')}">${a}</th>`).join('')}<th>Szekt.</th></tr></thead><tbody>${rows}</tbody><tfoot><tr><td>Σ</td>${cnt.map(c=>`<td>${c||''}</td>`).join('')}<td></td></tr></tfoot></table>${cust.length?`<div style="color:var(--mut);margin-top:3px">${cust.map(c=>'✎ '+esc(c)).join('<br>')}</div>`:''}`;
+    h+=`<table class="dm" style="--tc:${TCOL[t]}"><thead><tr><th>Szerep</th>${ACS.map((a,j)=>`<th title="${esc(j<ol.length?ol[j].label:'Egyéni opció (szabad szöveg)')}">${a}</th>`).join('')}<th>Szekt.</th></tr></thead><tbody>${rows}</tbody><tfoot><tr><td>Σ</td>${cnt.map(c=>`<td>${c||''}</td>`).join('')}<td></td></tr></tfoot></table>${cust.length?`<div style="color:var(--mut);margin-top:3px">${cust.map(c=>'✎ '+esc(c)).join('<br>')}</div>`:''}`;
     const mx=Math.max(1,...Object.values(sc));
     h+=`<div class="sub">Szektor-eloszlás · az emblémás mező a jelenlegi pozíció</div><div class="twoc"><div class="sh" style="--tc:${TCOL[t]}">${SEC.map(x=>`<b class="${x===ts.sec?'here':''}" style="--k:${sc[x]/mx*4}" title="${x}: ${sc[x]} döntés">${sc[x]||''}</b>`).join('')}</div><div style="color:var(--mut)">${ids.length} döntés · ${Object.values(sc).filter(v=>v).length} szektor. Vezető szerep döntése adja a következő pozíciót.</div></div>`;
   }
@@ -651,14 +660,14 @@ function turnPanel(mode,active,r,tn){
   const names=['Helyzet','Döntések','Elbírálás','Közlés'];
   h+=`<div class="lbl">${MODENAME[mode]} · T${tn.i}</div><div class="pipe" style="margin:8px 0 12px">${names.map((x,i)=>`<span class="${i<tn.phase?'dn':i===tn.phase?'on':''}">${i+1} ${x}</span>`).join('')}</div>`;
   if(tn.phase===0){
-    h+=`<div class="lbl">Injekt kiadása (FOR / IGA)</div><label class="fld"><span>Előre megírt injekt</span><select id="injsel">${[mode==='execution'&&tn.i===0?INJ0:null].concat(INJ).filter(Boolean).map(x=>`<option>${esc(x)}</option>`).join('')}</select></label><label class="fld"><span>OPFOR-súrlódás (OPF, az igazgató alatt)</span><select id="fricsel">${FRIC.map((x,i)=>`<option value="${i}">${esc(x)}</option>`).join('')}</select></label><div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn pri" data-act="release" type="button" ${S.role==='IGA'||S.role==='FOR'?'':'disabled'}>Injekt kiadása és kör indítása</button></div>${S.role==='IGA'||S.role==='FOR'?'':'<div style="font-size:12px;color:var(--mut);margin-top:6px">Szerep: Wargame-igazgató vagy Forgatókönyv-tervező</div>'}`;
+    h+=`<div class="lbl">Injekt kiadása (FOR / IGA)</div><label class="fld"><span>Scenario-injekt (a Scenario-csomagból)</span><select id="injsel">${injList().length?injList().map((x,i)=>`<option value="${i}" ${x===injFor(tn.i)?'selected':''}>${esc(trunc(injLabel(x),110))}</option>`).join(''):'<option value="-1">– nincs betöltött injekt –</option>'}</select></label><label class="fld"><span>Egyéni injekt (szabad szöveg – felülírja a kiválasztottat)</span><textarea id="injtxt" rows="2" maxlength="400" placeholder="Opcionális"></textarea></label><label class="fld"><span>OPFOR-súrlódás (OPF, az igazgató alatt)</span><select id="fricsel">${FRIC.map((x,i)=>`<option value="${i}">${esc(x)}</option>`).join('')}</select></label><div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn pri" data-act="release" type="button" ${S.role==='IGA'||S.role==='FOR'?'':'disabled'}>Injekt kiadása és kör indítása</button></div>${S.role==='IGA'||S.role==='FOR'?'':'<div style="font-size:12px;color:var(--mut);margin-top:6px">Szerep: Wargame-igazgató vagy Forgatókönyv-tervező</div>'}`;
   }else if(tn.phase===1){
     h+=`<div class="note" style="margin-bottom:8px">${esc(tn.inject)}${tn.fric?'<br><b>Súrlódás:</b> '+esc(FRIC[tn.fric]):''}</div>`;
     const ds=decSeats(),sub=ds.filter(s=>tn.orders[s.id]).length;
     h+=`<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span class="lbl">Csak a játékosok döntenek · indoklás kötelező</span><span class="mono" style="font-size:12px">${sub}/${ds.length}</span></div><div style="display:flex;flex-direction:column;gap:6px;max-height:420px;overflow:auto">`;
     ds.forEach(s=>{const o=tn.orders[s.id];h+=`<div class="ord"><div class="r1">${sym(s.t,18)}<b style="flex:1;font-size:13px">${esc(s.fn)}</b><span class="tg ${s.mode==='ai'?'ai':'hu'}">${s.mode==='ai'?'AI':'EMBER'}</span></div>`;
       if(o)h+=`<div style="font-size:12.5px"><b>${o.custom?'✎ ':''}${esc(o.act)}</b> · ${esc(o.sec)} <span class="tg ok">BEKÜLDVE</span><div style="color:var(--mut)">${esc(o.why)}</div></div>`;
-      else h+=`<div class="r2">${actSel('oa-'+s.id)}<select id="os-${s.id}">${SEC.map(a=>`<option>${a}</option>`).join('')}</select></div><input type="text" id="ow-${s.id}" placeholder="Indoklás (miért ezt döntötted?)"><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm" data-act="order" data-id="${s.id}" type="button">Beküld</button>${s.mode==='human'?`<button class="btn sm" data-act="phone" data-id="${s.id}" type="button">Mobilnézet</button>`:`<button class="btn sm" data-act="aiorder" data-id="${s.id}" type="button">AI-javaslat</button>`}</div>`;
+      else h+=`<div class="r2">${actSel('oa-'+s.id,OPL(s.t))}<select id="os-${s.id}">${SEC.map(a=>`<option>${a}</option>`).join('')}</select></div><input type="text" id="ow-${s.id}" placeholder="Indoklás (miért ezt döntötted?)"><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm" data-act="order" data-id="${s.id}" type="button">Beküld</button>${s.mode==='human'?`<button class="btn sm" data-act="phone" data-id="${s.id}" type="button">Mobilnézet</button>`:`<button class="btn sm" data-act="aiorder" data-id="${s.id}" type="button">AI-javaslat</button>`}</div>`;
       h+='</div>'});
     h+=`</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px"><button class="btn" data-act="fillorders" type="button">Hiányzók kitöltése (demó)</button><button class="btn pri" data-act="toadj" type="button" ${ds.length&&sub===ds.length?'':'disabled'}>Tovább az elbírálásra</button></div>`;
   }else if(tn.phase===2){
@@ -708,9 +717,9 @@ function phoneHtml(id,full){
   if(!s.active)return h+'<div class="note">Ez a hely most nem aktív.</div>';
   if(!tn||!r)return h+'<div class="note">Várakozás a játék indítására. A felület a playtest, főpróba és végrehajtás során aktív.</div>';
   if(tn.phase===0)h+='<div class="note">A kör még nem indult. Várj az injektre.</div>';
-  else{h+=`<div class="note"><b>T${tn.i} helyzet:</b> ${esc(tn.inject)}</div>`;
+  else{h+=`<div class="note"><b>T${tn.i} helyzet:</b> ${esc(tn.inject)}</div>`+phoneBrief(phoneSnap());
     const o=tn.orders[id];
-    if(tn.phase===1&&!o)h+=`<label class="fld"><span>Akció</span>${actSel('p-act')}</label><label class="fld"><span>Szektor</span><select id="p-sec">${SEC.map(a=>`<option>${a}</option>`).join('')}</select></label><label class="fld"><span>Indoklás *</span><textarea id="p-why" rows="3"></textarea></label><button class="btn pri" data-act="pphone" data-id="${id}" type="button" style="min-height:48px">Döntés beküldése</button>`;
+    if(tn.phase===1&&!o)h+=`<label class="fld"><span>Akció</span>${actSel('p-act',OPL(s.t))}</label><label class="fld"><span>Szektor</span><select id="p-sec">${SEC.map(a=>`<option>${a}</option>`).join('')}</select></label><label class="fld"><span>Indoklás *</span><textarea id="p-why" rows="3"></textarea></label><button class="btn pri" data-act="pphone" data-id="${id}" type="button" style="min-height:48px">Döntés beküldése</button>`;
     else if(o)h+=`<div class="ord"><span class="tg ok" style="align-self:flex-start">BEKÜLDVE</span><b>${o.custom?'✎ ':''}${esc(o.act)} · ${esc(o.sec)}</b><span style="color:var(--mut);font-size:13px">${esc(o.why)}</span></div>`;
     if(tn.phase===2)h+='<div class="note">Az elbírálás folyamatban van.</div>';
     if(tn.phase===3&&s.t!=='F'&&tn.adj[s.t])h+=`<div class="ord"><b>Közölt eredmény: ${esc(tn.adj[s.t].res)}</b><span style="font-size:13px;color:var(--mut)">${esc(tn.adj[s.t].why)}</span></div>`}
@@ -724,7 +733,7 @@ function render(){
   if(PROF&&!okView(UI.view))UI.view=PROF.landing;
   renderRail();renderTabs();
   const v=$('#view');
-  v.innerHTML=UI.view==='flow'?renderFlow():UI.view==='roster'?renderRoster():UI.view==='board'?renderBoard():renderData();
+  v.innerHTML=UI.view==='flow'?renderFlow():UI.view==='roster'?renderRoster():UI.view==='board'?renderBoard():UI.view==='scn'?renderScn():renderData();
   if(UI.view==='roster')drawQrs();
   if(UI.view==='board')requestAnimationFrame(drawMap);
   if(PROF){S.role=PROF.id;$('#who').textContent=PROF.nm+(SESS.name?' · '+SESS.name:'')}
@@ -744,13 +753,20 @@ document.addEventListener('click',e=>{
     case'revoke':delete S.sponsor[n];render();break;
     case'close':{const g=gate(S.step);if(!g.ready)return;S.done[S.step]=true;if(S.step<18)S.step++;UI.vstep=null;render();toast(S.done[18]?'A folyamat lezárult':'Lépés lezárva – a produktum a következő lépés bemenete');window.scrollTo({top:0});break}
     case'reopen':{for(let k=n;k<=18;k++)S.done[k]=false;S.step=n;UI.vstep=null;render();toast(n+'. lépés újranyitva');break}
-    case'simtest':{if(b.dataset.sure){const r=runScenarioTest();UI.view='data';render();$('#gtitle').value=S.title;toast('Teljes folyamat-teszt lefutott: '+r.entries+' naplóbejegyzés, '+r.defects.length+' kapu-hiba');}else{b.dataset.sure=1;b.textContent='Biztos? Új játék indul – kattints újra';setTimeout(()=>{b.dataset.sure='';b.textContent='Teljes folyamat-teszt (szimuláció)'},4000)}break}
+    case'brief':openBrief();break;
+    case'briefclose':$('#briefModal').hidden=true;break;
+    case'scnsample':{if(!scnEditable())return;fetch(SCN_FILE).then(r=>r.json()).then(j=>{setScn(sanitizeScn(j),'minta: '+SCN_FILE.split('/').pop());$('#gtitle').value=S.title;render();toast('Minta-scenario betöltve: '+S.scn.title)}).catch(er=>toast('A minta nem tölthető be: '+er.message));break}
+    case'scntpl':dl('scenario-sablon_'+FV()+'.json',JSON.stringify(scnTemplate(),null,1),'application/json');break;
+    case'scnexp':if(S.scn)dl('scenario_'+(S.scn.title||'nev').replace(/[^A-Za-z0-9Á-ű]+/g,'-').slice(0,40)+'_v'+S.scn.version+'_'+S.scn.date+'.json',JSON.stringify(S.scn,null,1),'application/json');break;
+    case'scnclear':if(b.dataset.sure){setScn(null);render();toast('A scenario törölve')}else{b.dataset.sure=1;b.textContent='Biztos? Kattints újra';setTimeout(()=>{b.dataset.sure='';b.textContent='Törlés'},3000)}break;
+    case'scnprompt':{const t=$('#scnprompt');t.select();try{navigator.clipboard.writeText(t.value).then(()=>toast('Prompt a vágólapon'),()=>toast('Másold ki kézzel (Ctrl+C)'))}catch(er){toast('Másold ki kézzel (Ctrl+C)')}break}
+    case'simtest':{if(b.dataset.sure){toast('Teszt fut…');runScenarioTest().then(r=>{UI.view='data';render();$('#gtitle').value=S.title;toast('Teljes folyamat-teszt lefutott: '+r.entries+' naplóbejegyzés, '+r.defects.length+' kapu-hiba')}).catch(er=>{console.error(er);toast('Teszt-hiba: '+er.message)})}else{b.dataset.sure=1;b.textContent='Biztos? Új játék indul – kattints újra';setTimeout(()=>{b.dataset.sure='';b.textContent='Teljes folyamat-teszt (szimuláció)'},4000)}break}
     case'dlaar':dl('wargame_AAR_'+FV()+'.md',buildAAR(),'text/markdown');break
     case'dllogcsv':dl('wargame_naplo_'+FV()+'.csv',logCsv(),'text/csv');break
-    case'dllogjson':dl('wargame_naplo_'+FV()+'.json',JSON.stringify({scenario:PACKS[PACK].nm,title:S.title,version:VER,exported:new Date().toISOString(),log:S.log},null,1),'application/json');break
+    case'dllogjson':dl('wargame_naplo_'+FV()+'.json',JSON.stringify({scenario:S.scn?{title:S.scn.title,version:S.scn.version,source:S.scn.source}:null,title:S.title,version:VER,exported:new Date().toISOString(),log:S.log},null,1),'application/json');break
     case'aar2field':{S.fields['16:aar']=buildAAR();render();toast('AAR-vázlat betöltve a 16. lépés mezőjébe');break}
     case'ff':{demoFill(+$('#ffsel').value);render();toast('Demó: az addigi lépések mintaadattal kitöltve');break}
-    case'reset':if(b.dataset.sure){S=defaults();UI.vstep=null;UI.sel=null;render();$('#gtitle').value=S.title;toast('Új játék indítva')}else{b.dataset.sure=1;b.textContent='Biztos? Kattints újra';setTimeout(()=>{b.dataset.sure='';b.textContent='Új játék'},3000)}break;
+    case'reset':if(b.dataset.sure){S=defaults();applyScn(null);UI.vstep=null;UI.sel=null;lsSet('wgs-terr','default');idb('del','sheet').then(()=>{const o=$('#terr option[value=custom]');if(o)o.disabled=true;$('#terr').value='default';setMapSource('default')});render();$('#gtitle').value=S.title;toast('Új, üres játék indítva (nincs scenario, injekt, válaszlehetőség)')}else{b.dataset.sure=1;b.textContent='Biztos? Kattints újra';setTimeout(()=>{b.dataset.sure='';b.textContent='Új játék'},3000)}break;
     case'seat':UI.sel=UI.sel===id?null:id;render();break;
     case'seatmode':{const s=S.seats.find(x=>x.id===id);s.mode=b.dataset.m;s.joined=false;render();break}
     case'join':{S.seats.find(x=>x.id===id).joined=true;render();refreshGate();break}
@@ -764,7 +780,7 @@ document.addEventListener('click',e=>{
     case'newturn':{const r=openRun(modeForStep(S.step));newTurn(r);render();break}
     case'autoturn':{const m=modeForStep(S.step);let r=openRun(m);if(!r)r=newRun(m);autoTurn(r);render();break}
     case'closerun':{const r=openRun(modeForStep(S.step));if(r){r.status='closed';}render();refreshGate();toast('Futás lezárva');break}
-    case'release':{const tn=curTurn(openRun(modeForStep(S.step)));tn.inject=$('#injsel').value;tn.fric=+$('#fricsel').value;tn.phase=1;tn.t0=Date.now();render();break}
+    case'release':{const tn=curTurn(openRun(modeForStep(S.step)));{const tx=$('#injtxt').value.trim(),x=injList()[+$('#injsel').value];tn.inject=tx?tx.slice(0,400):(x?x.text:NOINJ)}tn.fric=+$('#fricsel').value;tn.phase=1;tn.t0=Date.now();render();break}
     case'order':{const tn=curTurn(openRun(modeForStep(S.step)));const w=$('#ow-'+id).value.trim();if(!w){toast('Az indoklás kötelező');return}const ca=readAct('oa-'+id);if(!ca){toast('Add meg az egyéni akciót');return}tn.orders[id]=Object.assign(ca,{sec:$('#os-'+id).value,why:w,src:'ember',at:Date.now()});render();break}
     case'aiorder':{const tn=curTurn(openRun(modeForStep(S.step)));tn.orders[id]=genOrder(S.seats.find(x=>x.id===id),tn);render();toast('AI-javaslat rögzítve (szimulált, a valódi LLM a következő verzióban)');break}
     case'fillorders':{const tn=curTurn(openRun(modeForStep(S.step)));decSeats().forEach(s=>{if(!tn.orders[s.id])tn.orders[s.id]=genOrder(s,tn)});render();break}
@@ -789,7 +805,8 @@ document.addEventListener('change',e=>{
   if(d.fc){S.fields[d.fc]=t.checked;refreshGate();return}
   if(d.f&&t.tagName==='SELECT'){S.fields[d.f]=t.value;refreshGate();return}
   if(t.id==='role'){S.role=t.value;render();return}
-  if(t.id==='pack'){setPack(t.value,true);render();return}
+  if(d.scn!==undefined){if(scnEditable())scnInput(d.scn,t.value);return}
+  if(t.id==='scnfile'){const f=t.files[0];t.value='';if(!f||!scnEditable())return;if(f.size>2e6){toast('A fájl túl nagy (max. 2 MB)');return}const rd=new FileReader();rd.onload=()=>{try{const o=sanitizeScn(JSON.parse(rd.result));setScn(o,'fájl: '+f.name);$('#gtitle').value=S.title;render();toast('Scenario betöltve: '+o.title+' – '+o.injects.length+' injekt, K/P/Z opciók: '+['K','P','Z'].map(x=>o.teams[x].options.length).join('/'))}catch(er){toast('Érvénytelen scenario-fájl: '+er.message)}};rd.readAsText(f);return}
   if(t.id==='logph'){UI.logph=t.value;render();return}
   if(t.id==='terr'){lsSet('wgs-terr',t.value);if(TERR[t.value])genTerrain(t.value);setMapSource(t.value);return}
 });
@@ -810,19 +827,20 @@ $('#bgfile').addEventListener('change',e=>{const f=e.target.files[0];e.target.va
     cv.toBlob(async b=>{if(!b){toast('A kép feldolgozása nem sikerült');return}await idb('put','sheet',b);const o=$('#terr option[value=custom]');o.disabled=false;$('#terr').value='custom';lsSet('wgs-terr','custom');MAP=cv;MAR=Math.max(1.1,Math.min(2.4,cv.width/cv.height));refreshMap();toast('Térképszelvény beállítva a rács alá ('+f.name+'); a böngészőben megmarad')},'image/jpeg',.9)};
   im.src=u});
 $('#phoneModal').addEventListener('click',e=>{if(e.target.id==='phoneModal'){e.currentTarget.hidden=true;UI.phone=null}});
+$('#briefModal').addEventListener('click',e=>{if(e.target.id==='briefModal')e.currentTarget.hidden=true});
 
 
 /* ---------- élő szinkron (Supabase) ---------- */
 function keepRender(fn){const kept={};$$('#view input[id],#view textarea[id],#view select[id]').forEach(e=>{if(e.type==='checkbox')kept[e.id]=[e.checked];else kept[e.id]=[e.value]});const fid=document.activeElement&&document.activeElement.id;fn();Object.entries(kept).forEach(([id,v])=>{const e=document.getElementById(id);if(!e)return;if(e.type==='checkbox')e.checked=v[0];else if(e.tagName==='SELECT'){if([...e.options].some(o=>o.value===v[0]||o.text===v[0]))e.value=v[0]}else if(e.type!=='file')e.value=v[0]});if(fid){const e=document.getElementById(fid);if(e&&e.focus)e.focus()}}
 function setSync(ok,msg){const c=$('#sync');if(!c)return;c.textContent=msg;c.className='chipx '+(ok?'hu':'')}
 function phoneSnap(){const m=modeForStep(S.step),r=m?(openRun(m)||(m==='execution'?lastRun(m):null)):null,tn=curTurn(r),seats={};S.seats.forEach(x=>seats[x.id]={fn:x.fn,t:x.t,a:x.active?1:0,m:x.mode});
-  return{title:S.title,step:S.step,stepName:STEPS[S.step-1].nm,mode:m,seats,turn:tn?{i:tn.i,phase:tn.phase,inject:tn.inject,fric:tn.fric,orders:Object.fromEntries(Object.entries(tn.orders).map(([k,o])=>[k,{act:o.act,custom:!!o.custom,sec:o.sec,why:o.why}])),adj:Object.fromEntries(Object.entries(tn.adj).map(([k,a])=>[k,{res:a.res,why:a.why}]))}:null}}
+  return{title:S.title,step:S.step,stepName:STEPS[S.step-1].nm,mode:m,seats,opts:{K:OPL('K'),P:OPL('P'),Z:OPL('Z')},brief:playerBrief(),turn:tn?{i:tn.i,phase:tn.phase,inject:tn.inject,fric:tn.fric,fricT:tn.fric?(FRIC[tn.fric]||''):'',orders:Object.fromEntries(Object.entries(tn.orders).map(([k,o])=>[k,{act:o.act,custom:!!o.custom,sec:o.sec,why:o.why}])),adj:Object.fromEntries(Object.entries(tn.adj).map(([k,a])=>[k,{res:a.res,why:a.why}]))}:null}}
 let pubT=null,pubLast='';
 function schedulePublish(){if(IS_PHONE)return;clearTimeout(pubT);pubT=setTimeout(publishNow,400)}
 async function publishNow(){const sn=phoneSnap(),js=JSON.stringify(sn);if(js===pubLast)return;try{await rpc('wg_put_state',{p_room:S.room,p_key:S.hostKey,p_state:sn});pubLast=js;setSync(1,'Szoba '+S.room+' · élő')}catch(e){setSync(0,'Szinkron hiba');console.warn(e)}}
 function applyEvents(evs){let ch=false;for(const ev of evs){S.evSince=Math.max(S.evSince||0,ev.id);const p=ev.payload||{};const seat=S.seats.find(x=>x.id===p.seat);if(!seat)continue;
   if(ev.kind==='join'&&!seat.joined){seat.joined=true;ch=true}
-  if(ev.kind==='order'){const m=modeForStep(S.step),r=m&&openRun(m),tn=curTurn(r);if(tn&&tn.phase===1&&seat.active&&seat.t!=='F'&&!tn.orders[seat.id]&&String(p.why||'').trim()&&((ACT.includes(p.act))||(p.custom===true&&typeof p.act==='string'&&p.act.trim()&&p.act.length<=80))&&SEC.includes(p.sec)){tn.orders[seat.id]={act:String(p.act).slice(0,80),custom:!ACT.includes(p.act),sec:p.sec,why:String(p.why).slice(0,300),src:'ember (mobil)',at:Date.now()};ch=true}}}
+  if(ev.kind==='order'){const m=modeForStep(S.step),r=m&&openRun(m),tn=curTurn(r);if(tn&&tn.phase===1&&seat.active&&seat.t!=='F'&&!tn.orders[seat.id]&&String(p.why||'').trim()&&((OPL(seat.t).includes(p.act))||(p.custom===true&&typeof p.act==='string'&&p.act.trim()&&p.act.length<=80))&&SEC.includes(p.sec)){tn.orders[seat.id]={act:String(p.act).slice(0,80),custom:!OPL(seat.t).includes(p.act),sec:p.sec,why:String(p.why).slice(0,300),src:'ember (mobil)',at:Date.now()};ch=true}}}
   return ch}
 let polling=false;
 async function pollHost(){if(polling)return;polling=true;try{const evs=await rpc('wg_poll_events',{p_room:S.room,p_key:S.hostKey,p_since:S.evSince||0});if(evs&&evs.length){const ch=applyEvents(evs);save();if(ch){keepRender(render);refreshPhone();toast('Telefonról érkezett művelet')}}}catch(e){}polling=false}
@@ -838,15 +856,15 @@ function phoneRemote(sn,id){
   if(s.m==='ai')return h+'<div class="note">Ez a hely AI-ügynökhöz van rendelve, itt nincs emberi döntés.</div>';
   if(!sn.mode||!tn)return h+'<div class="note">Várakozás a játék indítására. A felület a playtest, főpróba és végrehajtás alatt aktív.</div>';
   if(tn.phase===0)return h+'<div class="note">A T'+tn.i+' kör még nem indult. Várj az injektre.</div>';
-  h+=`<div class="note"><b>T${tn.i} helyzet:</b> ${esc(tn.inject)}${tn.fric?'<br><b>Súrlódás:</b> '+esc(FRIC[tn.fric]):''}</div>`;
+  h+=`<div class="note"><b>T${tn.i} helyzet:</b> ${esc(tn.inject)}${tn.fricT?'<br><b>Súrlódás:</b> '+esc(tn.fricT):''}</div>`+phoneBrief(sn);
   const o=tn.orders[id]||PEND[id+':'+tn.i];
   if(o)h+=`<div class="ord"><span class="tg ok" style="align-self:flex-start">BEKÜLDVE</span><b>${o.custom?'✎ ':''}${esc(o.act)} · ${esc(o.sec)}</b><span style="color:var(--mut);font-size:13px">${esc(o.why)}</span></div>`;
-  else if(tn.phase===1)h+=`<label class="fld"><span>Akció</span>${actSel('p-act')}</label><label class="fld"><span>Szektor</span><select id="p-sec">${SEC.map(a=>`<option>${a}</option>`).join('')}</select></label><label class="fld"><span>Indoklás *</span><textarea id="p-why" rows="3"></textarea></label><button class="btn pri" data-act="pphoneR" type="button" style="min-height:48px">Döntés beküldése</button><div id="p-err" style="color:var(--bad);font-size:13px"></div>`;
+  else if(tn.phase===1)h+=`<label class="fld"><span>Akció</span>${actSel('p-act',(sn.opts&&sn.opts[s.t])||[])}</label><label class="fld"><span>Szektor</span><select id="p-sec">${SEC.map(a=>`<option>${a}</option>`).join('')}</select></label><label class="fld"><span>Indoklás *</span><textarea id="p-why" rows="3"></textarea></label><button class="btn pri" data-act="pphoneR" type="button" style="min-height:48px">Döntés beküldése</button><div id="p-err" style="color:var(--bad);font-size:13px"></div>`;
   else if(tn.phase===2)h+='<div class="note">Az elbírálás folyamatban van.</div>';
   if(tn.phase===3&&tn.adj[s.t])h+=`<div class="ord"><b>Közölt eredmény: ${esc(tn.adj[s.t].res)}</b><span style="font-size:13px;color:var(--mut)">${esc(tn.adj[s.t].why)}</span></div>`;
   return h;
 }
-function drawPhone(){const el=$('#phoneModal .phone');if(!el)return;const js=JSON.stringify(phSnap);if(js===phLast)return;phLast=js;const kept={};$$('#phoneModal [id]').forEach(e=>kept[e.id]=e.value);el.innerHTML=`<div class="lbl" style="text-align:center">${esc(phSnap.title||'Wargame Studio')} · szoba ${esc(PH_ROOM)}</div>`+phoneRemote(phSnap,PH_SEAT);Object.entries(kept).forEach(([id,v])=>{const e=document.getElementById(id);if(e&&e.tagName!=='BUTTON')e.value=v});syncAct()}
+function drawPhone(){const el=$('#phoneModal .phone');if(!el)return;const js=JSON.stringify(phSnap);if(js===phLast)return;phLast=js;const kept={};$$('#phoneModal [id]').forEach(e=>kept[e.id]=e.value);el.innerHTML=`<div class="lbl" style="text-align:center">${esc(phSnap.title||'Wargame Studio')} · szoba ${esc(PH_ROOM)}</div>`+phoneRemote(phSnap,PH_SEAT)+(phSnap.turn&&phSnap.turn.phase>=1?'':phoneBrief(phSnap));Object.entries(kept).forEach(([id,v])=>{const e=document.getElementById(id);if(e&&e.tagName!=='BUTTON')e.value=v});syncAct()}
 async function phoneTick(){try{const sn=await rpc('wg_get_state',{p_room:PH_ROOM});if(!sn||!sn.seats){phSnap=null;$('#phoneModal .phone').innerHTML='<div class="note">A szoba nem található. Ellenőrizd a QR-kódot, vagy kérd a gazdagéptől az új kódot.</div>';return}phSnap=sn;drawPhone()}catch(e){const el=$('#phoneModal .phone');if(el&&!phSnap)el.innerHTML='<div class="note">A szerver nem érhető el. Próbáld újra.</div>'}}
 function startPhoneMode(){
   $('#app').hidden=true;const m=$('#phoneModal');m.hidden=false;m.style.background='transparent';
@@ -859,50 +877,112 @@ async function phoneSubmit(){const w=($('#p-why')||{}).value||'';const err=$('#p
   try{await rpc('wg_post_event',{p_room:PH_ROOM,p_kind:'order',p_payload:Object.assign({seat:PH_SEAT},o)});PEND[PH_SEAT+':'+tn.i]=o;phLast='';drawPhone()}catch(e){if(err)err.textContent='Nem sikerült elküldeni: '+e.message}}
 
 /* ====================================================================
-   v0.4 · forgatókönyv-csomagok, folyamat-napló, AAR-generátor, szimulált teljes teszt
+   v0.4/v0.5 · folyamat-napló, AAR-generátor, szimulált teljes teszt
    ==================================================================== */
-const PSO_RES={K:['Siker','Részleges','Siker','Részleges','Részleges','Siker'],P:['Részleges','Kudarc','Részleges','Kudarc','Kudarc','Részleges'],Z:['Részleges','Siker','Részleges','Siker','Siker','Siker']};
-const PSO_WHY={Siker:'A döntés a mandátum és a ROE keretein belül, arányosan történt, és a kitűzött célt szolgálta.',Részleges:'A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).',Kudarc:'A döntés nem érte el a célt, vagy a mandátum/ROE határán kívül esett, illetve a civilek kockázatát növelte.'};
-const PSO_OBS=['Turn 0: a csapatok megismerték az eszközöket; a VII. fejezeti mandátum értelmezése eltért a KÉK törzsben.','A tűzszüneti vonal megsértése után a KÉK a 40. cikk szerinti ideiglenes intézkedéseket választotta; a PIROS részben alkalmazkodott, a ZÖLD információja késett.','A humanitárius konvoj feltartása: a POC és a hozzáférés együttes kezelése koordinációs hiányt mutatott a KÉK és a ZÖLD között.','Menekültáradat: a mozgás és a POC ütközött; a ROE-értelmezés vitát váltott ki a jogi tanácsadók között.','Embargó-megkerülés: a 41. cikk szerinti nem katonai eszközök alulhasznosítottak voltak; a PIROS erőalkalmazáshoz fordult.','Járőrtámadás: az önvédelem (51. cikk) és a mandátum szerinti erőalkalmazás (42. cikk) határa vitás volt; az arányosság indoklása gyenge.'];
-const PSO_RAT=['Helyzetmegállapítás: a(z) {sec} szektorban észlelt fenyegetés a nemzetközi béke és biztonság megsértése (39. cikk); jelentés az SZT-nek és a Force HQ-nak, RFI-vel a hiányzó információra.','Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) {sec} szektorban, a felek jogainak sérelme nélkül.','Nem katonai intézkedés (41. cikk): az embargó- és szankciós előírások ellenőrzése a(z) {sec} szektorban; a szállítmány megállítása erőalkalmazás nélkül.','Erőalkalmazás (42. cikk) a mandátum és a ROE keretében a(z) {sec} szektorban: arányos, a lehető legkisebb mértékű, előzetes figyelmeztetéssel; a civil áldozatok kockázata mérlegelve.','Erőbiztosítás (43. cikk): a hozzájáruló nemzetek tartalékának, a támogatási megállapodásnak és a ROE-értelmezésnek az egyeztetése a(z) {sec} szektor érdekében.','Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) {sec} szektorban; a konvoj kísérése, a menekültek mozgásának rendezése.','Önvédelem (51. cikk) és a mandátum védelme: a(z) {sec} szektorban támadás érte az állományt; azonnali, arányos védelmi intézkedés, utólagos jelentéssel.'];
-const PSO_PLAN={K:[0,1,5,3,4,2],P:[6,3,3,6,2,3],Z:[5,5,0,5,1,5]};
-const PSO_FOCUS=['A1','B1','A3','A2','C2','B3'];
-function psoOrder(s,tn){
-  const T=s.t,i=Math.max(0,tn.i),f=s.fn,foc=PSO_FOCUS[i%6];
-  let a=(PSO_PLAN[T]||[0])[i%6];
-  if(T==='K'){if(/Hírszerz|StratCom|CIS/.test(f))a=0;else if(/Logisztika|Jogi/.test(f))a=4;else if(/Összek/.test(f))a=5}
-  if(T==='Z'&&/Jogi/.test(f))a=1;
-  const own=T==='K'?'C3':T==='P'?'A1':'A3',sec=(s.i%3===0)?foc:(s.i%3===1?own:'B2');
-  const pre=T==='P'?'Szembenálló fél: ':T==='Z'?'Vendéglátó hatóság / humanitárius szervezet: ':'';
-  return{act:ACT[a],sec,why:pre+f+': '+PSO_RAT[a].replace('{sec}',sec),src:s.mode==='ai'?'AI (szimulált)':'ember (szimulált)',at:lnow()};
+/* ====================================================================
+   v0.5 · importálható Scenario-csomag, Scenario-fejlesztő nézet, Scenario Brief
+   Új játék = üres játék: nincs scenario, injekt, válaszlehetőség.
+   ==================================================================== */
+const SUB0={K:TEAMS.K.sub,P:TEAMS.P.sub,Z:TEAMS.Z.sub};
+const BRL={situation:'Helyzet',background:'Háttér',mission:'Küldetés',mandate:'Mandátum / szabályok',assumptions:'Feltevések',constraints:'Korlátok',adjudication:'Elbírálási szempontok (csak irányítás)'};
+const SCN_FILE='scenarios/pso-eszak-volgy_v1.0_2026-11-09.json';
+const scnEditable=()=>!S.done[8]&&['IGA','FOR','TER','FEJ'].includes(S.role);
+function blankScn(){const t=()=>({sub:'',start:'',options:[]});const o={schema:'wargame-studio-scenario',v:1,title:'',version:'0.1',date:new Date().toISOString().slice(0,10),author:'',source:'kézi szerkesztés',brief:{},fields:{},design:{},teams:{K:t(),P:t(),Z:t()},sectors:{},injects:[],friction:[],dcap:[]};Object.keys(BRL).forEach(k=>o.brief[k]='');return o}
+function sanitizeScn(r){
+  if(!r||typeof r!=='object'||r.schema!=='wargame-studio-scenario')throw new Error('nem Wargame Studio scenario-fájl (hiányzik a schema mező)');
+  const s=(x,n)=>String(x==null?'':x).slice(0,n),o=blankScn();
+  o.title=s(r.title,120);o.version=s(r.version,20)||'1.0';o.date=s(r.date,20);o.author=s(r.author,80);o.source=s(r.source,120)||'importált fájl';
+  Object.keys(BRL).forEach(k=>o.brief[k]=s(r.brief&&r.brief[k],2500));
+  const ok=new Set();Object.values(FIELDS).forEach(a=>a.forEach(f=>{if(f.t==='a'||f.t==='t')ok.add(f.id)}));
+  Object.keys(r.fields||{}).forEach(k=>{if(ok.has(k)&&typeof r.fields[k]==='string')o.fields[k]=s(r.fields[k],2500)});
+  const d=r.design||{};if(Number.isInteger(d.turns)&&d.turns>=1&&d.turns<=8)o.design.turns=d.turns;if(RIG.includes(d.rigidity))o.design.rigidity=d.rigidity;if(ADJM.includes(d.adj))o.design.adj=d.adj;if(['Informális','Formális (MoA)'].includes(d.formal))o.design.formal=d.formal;
+  'KPZ'.split('').forEach(t=>{const x=(r.teams&&r.teams[t])||{};o.teams[t].sub=s(x.sub,80);o.teams[t].start=SEC.includes(x.start)?x.start:'';
+    o.teams[t].options=(Array.isArray(x.options)?x.options:[]).slice(0,12).map((p,i)=>{const q=typeof p==='string'?{label:p}:(p||{});const label=s(q.label,80).trim();if(!label)return null;const a=s(q.abbr,5).trim().toUpperCase()||label.replace(/[^A-Za-zÁ-ű]/g,'').slice(0,3).toUpperCase()||('O'+(i+1));const e={abbr:a,label};if(q.rat)e.rat=s(q.rat,300);return e}).filter(Boolean)});
+  SEC.forEach(k=>{const v=s(r.sectors&&r.sectors[k],200);if(v)o.sectors[k]=v});
+  o.injects=(Array.isArray(r.injects)?r.injects:[]).slice(0,40).map(x=>{const text=s(x&&x.text,400).trim();if(!text)return null;return{turn:Number.isInteger(x.turn)&&x.turn>=0&&x.turn<=12?x.turn:null,sector:SEC.includes(x.sector)?x.sector:'',text}}).filter(Boolean);
+  o.friction=(Array.isArray(r.friction)?r.friction:[]).slice(0,10).map(x=>s(x,120).trim()).filter(Boolean);
+  o.dcap=(Array.isArray(r.dcap)?r.dcap:[]).slice(0,10).map(x=>({q:s(x&&x.q,200).trim(),metric:METRICS[x&&x.metric]?x.metric:'decisions'})).filter(x=>x.q);
+  return o;
 }
-function psoAdj(t,i){const r=PSO_RES[t][i%6];return{res:r,why:PSO_WHY[r],method:cfg().adj,roll:0}}
-const psoObs=i=>PSO_OBS[i%6];
+function applyScn(o){SCN=o||null;Object.keys(SAMPLE).forEach(k=>delete SAMPLE[k]);Object.assign(SAMPLE,SAMPLE0,o?o.fields:{});FRIC=['– nincs –'].concat(o?o.friction:[]);START={K:'A1',P:'C3',Z:'A3'};'KPZ'.split('').forEach(t=>{const tm=o&&o.teams&&o.teams[t];TEAMS[t].sub=(tm&&tm.sub)||SUB0[t];if(tm&&tm.start)START[t]=tm.start})}
+function fillFromScn(o){
+  if(o.title&&(!S.title||S.title==='Új játék'))S.title=o.title;
+  Object.keys(o.fields).forEach(id=>{for(const n in FIELDS){if((FIELDS[n]||[]).some(f=>f.id===id)){const k=n+':'+id;if(S.fields[k]===undefined||String(S.fields[k]).trim()==='')S.fields[k]=o.fields[id]}}});
+  const d=o.design||{};[['turns','turns'],['rigidity','rigidity'],['adj','adj'],['formal','formal']].forEach(([a,b])=>{if(d[a]!==undefined&&(S.fields['4:'+b]===undefined||S.fields['4:'+b]===''))S.fields['4:'+b]=d[a]});
+  if(o.dcap.length&&!S.dcap.length)S.dcap=o.dcap.map((x,i)=>({id:i+1,q:x.q,metric:x.metric,tested:null}));
+}
+function setScn(o,src){
+  const was=S.seats.map(x=>[x,x.prompt===defPrompt(x.t,x.fn,x.role)]);
+  if(o&&src)o.source=src;S.scn=o||null;applyScn(S.scn);
+  was.forEach(([x,def])=>{if(def)x.prompt=defPrompt(x.t,x.fn,x.role)});
+  if(o)fillFromScn(o);
+}
+function scnChecks(){const c=S.scn,L=[],add=(ok,l,hard)=>L.push({ok:!!ok,l,hard:!!hard});
+  add(c&&c.title.trim(),'A scenario neve megadva',1);
+  add(c&&c.brief.situation.trim()&&c.brief.mission.trim(),'Brief: helyzet és küldetés megadva',1);
+  add(c&&['K','P'].every(t=>c.teams[t].options.length>=3),'KÉK és PIROS csapat: legalább 3 válaszlehetőség',1);
+  add(c&&c.injects.length>=1,'Legalább 1 injekt megadva',1);
+  add(c&&c.injects.some(x=>x.turn===0),'Van Turn 0 (bemelegítő) injekt');
+  add(c&&c.injects.length>=cfg().turns,'Az injektek száma ≥ a tervezett körök száma ('+cfg().turns+')');
+  add(c&&c.teams.Z.options.length>=3,'ZÖLD csapat: legalább 3 válaszlehetőség (ha játszik)');
+  add(c&&c.brief.adjudication.trim(),'Elbírálási szempontok megadva');
+  add(c&&c.dcap.length>=3,'A scenario DCAP-kérdéseket is tartalmaz (≥ 3)');
+  return L}
+const scnReady=()=>scnChecks().filter(x=>x.hard).every(x=>x.ok);
+const scnChecksHtml=()=>scnChecks().map(i=>`<div class="gi ${i.ok?'ok':''} ${i.hard?'':'soft'}"><span class="mk">${i.ok?'✓':''}</span><span>${esc(i.l)}${i.hard?'':' <span class="mono" style="color:var(--mut)">(nem blokkol)</span>'}</span></div>`).join('');
+const parseOpts=t=>t.split('\n').map(x=>x.trim()).filter(Boolean).slice(0,12).map((x,i)=>{const p=x.split('|').map(z=>z.trim());let a,l,r='';if(p.length>=2&&p[0].length<=5){a=p[0].toUpperCase();l=p[1];r=p.slice(2).join(' | ')}else{l=p[0];a=l.replace(/[^A-Za-zÁ-ű]/g,'').slice(0,3).toUpperCase()||('O'+(i+1))}const e={abbr:a.slice(0,5),label:l.slice(0,80)};if(r)e.rat=r.slice(0,300);return e}).filter(o=>o.label);
+const fmtOpts=a=>a.map(o=>o.abbr+' | '+o.label+(o.rat?' | '+o.rat:'')).join('\n');
+const parseInj=t=>t.split('\n').map(x=>x.trim()).filter(Boolean).slice(0,40).map(x=>{const p=x.split('|').map(z=>z.trim());if(p.length<3)return{turn:null,sector:'',text:x.slice(0,400)};const n=parseInt(p[0],10);return{turn:Number.isInteger(n)&&n>=0&&n<=12?n:null,sector:SEC.includes(p[1].toUpperCase())?p[1].toUpperCase():'',text:p.slice(2).join(' | ').slice(0,400)}}).filter(x=>x.text);
+const fmtInj=a=>a.map(x=>(x.turn==null?'–':x.turn)+' | '+(x.sector||'–')+' | '+x.text).join('\n');
+const parseLines=(t,n)=>t.split('\n').map(x=>x.trim()).filter(Boolean).slice(0,10).map(x=>x.slice(0,n));
+const parseSec=t=>{const o={};t.split('\n').forEach(x=>{const m=x.match(/^\s*([A-C][1-3])\s*[:|-]\s*(.+)$/i);if(m)o[m[1].toUpperCase()]=m[2].trim().slice(0,200)});return o};
+const fmtSec=o=>SEC.filter(k=>o[k]).map(k=>k+': '+o[k]).join('\n');
+const parseDcap=t=>t.split('\n').map(x=>x.trim()).filter(Boolean).slice(0,10).map(x=>{const p=x.split('|').map(z=>z.trim());return p.length>=2&&METRICS[p[0]]?{metric:p[0],q:p.slice(1).join(' | ').slice(0,200)}:{metric:'decisions',q:x.slice(0,200)}});
+const fmtDcap=a=>a.map(x=>x.metric+' | '+x.q).join('\n');
+function scnInput(p,v){
+  if(!S.scn)S.scn=blankScn();const c=S.scn,a=p.split(':');
+  if(['title','version','author','date'].includes(p))c[p]=v.slice(0,p==='title'?120:80);
+  else if(a[0]==='b')c.brief[a[1]]=v.slice(0,2500);
+  else if(a[0]==='t')c.teams[a[1]][a[2]]=a[2]==='start'?(SEC.includes(v)?v:''):v.slice(0,80);
+  else if(a[0]==='o')c.teams[a[1]].options=parseOpts(v);
+  else if(p==='inj')c.injects=parseInj(v);
+  else if(p==='fric')c.friction=parseLines(v,120);
+  else if(p==='sec')c.sectors=parseSec(v);
+  else if(p==='dcap')c.dcap=parseDcap(v);
+  applyScn(c);save();const x=$('#scnchecks');if(x)x.innerHTML=scnChecksHtml();
+}
+const scnTemplate=()=>({schema:'wargame-studio-scenario',v:1,title:'Scenario neve',version:'1.0',date:new Date().toISOString().slice(0,10),author:'',source:'',brief:{situation:'',background:'',mission:'',mandate:'',assumptions:'',constraints:'',adjudication:''},fields:{problem:'',outcome:'',goal:'',objectives:'1. célkitűzés\n2. célkitűzés\n3. célkitűzés',expected:'',milestones:'',constraints:'',research:'',scenario:'',eventplan:''},design:{turns:3,rigidity:RIG[1],adj:ADJM[0],formal:'Informális'},teams:{K:{sub:'KÉK csapat megnevezése',start:'A1',options:[{abbr:'RÖV',label:'Válaszlehetőség megnevezése (max. 80 karakter)',rat:'Opcionális indoklás-sablon a(z) {sec} szektorra'}]},P:{sub:'PIROS csapat megnevezése',start:'C3',options:[]},Z:{sub:'ZÖLD csapat megnevezése',start:'A3',options:[]}},sectors:{A1:'',B2:'',C3:''},injects:[{turn:0,sector:'A1',text:'Turn 0 bemelegítő injekt'},{turn:1,sector:'B1',text:'1. kör injektje'}],friction:[],dcap:[{q:'Elemzési kérdés',metric:'decisions'}]});
+const scnPrompt=()=>'Készíts egy komplett Wargame Studio scenario-csomagot JSON formában, magyar nyelven, a következő témára: [ITT ADD MEG A TÉMÁT / A MEGBÍZÓ PROBLÉMÁJÁT].\n\nCsak érvényes JSON-t adj vissza (kódblokk és magyarázat nélkül), pontosan az alábbi szerkezettel. Szabályok:\n- fields.objectives: 3–4 célkitűzés, soronként egy; a fields többi mezője rövid, tömör szöveg.\n- teams.K (KÉK) és teams.P (PIROS): 5–8 válaszlehetőség csapatonként, a csapat valós eszköztárából (a KÉK és a PIROS opciói eltérőek legyenek); abbr: max. 5 karakter; label: max. 80 karakter; rat: indoklás-sablon a {sec} helyőrzővel. teams.Z (ZÖLD): opcionális, szintén opciókkal.\n- injects: 6 injekt (turn: 0 = bemelegítő, 1–5 = a körök; sector: A1–C3; text: a helyzet), kiegészítve 1–2 bármikor használható injekttel (turn: null).\n- friction: 3–5 súrlódás; dcap: 4 elemzési kérdés (metric: decisions | adjudication | time | observation).\n- sectors: A1–C3 rövid leírása; brief: situation, background, mission, mandate, assumptions, constraints, adjudication.\n- Fiktív, osztályozatlan adatokat használj.\n\nSzerkezet:\n'+JSON.stringify(scnTemplate(),null,1);
+function renderScn(){
+  const c=S.scn,ed=scnEditable(),dis=ed?'':'disabled',e=esc,tm=t=>c?c.teams[t]:{sub:'',start:'',options:[]};
+  const meta=c?`<div class="kv"><span>Név</span><b>${e(c.title||'—')}</b></div><div class="kv"><span>Verzió · dátum</span><b>v${e(c.version)} · ${e(c.date)}</b></div><div class="kv"><span>Szerző · forrás</span><b>${e(c.author||'—')} · ${e(c.source||'—')}</b></div><div class="kv"><span>Tartalom</span><b class="mono">${c.injects.length} injekt · K ${c.teams.K.options.length} / P ${c.teams.P.options.length} / Z ${c.teams.Z.options.length} opció</b></div>`:'<div class="note">Nincs betöltött scenario: a játék üres (nincs scenario, injekt, válaszlehetőség). Tölts be fájlt, használd a mintát, vagy írd meg a mezőkben.</div>';
+  let h='<div class="dgrid"><div class="col">';
+  h+=`<section class="panel hud pad"><h3 style="font-size:20px;margin-bottom:6px">Scenario-csomag</h3>${meta}<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px"><label class="btn sm" for="scnfile" style="cursor:pointer;${ed?'':'opacity:.5;pointer-events:none'}">Betöltés fájlból (JSON)</label><input type="file" id="scnfile" accept=".json,application/json" hidden ${dis}><button class="btn sm" data-act="scnsample" type="button" ${dis}>Minta: ENSZ békeművelet (VII. fejezet)</button><button class="btn sm" data-act="scntpl" type="button">Üres sablon letöltése</button><button class="btn sm" data-act="scnexp" type="button" ${c?'':'disabled'}>Exportálás (JSON)</button><button class="btn sm" data-act="scnclear" type="button" ${c&&ed?'':'disabled'}>Törlés</button><button class="btn sm pri" data-act="brief" type="button">Scenario Brief megtekintése</button></div><div class="note" style="margin-top:10px">${S.done[8]?'A Scenario a 8. lépés lezárásával zárolva (az igazgató újranyithatja).':'Szerkeszthető a 8. lépés lezárásáig: Forgatókönyv-tervező, Játéktervező, Játékfejlesztő, Wargame-igazgató.'} A betöltés a lépések üres mezőit előtölti (probléma, cél, célkitűzések…), a kapuk, szerepfeladatok és megbízói jóváhagyások továbbra is szükségesek.</div></section>`;
+  h+=`<section class="panel pad"><h3 style="font-size:18px;margin-bottom:8px">Scenario ellenőrzés (a 05. lépés kapujához)</h3><div id="scnchecks">${scnChecksHtml()}</div></section>`;
+  h+=`<section class="panel pad"><h3 style="font-size:18px;margin-bottom:6px">Scenario generáltatása</h3><div class="note" style="margin-bottom:8px">Másold ki a promptot egy MI-asszisztensbe (pl. Claude), írd be a témát, és a kapott JSON-t töltsd be fájlként (.json).</div><textarea id="scnprompt" rows="8" readonly class="mono" style="font-size:11.5px">${e(scnPrompt())}</textarea><div style="margin-top:8px"><button class="btn sm" data-act="scnprompt" type="button">Prompt másolása</button></div></section>`;
+  h+='</div><div class="col">';
+  h+=`<section class="panel hud pad"><h3 style="font-size:20px;margin-bottom:8px">Scenario Brief</h3><div style="display:grid;grid-template-columns:1fr 90px;gap:8px"><label class="fld"><span>Név *</span><input type="text" data-scn="title" value="${e(c?c.title:'')}" ${dis}></label><label class="fld"><span>Verzió</span><input type="text" data-scn="version" value="${e(c?c.version:'')}" ${dis}></label></div><label class="fld"><span>Szerző</span><input type="text" data-scn="author" value="${e(c?c.author:'')}" ${dis}></label>`+Object.keys(BRL).map(k=>`<label class="fld"><span>${BRL[k]}${k==='situation'||k==='mission'?' *':''}</span><textarea rows="3" data-scn="b:${k}" ${dis}>${e(c?c.brief[k]:'')}</textarea></label>`).join('')+'</section>';
+  h+=`<section class="panel pad"><h3 style="font-size:18px;margin-bottom:6px">Csapatok és válaszlehetőségek</h3><div class="note" style="margin-bottom:8px">Soronként egy opció: <span class="mono">RÖV | megnevezés | (opcionális) indoklás-sablon {sec}</span>. Az egyéni opció mindig elérhető.</div>`+'KPZ'.split('').map(t=>`<div class="ord" style="margin-bottom:8px"><div class="r1">${sym(t,20)}<b style="flex:1">${TEAMS[t].nm}</b></div><div style="display:grid;grid-template-columns:1fr 110px;gap:8px"><label class="fld"><span>Megnevezés</span><input type="text" data-scn="t:${t}:sub" value="${e(c?c.teams[t].sub:'')}" ${dis}></label><label class="fld"><span>Kezdő szektor</span><select data-scn="t:${t}:start" ${dis}><option value="">alap (${({K:'A1',P:'C3',Z:'A3'})[t]})</option>${SEC.map(x=>`<option ${c&&c.teams[t].start===x?'selected':''}>${x}</option>`).join('')}</select></label></div><label class="fld"><span>Válaszlehetőségek</span><textarea rows="6" data-scn="o:${t}" ${dis}>${e(fmtOpts(tm(t).options))}</textarea></label></div>`).join('')+'</section>';
+  h+=`<section class="panel pad"><h3 style="font-size:18px;margin-bottom:6px">Injektek, súrlódás, szektorok, DCAP</h3><label class="fld"><span>Injektek – soronként: kör | szektor | szöveg (kör: 0 = Turn 0, – = bármelyik)</span><textarea rows="7" data-scn="inj" ${dis}>${e(c?fmtInj(c.injects):'')}</textarea></label><label class="fld"><span>OPFOR-súrlódás – soronként egy</span><textarea rows="3" data-scn="fric" ${dis}>${e(c?c.friction.join('\n'):'')}</textarea></label><label class="fld"><span>Szektorok leírása – soronként: A1: leírás</span><textarea rows="4" data-scn="sec" ${dis}>${e(c?fmtSec(c.sectors):'')}</textarea></label><label class="fld"><span>DCAP-kérdések – soronként: mérőszám | kérdés (decisions, adjudication, time, observation)</span><textarea rows="4" data-scn="dcap" ${dis}>${e(c?fmtDcap(c.dcap):'')}</textarea></label></section>`;
+  return h+'</div></div>';
+}
+function briefHtml(){
+  const c=S.scn;if(!c)return'<h3 style="margin:0 0 8px">Scenario Brief</h3><div class="note">Nincs betöltött scenario. A Scenario nézetben (FOR, TER, FEJ, IGA) tölthető be vagy szerkeszthető.</div>';
+  const grp=(PROF&&PROF.group)||'ctl',ctl=grp!=='ply',p=(l,t)=>t?`<div class="lbl" style="margin-top:10px">${esc(l)}</div><div style="white-space:pre-wrap;font-size:14px;line-height:1.5">${esc(t)}</div>`:'';
+  let h=`<h3 style="margin:0">${esc(c.title||'Scenario Brief')}</h3><div class="mono" style="font-size:12px;color:var(--mut);margin-bottom:6px">v${esc(c.version)} · ${esc(c.date)} · ${esc(c.author||'—')}${c.source?' · '+esc(c.source):''}</div>`;
+  ['situation','background','mission','mandate','assumptions','constraints'].forEach(k=>h+=p(BRL[k],c.brief[k]));
+  h+=p('Célkitűzések',c.fields.objectives||getF(2,'objectives')||'');
+  h+='<div class="lbl" style="margin-top:12px">Csapatok és válaszlehetőségek</div>'+'KPZ'.split('').map(t=>{const x=c.teams[t];return`<div class="ord" style="margin-top:6px"><div class="r1">${sym(t,20)}<b style="flex:1">${TEAMS[t].nm} · ${esc(x.sub||SUB0[t])}</b><span class="mono" style="font-size:11px">kezdő szektor: ${START[t]}</span></div>${x.options.length?`<div style="font-size:13px;line-height:1.5">${x.options.map(o=>`<span class="mono">${esc(o.abbr)}</span> ${esc(o.label)}`).join('<br>')}</div>`:'<div style="color:var(--mut);font-size:13px">Nincs megadva (csak egyéni opció).</div>'}</div>`}).join('');
+  if(SEC.some(k=>c.sectors[k]))h+=p('Szektorok',fmtSec(c.sectors));
+  if(ctl){h+=p('Injekt-ütemterv (csak irányítás)',c.injects.map(x=>(x.turn==null?'bármikor':'T'+x.turn)+(x.sector?' · '+x.sector:'')+': '+x.text).join('\n'));h+=p('OPFOR-súrlódás',c.friction.join('\n'));h+=p(BRL.adjudication,c.brief.adjudication)}
+  else h+='<div class="note" style="margin-top:10px">Az injektek és az elbírálási szempontok a játékirányításnál maradnak.</div>';
+  return h;
+}
+function openBrief(){const m=$('#briefModal');m.innerHTML=`<div class="brief" role="dialog" aria-label="Scenario Brief"><button class="btn sm" data-act="briefclose" type="button" style="align-self:flex-end">Bezár ✕</button>${briefHtml()}</div>`;m.hidden=false}
 
-const PACKS={
- std:{nm:'Alap (Baltic Shield – gyakorló)'},
- pso:{nm:'ENSZ békeművelet – VII. fejezet (Észak-völgy, fiktív)',title:'ENSZ BKM – ÉSZAK-VÖLGY 26',
-  act:['Helyzetmegállapítás, jelentés az SZT-nek (39. cikk)','Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk)','Nem katonai intézkedések: embargó-, szankcióellenőrzés (41. cikk)','Fegyveres erő alkalmazása mandátum és ROE szerint (42. cikk)','Erőbiztosítás, ROE- és támogatási egyeztetés (43. cikk)','Civilek védelme, humanitárius hozzáférés (POC)','Önvédelem, jogos védelem (51. cikk)'],
-  acs:['JEL','IDE','SZA','ERŐ','ERB','POC','VÉD','EGY'],
-  inj:['A PIROS erők átlépték a tűzszüneti vonalat a B1 szektorban; civil falvak kerültek veszélybe (a béke fenyegetése, 39. cikk).','Az A3 szektorban ellenőrzőponton feltartottak egy humanitárius konvojt; élelmiszer- és gyógyszerhiány alakul ki.','Menekültáradat az A2 szektor útjain; a beáramlás akadályozza az ENSZ-erő mozgását és a konvojokat.','Embargót sértő fegyverszállítmány észlelve a C2 határátkelőnél (a 41. cikk szerinti intézkedések hatóköre).','Támadás érte az ENSZ-járőrt a B3 szektorban; sérültek; azonnali ROE-döntés szükséges (42. és 51. cikk).','Dezinformációs kampány: hamis hír a civil áldozatokról; a helyi lakosság bizalma és a hozzáférés romlik.'],
-  inj0:'Turn 0 – bemelegítő vignette: a tűzszüneti vonalon feszültség; az ENSZ-járőr a PIROS erők mozgását észleli az A1 szektorban.',
-  fric:['– nincs –','Nyelvi és kulturális akadály a tárgyalásokon','Összeköttetési zavar (rádió, műhold)','Mandátum- és ROE-értelmezési vita a hozzájáruló nemzetek között','Dezinformáció a helyi médiában'],
-  start:{K:'C3',P:'A1',Z:'A3'},
-  sub:{K:'ENSZ békefenntartó erő (Force HQ)',P:'Szembenálló fegyveres csoport',Z:'Vendéglátó állam hatóságai, humanitárius szervezetek'},
-  dcap:[['Milyen mandátum- és ROE-értelmezés alapján döntöttek a csapatok az erőalkalmazásról (40–42., 51. cikk)?','decisions'],['Hogyan alakult a civilek védelmének és a humanitárius hozzáférésnek az eredménye körönként?','adjudication'],['Mennyi idő kellett a döntésekhez a kritikus injekteknél (ROE-döntés, konvoj)?','time'],['Mi akadályozta a koordinációt az ENSZ-erő, a vendéglátó állam és a humanitárius szervezetek között?','observation']],
-  sample:{problem:'Hogyan tartható fenn a tűzszünet, és hogyan védhetők meg a civilek az Észak-völgy tartományban (Aldória, fiktív), ha az ENSZ Biztonsági Tanácsa az Alapokmány VII. fejezete alapján robusztus mandátumot adott a békefenntartó missziónak?',outcome:'A döntési alternatívák (39–43. és 51. cikk szerinti eszközök) és következményeik feltárása; javaslatok a mandátum- és ROE-értelmezésre.',goal:'Az ENSZ-erő döntéshozatalának vizsgálata VII. fejezeti mandátum alatt, korlátozott erőforrásokkal.',objectives:'Értékelni a 40–42. cikk szerinti eszközök fokozatos és arányos alkalmazását\nFeltárni a civilek védelmének (POC) és a humanitárius hozzáférésnek az akadályait\nVizsgálni az ENSZ-erő, a vendéglátó állam és a humanitárius szervezetek koordinációját',expected:'Döntési minták és tanulságok a mandátum értelmezéséről; ajánlások a ROE- és koordinációs eljárásokra.',milestones:'Behatárolás, 2 playtest, főpróba, játék (turn 0–5), hot-wash, AAR, jelentés',constraints:'2 nap, 5 játékkör + turn 0, osztályozatlan (fiktív) adatok, mobilról csatlakozó játékosok',research:'Az ENSZ Alapokmány VII. fejezete (39–51. cikk); békefenntartás elvei (hozzájárulás, pártatlanság, erőalkalmazás önvédelemben és a mandátum védelmében); POC-irányelvek; ROE-minták; hasonló békeműveleti játékok.',scenario:'Fiktív Aldória, Észak-völgy tartomány. Tűzszünet két fél között; az SZT VII. fejezet alapján robusztus mandátumot adott. KÉK: ENSZ-erő (Force HQ a C3 szektorban); PIROS: szembenálló fegyveres csoport (A1–B1 hegyvidék); ZÖLD: vendéglátó állam hatóságai és humanitárius szervezetek (A3 osztópont). B2: pufferzóna, A2: menekültútvonalak, C2: határátkelő. Injektek: tűzszüneti vonal megsértése, konvoj feltartása, menekültáradat, embargó-megkerülés, járőrtámadás, dezinformáció.',eventplan:'Helyszín: gyakorlóterem, két adjudikátori asztal, zárt hálózat; QR-os mobil csatlakozás; étkezés és szállás a helyszínen; fiktív, osztályozatlan adatok.',bugs:'A 41. cikk szerinti (nem katonai) opció kevésbé kidolgozott; az injekt-kiadás lassú; az elbírálási lap nem különítette el a POC-eredményt.',refine:'Körönként 25 perc döntési idő; az elbírálási lap kiegészítve POC- és ROE-szempontokkal; a 41. cikk opciójához példák.',invite:'Meghívó és tájékoztató melléklet kiküldve (fiktív MISSZIÓ, VII. fejezeti háttér).',rehearse:'Az adjudikátorok és a facilitátorok begyakorolták a kör menetét és a ROE-alapú elbírálást.',readahead:'Háttéranyag: Alapokmány VII. fejezet kivonat, a mandátum, a ROE-kártya; 10 nappal a játék előtt.',setup:'Az eszközök, a kijelzők és a hálózat rendben; az IT végponttól végpontig tesztelve.',hotwash:'A játékosok szerint a ROE-értelmezés és az információmegosztás volt a szűk keresztmetszet; a nem katonai eszközök alulhasználtak.',aar:'A célok többsége részben teljesült; fő tanulság a koordináció és a ROE-értelmezés egységesítése.',eval:'A szabályok működtek; a DCAP megfigyelési mérőszáma finomításra szorul; az elbírálási lap POC-szempontokkal bővült.',report:'Végső jelentés a követő felhasználásra összeállítva.',archive:'Archívum: wargame-tár; felhasználó: békeműveleti tervezési csoport.',integr:'A megállapítások beépülnek a következő békeműveleti tervezési és kiképzési ciklusba.'}}
-};
-var STD0=null;
-function setPack(k,user){
-  if(!STD0)STD0={act:ACT,acs:ACS,inj:INJ,inj0:INJ0,fric:FRIC,start:START,sub:{K:TEAMS.K.sub,P:TEAMS.P.sub,Z:TEAMS.Z.sub},sample:Object.assign({},SAMPLE)};
-  if(!PACKS[k])k='std';const pk=PACKS[k],b=k==='std'?STD0:pk;
-  ACT=b.act;ACS=b.acs;INJ=b.inj;INJ0=b.inj0;FRIC=b.fric;START=b.start;
-  ['K','P','Z'].forEach(t=>TEAMS[t].sub=b.sub[t]);
-  Object.keys(SAMPLE).forEach(x=>delete SAMPLE[x]);Object.assign(SAMPLE,k==='std'?STD0.sample:pk.sample);
-  PACK=k;S.pack=k;lsSet('wgs-pack',k);
-  if(user){S.title=k==='pso'?PACKS.pso.title:'BALTIC SHIELD 26';S.seats.forEach(x=>x.prompt=defPrompt(x.t,x.fn,x.role));const g=$('#gtitle');if(g)g.value=S.title}
-  const sel=$('#pack');if(sel)sel.value=k;
-}
+const SAMPLE0=Object.assign({},SAMPLE);
+function playerBrief(){const c=S.scn;if(!c)return null;const b={};['situation','background','mission','mandate','assumptions','constraints'].forEach(k=>{if(c.brief[k])b[k]=c.brief[k]});if(c.fields.objectives||getF(2,'objectives'))b.objectives=c.fields.objectives||getF(2,'objectives');b.teams={};'KPZ'.split('').forEach(t=>b.teams[t]={sub:c.teams[t].sub||SUB0[t],start:START[t]});b.title=c.title;b.version=c.version;return b}
+function phoneBrief(sn){const b=sn&&sn.brief;if(!b)return'';const p=(l,t)=>t?`<div class="lbl" style="margin-top:8px">${esc(l)}</div><div style="white-space:pre-wrap;font-size:13px">${esc(t)}</div>`:'';return`<details class="note" style="margin:8px 0"><summary style="cursor:pointer;font-weight:600">Scenario Brief – ${esc(b.title||'')}</summary>`+['situation','background','mission','mandate','assumptions','constraints'].map(k=>p(BRL[k],b[k])).join('')+p('Célkitűzések',b.objectives)+(b.teams?'<div class="lbl" style="margin-top:8px">Csapatok</div><div style="font-size:13px">'+'KPZ'.split('').map(t=>TEAMS[t].nm+': '+esc((b.teams[t]||{}).sub||'')+' (kezdő szektor: '+esc((b.teams[t]||{}).start||'')+')').join('<br>')+'</div>':'')+'</details>'}
 
 /* ---------- folyamat-napló (automatikus, a változások különbségéből) ---------- */
 var LOGPREV=null,LOGROOM=null,LOGNOW=null;
@@ -913,7 +993,7 @@ const fmtT=ts=>new Date(ts).toLocaleString('hu-HU',{year:'numeric',month:'2-digi
 const seatFn=id=>{const x=S.seats.find(z=>z.id===id);return x?x.fn:id};
 function logSnap(){
   const m={};
-  m.pack=[1,'beállítás','Forgatókönyv-csomag: '+(PACKS[S.pack]?PACKS[S.pack].nm:S.pack),S.pack];
+  {const c=S.scn,oc=c?['K','P','Z'].map(t=>c.teams[t].options.length).join('/'):'';m.scn=[S.step,'beállítás','Scenario: '+(c?c.title+' v'+c.version+' ('+c.source+') – '+c.injects.length+' injekt, válaszlehetőség K/P/Z: '+oc:'nincs betöltve (üres játék)'),c?[c.title,c.version,c.source,c.injects.length,oc,c.brief.situation.length,c.brief.mission.length,c.friction.length,c.dcap.length].join('|'):'']}
   m.title=[1,'beállítás','Játék neve: '+S.title,S.title];
   Object.keys(S.done).forEach(n=>m['done:'+n]=[+n,'kapu',S.done[n]?(n+'. lépés ('+STEPS[n-1].nm+') lezárva'):(n+'. lépés újranyitva'),!!S.done[n]]);
   Object.keys(S.ticks).forEach(k=>{const q=k.split(':').map(Number),n=q[0],t=STEPS[n-1]&&STEPS[n-1].tasks[q[1]];m['tick:'+k]=[n,'feladat',(S.ticks[k]?'Feladat kész':'Feladat visszavonva')+' ['+(t?t[0]:'?')+']: '+(t?t[1]:k),!!S.ticks[k]]});
@@ -946,7 +1026,7 @@ function pushLog(n,cat,tx,k){
 }
 const logNote=(cat,tx,n)=>pushLog(n||S.step,cat,tx,'');
 function logDiff(){
-  if(S.room!==LOGROOM){LOGROOM=S.room;LOGPREV=logSnap();if(!S.log.length)pushLog(1,'folyamat','Új játék indítva: '+S.title+' ('+(PACKS[S.pack]||PACKS.std).nm+')','');return}
+  if(S.room!==LOGROOM){LOGROOM=S.room;LOGPREV=logSnap();if(!S.log.length)pushLog(1,'folyamat','Új játék indítva: '+S.title,'');return}
   const cur=logSnap();
   for(const k in cur){const c=cur[k],pv=LOGPREV[k];
     if(pv&&String(pv[3])===String(c[3]))continue;
@@ -961,13 +1041,13 @@ function logCsv(){const q=x=>'"'+String(x==null?'':x).replace(/"/g,'""')+'"';ret
 
 /* ---------- AAR-generátor ---------- */
 function buildAAR(){
-  const c=cfg(),L=S.log,ex=execRun(),dp=dataPoints(ex),pk=PACKS[S.pack]||PACKS.std,ts=teamState(ex);
+  const c=cfg(),L=S.log,ex=execRun(),dp=dataPoints(ex),ts=teamState(ex);
   const hn=S.seats.filter(s=>s.active&&s.mode==='human').length,an=S.seats.filter(s=>s.active&&s.mode==='ai').length;
   const t0=L.length?L[0].ts:Date.now(),t1=L.length?L[L.length-1].ts:Date.now(),days=Math.round((t1-t0)/864e5);
   const doneN=Object.keys(S.done).filter(n=>S.done[n]).length;
   const rn=m=>runsOf(m).length;
   let o=`# After Action Review (AAR) – ${S.title}\n\n`;
-  o+=`- Forgatókönyv: ${pk.nm}\n- Program: Wargame Studio ${VER}\n- Az AAR automatikus vázlat a folyamat-naplóból és a rögzített adatokból; az elemző (ELE) és a Wargame-igazgató (IGA) hagyja jóvá.\n`;
+  o+=`- Scenario: ${S.scn?S.scn.title+' (v'+S.scn.version+', forrás: '+S.scn.source+')':'nincs betöltve'}\n- Program: Wargame Studio ${VER}\n- Az AAR automatikus vázlat a folyamat-naplóból és a rögzített adatokból; az elemző (ELE) és a Wargame-igazgató (IGA) hagyja jóvá.\n`;
   if(L.some(e=>e.sim))o+=`- **Megjegyzés:** a naplóbejegyzések szimulált teszt eredményei (nem valódi résztvevőktől); az AAR a folyamat és az alkalmazás vizsgálatát szolgálja, nem operatív következtetések levonására.\n`;
   o+=`\n## 1. Összefoglaló\n\n- Probléma: ${getF(1,'problem')||'—'}\n- Cél: ${c.goal}\n- Célkitűzések:\n${c.obj.map((x,i)=>`  ${i+1}. ${x}`).join('\n')||'  —'}\n- Módszertan: ${c.rig}; elbírálás: ${c.adj}; ${c.turns} tervezett kör\n- Időtartam a napló szerint: ${fmtT(t0)} – ${fmtT(t1)} (${days} nap)\n- Lezárt lépések: ${doneN}/18\n- Résztvevők (aktív helyek): ${hn} emberi, ${an} AI\n- Futások: ${rn('playtest')} playtest, ${rn('rehearsal')} főpróba, végrehajtás: ${execTurnsDone()} kör (+ turn 0)\n- Adat: ${dp.decisions} indokolt döntés, ${dp.adjudication} elbírálás, ${dp.time} időmérés, ${dp.observation} megfigyelés\n- Naplóbejegyzések: ${L.length}\n`;
   o+=`\n## 2. Folyamat-idővonal (tervezés → szervezés → végrehajtás → elemzés)\n\n| Lépés | Fázis | Lezárva | Pipák | Produktum | Megbízó | Közreműködő szerepek |\n|---|---|---|---|---|---|---|\n`;
@@ -984,10 +1064,10 @@ function buildAAR(){
     tdone.forEach(tn=>{const cell=t=>{const id=Object.keys(tn.orders).filter(k=>k[0]===t).sort()[0],od=id&&tn.orders[id],a=tn.adj[t];return od?`${trunc(od.act,38)} @ ${od.sec} → **${a?a.res:'—'}**`:'—'};o+=`| T${tn.i} | ${trunc(tn.inject,90)} | ${cell('K')} | ${cell('P')} | ${cell('Z')} | ${tn.t0&&tn.t3?Math.round((tn.t3-tn.t0)/60000):'—'} |\n`});
     o+=`\nEredményindex (siker +2, részleges +1, kudarc −1): `+'KPZ'.split('').map(t=>`${TEAMS[t].nm} ${ts[t].idx>=0?'+':''}${ts[t].idx} (${ts[t].res.join('/')})`).join(' · ')+`\n`}else o+='Nincs lezárt végrehajtási kör.\n';
   o+=`\n## 5. Döntési minták\n\n`;
-  const acts=ACT.concat(['Egyéni opció']);const cnt=acts.map(()=>({K:0,P:0,Z:0,s:0,r:0,k:0}));
-  tdone.filter(t=>t.i>0).forEach(tn=>Object.entries(tn.orders).forEach(([id,od])=>{const j=ACT.indexOf(od.act),k=j<0?ACT.length:j,t=id[0];if(t==='F')return;cnt[k][t]++;const a=tn.adj[t];if(a)cnt[k][a.res==='Siker'?'s':a.res==='Részleges'?'r':'k']++}));
+  const cnt={};
+  tdone.filter(t=>t.i>0).forEach(tn=>Object.entries(tn.orders).forEach(([id,od])=>{const t=id[0];if(t==='F')return;const lab=OPL(t).includes(od.act)?od.act:'Egyéni opció';(cnt[lab]=cnt[lab]||{K:0,P:0,Z:0,s:0,r:0,k:0})[t]++;const a=tn.adj[t];if(a)cnt[lab][a.res==='Siker'?'s':a.res==='Részleges'?'r':'k']++}));
   o+=`| Válaszopció | KÉK | PIROS | ZÖLD | Összesen | Siker / részleges / kudarc (a csapat körének eredménye) |\n|---|---|---|---|---|---|\n`;
-  acts.forEach((a,k)=>{const x=cnt[k],tot=x.K+x.P+x.Z;if(tot)o+=`| ${a} | ${x.K} | ${x.P} | ${x.Z} | ${tot} | ${x.s} / ${x.r} / ${x.k} |\n`});
+  Object.keys(cnt).forEach(a=>{const x=cnt[a],tot=x.K+x.P+x.Z;if(tot)o+=`| ${a} | ${x.K} | ${x.P} | ${x.Z} | ${tot} | ${x.s} / ${x.r} / ${x.k} |\n`});
   o+=`\n## 6. Célkitűzések elérése (ODCR)\n\n`;
   o+=c.obj.length?c.obj.map((x,i)=>{const v=S.odcr[i]||{};return`**${i+1}. ${x}**\n- Observation: ${odcrObs(i,ex)}\n- Discussion: ${v.d||'—'}\n- Conclusion: ${v.c||'—'}\n- Recommendation: ${v.r||'—'}\n`}).join('\n'):'Nincs rögzített célkitűzés.\n';
   o+=`\n## 7. Adatgyűjtés (DCAP) lefedettsége\n\n`;
@@ -1011,30 +1091,35 @@ function logAndAar(){
 }
 
 /* ---------- szimulált teljes folyamat-teszt (békeműveleti forgatókönyv) ---------- */
-function runScenarioTest(){
+async function runScenarioTest(){
   const rep={defects:[],entries:0},keepRole=PROF?PROF.id:'IGA';
-  setPack('pso',false);S=defaults();S.pack='pso';UI.vstep=null;UI.sel=null;LOGROOM=null;
+  const raw=await (await fetch(SCN_FILE)).json(),SIM=raw.simulation||{plan:{},results:{},observations:[],odcr:[]},SCNO=sanitizeScn(raw);
+  const WHY={Siker:'A döntés a mandátum és a ROE keretein belül, arányosan történt, és a kitűzött célt szolgálta.',Részleges:'A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).',Kudarc:'A döntés nem érte el a célt, vagy a mandátum/ROE határán kívül esett, illetve a civilek kockázatát növelte.'};
+  S=defaults();applyScn(null);UI.vstep=null;UI.sel=null;LOGROOM=null;
+  rep.emptyStart={scn:S.scn===null,options:OPL('K').length+OPL('P').length+OPL('Z').length,injects:injList().length,log:S.log.length};
   const D0=Date.UTC(2026,2,2,7,0,0),DAYS=[0,3,7,10,14,28,35,42,56,63,70,77,77,78,85,99,106,113],MIN=60000;
   LOGNOW=D0;logDiff();
   const as=(role,ts,fn)=>{S.role=role;LOGNOW=ts;fn();save()};
   const FR={1:'MEG',2:'IGA',3:'TER',4:'TER',5:'FOR',6:'FEJ',7:'FEJ',8:'REN',9:'IGA',10:'IGA',11:'REN',12:'FAC',14:'FAC',16:'ELE',17:'ELE',18:'IGA'};
   function simTurn(r,T){const tn=newTurn(r);
-    as('FOR',T,()=>{tn.inject=(r.mode==='execution'&&tn.i===0)?INJ0:INJ[(tn.i-1+INJ.length)%INJ.length];tn.fric=tn.i%FRIC.length;tn.phase=1;tn.t0=T});
+    as('FOR',T,()=>{tn.inject=(injFor(tn.i)||{text:NOINJ}).text;tn.fric=tn.i%FRIC.length;tn.phase=1;tn.t0=T});
     T+=2*MIN;
-    decSeats().forEach(s=>{T+=45000+(s.i%4)*20000;as(s.role,T,()=>{tn.orders[s.id]=psoOrder(s,tn)})});
+    decSeats().forEach(s=>{T+=45000+(s.i%4)*20000;as(s.role,T,()=>{tn.orders[s.id]=genOrder(s,tn,(SIM.plan[s.t]||[0])[Math.max(0,tn.i)%6])})});
     T+=3*MIN;as('IGA',T,()=>{tn.phase=2});
-    activeTeams(tn).forEach(t=>{T+=2*MIN;as('ADJ',T,()=>{tn.adj[t]=psoAdj(t,tn.i)})});
-    T+=2*MIN;as('FAC',T,()=>{tn.obs=psoObs(tn.i)});
+    activeTeams(tn).forEach(t=>{T+=2*MIN;as('ADJ',T,()=>{{const rs=((SIM.results||{})[t]||[])[tn.i%6]||'Részleges';tn.adj[t]={res:rs,why:WHY[rs],method:cfg().adj,roll:0}}})});
+    T+=2*MIN;as('FAC',T,()=>{tn.obs=(SIM.observations||[])[tn.i%Math.max(1,(SIM.observations||[]).length)]||'—'});
     T+=2*MIN;as('IGA',T,()=>{tn.phase=3;tn.t3=T});
     return T+5*MIN}
   function simRun(mode,T,k,role){let r;as(role,T,()=>{r=newRun(mode)});for(let i=0;i<k;i++)T=simTurn(r,T);as('IGA',T,()=>{r.status='closed'});return T+MIN}
   for(let n=1;n<=18;n++){
     const st=STEPS[n-1];let T=D0+DAYS[n-1]*864e5+(n===13?4:2)*36e5;
     S.step=n;
+    if(n===1)as('IGA',T+=5*MIN,()=>{setScn(SCNO,'szimulált teszt: '+SCN_FILE.split('/').pop());S.role='IGA'});
     st.tasks.forEach((tk,i)=>{T+=7*MIN;as(tk[0],T,()=>{S.ticks[n+':'+i]=true})});
     (FIELDS[n]||[]).forEach(f=>{T+=11*MIN;as(FR[n]||'IGA',T,()=>{const k=n+':'+f.id;
       S.fields[k]=f.t==='c'?true:f.t==='n'?(f.id==='turns'?5:f.def):f.t==='s'?(f.id==='method'?f.opts[0]:f.id==='formal'?f.opts[1]:f.id==='rigidity'?RIG[1]:ADJM[2]):(SAMPLE[f.id]||'Minta: '+f.l)})});
     if(n===5){
+      as('FOR',T+=5*MIN,()=>{scnInput('version',SCNO.version+'-áttekintett')});
       as('IGA',T+=10*MIN,()=>{S.seats.forEach(x=>{if(x.t==='K'&&x.i<7)x.active=true;if(x.t==='P'&&x.i<6)x.active=true;if(x.t==='Z'&&x.i<4)x.active=true});seatsOf('K')[3].mode='ai';seatsOf('P')[2].mode='ai'});
       as('FEJ',T+=10*MIN,()=>{const x=seatsOf('K')[2];x.prompt+=' Kiegészítés: a ROE-kártya szerinti erőalkalmazásnál mindig mérlegeld az arányosságot és a civil áldozatok kockázatát.'});
       as('ELE',T+=10*MIN,()=>{loadSampleDcap()})}
@@ -1045,8 +1130,8 @@ function runScenarioTest(){
     if(n===11)S.seats.filter(s=>s.active&&s.mode==='human').forEach(s=>{T+=MIN;as(s.role==='JAT'?'JAT':s.role,T,()=>{s.joined=true})});
     if(n===12){let r;as('IGA',T+10*MIN,()=>{r=newRun('execution')});simTurn(r,T+12*MIN)}
     if(n===13){const r=execRun();T+=10*MIN;for(let i=0;i<5;i++)T=simTurn(r,T);as('IGA',T,()=>{r.status='closed'})}
-    if(n===15)as('ELE',T+=10*MIN,()=>{const x=[['A 40. és 42. cikk szerinti eszközök fokozatos alkalmazása ott volt eredményes, ahol a döntés előzetes figyelmeztetéssel és arányosan történt.','A KÉK csapat az ideiglenes intézkedéseket és a POC-t eredményesebben használta, mint az erőalkalmazást; az arányosság indoklása több körben gyenge volt.','A ROE-kártyát döntési támogató eljárásrenddel kell kiegészíteni.'],['A civilek védelmét a koordinációs késedelem és az információhiány akadályozta; a humanitárius hozzáférés a ZÖLD és a KÉK közös döntésein múlt.','A cél részben teljesült: a POC-döntések a körök többségében sikeresek voltak, de a konvoj-feltartás és a menekültáradat ütközött.','Közös POC- és konvoj-koordinációs cella kialakítása az ENSZ-erő, a hatóságok és a szervezetek között.'],['A koordináció a legfőbb szűk keresztmetszet; az információ a ZÖLD felé késve jutott el.','A cél részben teljesült; a koordináció erősíthető, de nem volt egyértelmű közös helyzetkép.','Közös helyzetkép (COP) és rendszeres egyeztetés a követő gyakorlatokon.']];
-      cfg().obj.forEach((_,i)=>{S.odcr[i]={d:x[i][0],c:x[i][1],r:x[i][2]}})});
+    if(n===15)as('ELE',T+=10*MIN,()=>{const x=SIM.odcr||[];
+      cfg().obj.forEach((_,i)=>{const q=x[i]||['—','—','—'];S.odcr[i]={d:q[0],c:q[1],r:q[2]}})});
     if(n===16)as('ELE',T+=30*MIN,()=>{S.fields['16:aar']=buildAAR()});
     if(n===17)as('ELE',T+=30*MIN,()=>{S.fields['17:report']=quickReport()});
     if(st.tp===1)as('MEG',T+=15*MIN,()=>{S.sponsor[n]={at:T}});
@@ -1062,7 +1147,7 @@ var SIMREP=null;
 (function init(){
   const th=lsGet('wgs-theme');if(th)document.documentElement.dataset.theme=th;
   if(PROF)S.role=PROF.id;
-  setPack(S.pack||PACK,false);
+  applyScn(S.scn);
   let tr=lsGet('wgs-terr')||'default';genTerrain(TERR[tr]?tr:'temp');
   idb('get','sheet').then(b=>{if(b)$('#terr option[value=custom]').disabled=false;else if(tr==='custom'){tr='default';lsSet('wgs-terr','default')}$('#terr').value=tr;setMapSource(tr)});
   $('#gtitle').value=S.title;

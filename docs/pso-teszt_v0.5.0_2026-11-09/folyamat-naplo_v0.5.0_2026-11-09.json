@@ -1,0 +1,4820 @@
+{
+ "scenario": {
+  "title": "ENSZ békeművelet – Észak-völgy (VII. fejezet)",
+  "version": "1.0-áttekintett",
+  "source": "szimulált teszt: pso-eszak-volgy_v1.0_2026-11-09.json"
+ },
+ "version": "v0.5.0 · 2026-11-09",
+ "log": [
+  {
+   "ts": 1772434800000,
+   "n": 1,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "folyamat",
+   "tx": "Új játék indítva: Új játék",
+   "k": "",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 1,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "beállítás",
+   "tx": "Scenario: ENSZ békeművelet – Észak-völgy (VII. fejezet) v1.0 (szimulált teszt: pso-eszak-volgy_v1.0_2026-11-09.json) – 7 injekt, válaszlehetőség K/P/Z: 8/6/6",
+   "k": "scn",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 1,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "beállítás",
+   "tx": "Játék neve: ENSZ békeművelet – Észak-völgy (VII. fejezet)",
+   "k": "title",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 1,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Probléma / kérdés a megbízó megfogalmazásában: Hogyan tartható fenn a tűzszünet, és hogyan védhetők meg a civilek az Észak-völgy tartományban (Aldória, fiktív), ha az ENSZ Biztonsági Tanácsa az Alapokmány VII. fejezete alapján robusztus mandátumot adott a békefennta…",
+   "k": "field:1:problem",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 1,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Kívánt eredmény: A döntési alternatívák (39–43. és 51. cikk szerinti eszközök) és következményeik feltárása; javaslatok a mandátum- és ROE-értelmezésre.",
+   "k": "field:1:outcome",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 2,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Cél: Az ENSZ-erő döntéshozatalának vizsgálata VII. fejezeti mandátum alatt, korlátozott erőforrásokkal.",
+   "k": "field:2:goal",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 2,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Célkitűzések (3–4, soronként egy): Értékelni a 40–42. cikk szerinti eszközök fokozatos és arányos alkalmazását Feltárni a civilek védelmének (POC) és a humanitárius hozzáférésnek az akadályait Vizsgálni az ENSZ-erő, a vendéglátó állam és a humanitárius s…",
+   "k": "field:2:objectives",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 2,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Elvárt eredmények: Döntési minták és tanulságok a mandátum értelmezéséről; ajánlások a ROE- és koordinációs eljárásokra.",
+   "k": "field:2:expected",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 2,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Mérföldkövek: Behatárolás, 2 playtest, főpróba, játék (turn 0–5), hot-wash, AAR, jelentés",
+   "k": "field:2:milestones",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 2,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Korlátok: 2 nap, 5 játékkör + turn 0, osztályozatlan (fiktív) adatok, mobilról csatlakozó játékosok",
+   "k": "field:2:constraints",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 3,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Kutatási alap: téma, hasonló játékok, erők/elemek: Az ENSZ Alapokmány VII. fejezete (39–51. cikk); békefenntartás elvei; POC-irányelvek; ROE-minták; hasonló békeműveleti játékok.",
+   "k": "field:3:research",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 5,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Forgatókönyv és vignette-ek: Fiktív Aldória, Észak-völgy tartomány. KÉK: ENSZ-erő (Force HQ a C3 szektorban); PIROS: szembenálló fegyveres csoport (A1–B1 hegyvidék); ZÖLD: vendéglátó állam hatóságai és humanitárius szervezetek (A3 osztópont). B2: p…",
+   "k": "field:5:scenario",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 5,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Esemény-terv: helyszín, biztonság, IT, szállás, étkezés: Helyszín: gyakorlóterem, két adjudikátori asztal, zárt hálózat; QR-os mobil csatlakozás; étkezés és szállás a helyszínen; fiktív, osztályozatlan adatok.",
+   "k": "field:5:eventplan",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 6,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Playtest-hibalista és megfigyelések: A 41. cikk szerinti (nem katonai) opció kevésbé kidolgozott; az injekt-kiadás lassú; az elbírálási lap nem különítette el a POC-eredményt.",
+   "k": "field:6:bugs",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 7,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Finomított szabályok, mechanika, időzítés: Körönként 25 perc döntési idő; az elbírálási lap kiegészítve POC- és ROE-szempontokkal; a 41. cikk opciójához példák.",
+   "k": "field:7:refine",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 8,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Meghívó (calling message) és adminisztratív melléklet: Meghívó és tájékoztató melléklet kiküldve (fiktív misszió, VII. fejezeti háttér).",
+   "k": "field:8:invite",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 9,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – A főpróba tapasztalatai: Az adjudikátorok és a facilitátorok begyakorolták a kör menetét és a ROE-alapú elbírálást.",
+   "k": "field:9:rehearse",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 10,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Kiadott read-ahead anyag (tartalom, dátum): Háttéranyag: Alapokmány VII. fejezet kivonat, a mandátum, a ROE-kártya; 10 nappal a játék előtt.",
+   "k": "field:10:readahead",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 11,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Helyszín- és IT-állapot jegyzet: Az eszközök, a kijelzők és a hálózat rendben; az IT végponttól végpontig tesztelve.",
+   "k": "field:11:setup",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 14,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Hot-wash: felismerések, tanulságok: A játékosok szerint a ROE-értelmezés és az információmegosztás volt a szűk keresztmetszet; a nem katonai eszközök alulhasználtak.",
+   "k": "field:14:hotwash",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 16,
+   "ph": 3,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – AAR: kulcsmegállapítások, cél-elérés, követő lépések: A célok többsége részben teljesült; fő tanulság a koordináció és a ROE-értelmezés egységesítése.",
+   "k": "field:16:aar",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 16,
+   "ph": 3,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Belső értékelés: szabályok, DCAP, rendezvény, megbízó: A szabályok működtek; a DCAP megfigyelési mérőszáma finomításra szorul; az elbírálási lap POC-szempontokkal bővült.",
+   "k": "field:16:eval",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 17,
+   "ph": 3,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Végső jelentés – összefoglaló: Végső jelentés a követő felhasználásra összeállítva.",
+   "k": "field:17:report",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 18,
+   "ph": 3,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Archivált tudás: hol tárolva, ki használja: Archívum: wargame-tár; felhasználó: békeműveleti tervezési csoport.",
+   "k": "field:18:archive",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 18,
+   "ph": 3,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Beépítés a további kampányba: A megállapítások beépülnek a következő békeműveleti tervezési és kiképzési ciklusba.",
+   "k": "field:18:integr",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 4,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Játékkörök száma (turn 1…N): 5",
+   "k": "field:4:turns",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 4,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Merevségi skála: Matrix wargame",
+   "k": "field:4:rigidity",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 4,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Elbírálási módszer: Analitikus támogatással",
+   "k": "field:4:adj",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 4,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – Megállapodás: Formális (MoA)",
+   "k": "field:4:formal",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 1,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "DCAP",
+   "tx": "DCAP-kérdés: Milyen mandátum- és ROE-értelmezés alapján döntöttek a csapatok az erőalkalmazásról (40–42., 51. cikk)? [Döntés és indoklás; teszt: nincs jelölve]",
+   "k": "dc:1",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 1,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "DCAP",
+   "tx": "DCAP-kérdés: Hogyan alakult a civilek védelmének és a humanitárius hozzáférésnek az eredménye körönként? [Elbírálási eredmény; teszt: nincs jelölve]",
+   "k": "dc:2",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 1,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "DCAP",
+   "tx": "DCAP-kérdés: Mennyi idő kellett a döntésekhez a kritikus injekteknél (ROE-döntés, konvoj)? [Időfelhasználás; teszt: nincs jelölve]",
+   "k": "dc:3",
+   "sim": 1
+  },
+  {
+   "ts": 1772442300000,
+   "n": 1,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "DCAP",
+   "tx": "DCAP-kérdés: Mi akadályozta a koordinációt az ENSZ-erő, a vendéglátó állam és a humanitárius szervezetek között? [Megfigyelés (ELE/FAC); teszt: nincs jelölve]",
+   "k": "dc:4",
+   "sim": 1
+  },
+  {
+   "ts": 1772442720000,
+   "n": 1,
+   "ph": 0,
+   "role": "MEG",
+   "cat": "feladat",
+   "tx": "Feladat kész [MEG]: Megfogalmazza a problémát és a kívánt eredményt; erőforrást ad",
+   "k": "tick:1:0",
+   "sim": 1
+  },
+  {
+   "ts": 1772443140000,
+   "n": 1,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "feladat",
+   "tx": "Feladat kész [IGA]: Tisztázza a problémát; nélküle nem lép tovább a tervezésben",
+   "k": "tick:1:1",
+   "sim": 1
+  },
+  {
+   "ts": 1772443560000,
+   "n": 1,
+   "ph": 0,
+   "role": "ELE",
+   "cat": "feladat",
+   "tx": "Feladat kész [ELE]: Segít a probléma szerkezetbe foglalásában",
+   "k": "tick:1:2",
+   "sim": 1
+  },
+  {
+   "ts": 1772443980000,
+   "n": 1,
+   "ph": 0,
+   "role": "REN",
+   "cat": "feladat",
+   "tx": "Feladat kész [REN]: Már itt bekapcsolódik a tervezésbe",
+   "k": "tick:1:3",
+   "sim": 1
+  },
+  {
+   "ts": 1772446200000,
+   "n": 1,
+   "ph": 0,
+   "role": "MEG",
+   "cat": "megbízó",
+   "tx": "Megbízói jóváhagyás: 1. lépés (Kezdeményezés)",
+   "k": "sp:1",
+   "sim": 1
+  },
+  {
+   "ts": 1772446800000,
+   "n": 1,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "1. lépés (Kezdeményezés) lezárva",
+   "k": "done:1",
+   "sim": 1
+  },
+  {
+   "ts": 1772701620000,
+   "n": 2,
+   "ph": 0,
+   "role": "MEG",
+   "cat": "feladat",
+   "tx": "Feladat kész [MEG]: Közösen elfogadja a célt, a célkitűzéseket, a mérföldköveket",
+   "k": "tick:2:0",
+   "sim": 1
+  },
+  {
+   "ts": 1772702040000,
+   "n": 2,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "feladat",
+   "tx": "Feladat kész [IGA]: Vezeti a behatároló megbeszélést, témánként egy dia",
+   "k": "tick:2:1",
+   "sim": 1
+  },
+  {
+   "ts": 1772702460000,
+   "n": 2,
+   "ph": 0,
+   "role": "ELE",
+   "cat": "feladat",
+   "tx": "Feladat kész [ELE]: Elemzési koncepció, alapkérdések, torzítás-ellenőrzés",
+   "k": "tick:2:2",
+   "sim": 1
+  },
+  {
+   "ts": 1772702880000,
+   "n": 2,
+   "ph": 0,
+   "role": "REN",
+   "cat": "feladat",
+   "tx": "Feladat kész [REN]: Részt vesz a behatárolásban",
+   "k": "tick:2:3",
+   "sim": 1
+  },
+  {
+   "ts": 1772707080000,
+   "n": 2,
+   "ph": 0,
+   "role": "MEG",
+   "cat": "megbízó",
+   "tx": "Megbízói jóváhagyás: 2. lépés (Behatárolás)",
+   "k": "sp:2",
+   "sim": 1
+  },
+  {
+   "ts": 1772707680000,
+   "n": 2,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "2. lépés (Behatárolás) lezárva",
+   "k": "done:2",
+   "sim": 1
+  },
+  {
+   "ts": 1773047220000,
+   "n": 3,
+   "ph": 0,
+   "role": "TER",
+   "cat": "feladat",
+   "tx": "Feladat kész [TER]: Témát, hasonló játékok mechanikáit, erőket kutat",
+   "k": "tick:3:0",
+   "sim": 1
+  },
+  {
+   "ts": 1773047640000,
+   "n": 3,
+   "ph": 0,
+   "role": "FOR",
+   "cat": "feladat",
+   "tx": "Feladat kész [FOR]: Háttéranyagot gyűjt, szakértőket (SME) von be",
+   "k": "tick:3:1",
+   "sim": 1
+  },
+  {
+   "ts": 1773048060000,
+   "n": 3,
+   "ph": 0,
+   "role": "ELE",
+   "cat": "feladat",
+   "tx": "Feladat kész [ELE]: Módszert választ: tényleg wargame kell?",
+   "k": "tick:3:2",
+   "sim": 1
+  },
+  {
+   "ts": 1773049380000,
+   "n": 3,
+   "ph": 0,
+   "role": "TER",
+   "cat": "produktum",
+   "tx": "Produktum – Módszer-döntés: kell-e wargame?: Wargame indokolt",
+   "k": "field:3:method",
+   "sim": 1
+  },
+  {
+   "ts": 1773049980000,
+   "n": 3,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "3. lépés (Kutatás) lezárva",
+   "k": "done:3",
+   "sim": 1
+  },
+  {
+   "ts": 1773306420000,
+   "n": 4,
+   "ph": 0,
+   "role": "MEG",
+   "cat": "feladat",
+   "tx": "Feladat kész [MEG]: Jóváhagyja az ismertetőt és az ütemtervet",
+   "k": "tick:4:0",
+   "sim": 1
+  },
+  {
+   "ts": 1773306840000,
+   "n": 4,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "feladat",
+   "tx": "Feladat kész [IGA]: Bemutatja a 8 elemet, lehetőleg személyesen",
+   "k": "tick:4:1",
+   "sim": 1
+  },
+  {
+   "ts": 1773307260000,
+   "n": 4,
+   "ph": 0,
+   "role": "TER",
+   "cat": "feladat",
+   "tx": "Feladat kész [TER]: Kezdeti formátum és struktúra (hossz, csapatok)",
+   "k": "tick:4:2",
+   "sim": 1
+  },
+  {
+   "ts": 1773307680000,
+   "n": 4,
+   "ph": 0,
+   "role": "ELE",
+   "cat": "feladat",
+   "tx": "Feladat kész [ELE]: Finomított elemzési koncepció",
+   "k": "tick:4:3",
+   "sim": 1
+  },
+  {
+   "ts": 1773311220000,
+   "n": 4,
+   "ph": 0,
+   "role": "MEG",
+   "cat": "megbízó",
+   "tx": "Megbízói jóváhagyás: 4. lépés (Tervezési ismertető)",
+   "k": "sp:4",
+   "sim": 1
+  },
+  {
+   "ts": 1773311820000,
+   "n": 4,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "4. lépés (Tervezési ismertető) lezárva",
+   "k": "done:4",
+   "sim": 1
+  },
+  {
+   "ts": 1773652020000,
+   "n": 5,
+   "ph": 0,
+   "role": "TER",
+   "cat": "feladat",
+   "tx": "Feladat kész [TER]: Szabályok, körök, bemenetek, elbírálás",
+   "k": "tick:5:0",
+   "sim": 1
+  },
+  {
+   "ts": 1773652440000,
+   "n": 5,
+   "ph": 0,
+   "role": "ELE",
+   "cat": "feladat",
+   "tx": "Feladat kész [ELE]: DCAP: mérőszámok, kérdések, módszerek",
+   "k": "tick:5:1",
+   "sim": 1
+  },
+  {
+   "ts": 1773652860000,
+   "n": 5,
+   "ph": 0,
+   "role": "FOR",
+   "cat": "feladat",
+   "tx": "Feladat kész [FOR]: Forgatókönyv, vignette-ek, erők/OOB",
+   "k": "tick:5:2",
+   "sim": 1
+  },
+  {
+   "ts": 1773653280000,
+   "n": 5,
+   "ph": 0,
+   "role": "FEJ",
+   "cat": "feladat",
+   "tx": "Feladat kész [FEJ]: Prototípus: térkép, bábuk, kártyák",
+   "k": "tick:5:3",
+   "sim": 1
+  },
+  {
+   "ts": 1773653700000,
+   "n": 5,
+   "ph": 0,
+   "role": "OPF",
+   "cat": "feladat",
+   "tx": "Feladat kész [OPF]: Segít a forgatókönyvben és az erőkben",
+   "k": "tick:5:4",
+   "sim": 1
+  },
+  {
+   "ts": 1773654120000,
+   "n": 5,
+   "ph": 0,
+   "role": "REN",
+   "cat": "feladat",
+   "tx": "Feladat kész [REN]: Helyszín, biztonság, IT, szállás, étkezés",
+   "k": "tick:5:5",
+   "sim": 1
+  },
+  {
+   "ts": 1773655740000,
+   "n": 5,
+   "ph": 0,
+   "role": "FOR",
+   "cat": "beállítás",
+   "tx": "Scenario: ENSZ békeművelet – Észak-völgy (VII. fejezet) v1.0-áttekintett (szimulált teszt: pso-eszak-volgy_v1.0_2026-11-09.json) – 7 injekt, válaszlehetőség K/P/Z: 8/6/6",
+   "k": "scn",
+   "sim": 1
+  },
+  {
+   "ts": 1773656340000,
+   "n": 5,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "szervezés",
+   "tx": "Szereplista – KÉK / J3 Műveletek: AI-ügynök",
+   "k": "seat:K3:m",
+   "sim": 1
+  },
+  {
+   "ts": 1773656340000,
+   "n": 5,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "szervezés",
+   "tx": "Szereplista – KÉK / J5 Tervezés: aktív hely",
+   "k": "seat:K5:a",
+   "sim": 1
+  },
+  {
+   "ts": 1773656340000,
+   "n": 5,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "szervezés",
+   "tx": "Szereplista – KÉK / J6 CIS: aktív hely",
+   "k": "seat:K6:a",
+   "sim": 1
+  },
+  {
+   "ts": 1773656340000,
+   "n": 5,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "szervezés",
+   "tx": "Szereplista – PIROS / J2 Hírszerzés: AI-ügynök",
+   "k": "seat:P2:m",
+   "sim": 1
+  },
+  {
+   "ts": 1773656340000,
+   "n": 5,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "szervezés",
+   "tx": "Szereplista – PIROS / J4 Logisztika: aktív hely",
+   "k": "seat:P4:a",
+   "sim": 1
+  },
+  {
+   "ts": 1773656340000,
+   "n": 5,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "szervezés",
+   "tx": "Szereplista – PIROS / J5 Tervezés: aktív hely",
+   "k": "seat:P5:a",
+   "sim": 1
+  },
+  {
+   "ts": 1773656340000,
+   "n": 5,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "szervezés",
+   "tx": "Szereplista – ZÖLD / J2 Hírszerzés: aktív hely",
+   "k": "seat:Z2:a",
+   "sim": 1
+  },
+  {
+   "ts": 1773656340000,
+   "n": 5,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "szervezés",
+   "tx": "Szereplista – ZÖLD / J3 Műveletek: aktív hely",
+   "k": "seat:Z3:a",
+   "sim": 1
+  },
+  {
+   "ts": 1773656940000,
+   "n": 5,
+   "ph": 0,
+   "role": "FEJ",
+   "cat": "szervezés",
+   "tx": "AI-prompt egyedi módosítása – KÉK / J2 Hírszerzés",
+   "k": "seat:K2:p",
+   "sim": 1
+  },
+  {
+   "ts": 1773658140000,
+   "n": 5,
+   "ph": 0,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "5. lépés (Játéktervezés) lezárva",
+   "k": "done:5",
+   "sim": 1
+  },
+  {
+   "ts": 1774861620000,
+   "n": 6,
+   "ph": 1,
+   "role": "FEJ",
+   "cat": "feladat",
+   "tx": "Feladat kész [FEJ]: Teljes playtest: térkép, elemek, mechanika, időzítés, tér, IT",
+   "k": "tick:6:0",
+   "sim": 1
+  },
+  {
+   "ts": 1774862040000,
+   "n": 6,
+   "ph": 1,
+   "role": "ELE",
+   "cat": "feladat",
+   "tx": "Feladat kész [ELE]: A DCAP tesztje: keletkezik-e a szükséges adat?",
+   "k": "tick:6:1",
+   "sim": 1
+  },
+  {
+   "ts": 1774863300000,
+   "n": 6,
+   "ph": 1,
+   "role": "FEJ",
+   "cat": "játék",
+   "tx": "Playtest – 1. futás megnyitva",
+   "k": "run:1",
+   "sim": 1
+  },
+  {
+   "ts": 1774863300000,
+   "n": 6,
+   "ph": 1,
+   "role": "FOR",
+   "cat": "játék",
+   "tx": "Playtest T1: injekt kiadva, döntések gyűjtése – A PIROS erők átlépték a tűzszüneti vonalat a B1 szektorban; civil falvak kerültek veszélybe (a béke fenyegetése, 39. cikk). · súrlódás: Nyelvi és kulturális akadály a tárgyalásokon",
+   "k": "t:1:1:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1774863465000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [KÉK / Parancsnok]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B1 (ember (szimulált)) – Parancsnok: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B1 szektorban, a felek joga…",
+   "k": "t:1:1:o:K0",
+   "sim": 1
+  },
+  {
+   "ts": 1774863530000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [KÉK / Törzsfőnök]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B2 (ember (szimulált)) – Törzsfőnök: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B2 szektorban, a felek joga…",
+   "k": "t:1:1:o:K1",
+   "sim": 1
+  },
+  {
+   "ts": 1774863615000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [KÉK / J2 Hírszerzés]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B2 (AI (szimulált)) – J2 Hírszerzés: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B2 szektorban, a felek j…",
+   "k": "t:1:1:o:K2",
+   "sim": 1
+  },
+  {
+   "ts": 1774863720000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [KÉK / J3 Műveletek]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ C3 (AI (szimulált)) – J3 Műveletek: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) C3 szektorban, a felek jo…",
+   "k": "t:1:1:o:K3",
+   "sim": 1
+  },
+  {
+   "ts": 1774863765000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [KÉK / J4 Logisztika]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B3 (ember (szimulált)) – J4 Logisztika: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B3 szektorban, a felek j…",
+   "k": "t:1:1:o:K4",
+   "sim": 1
+  },
+  {
+   "ts": 1774863830000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [KÉK / J5 Tervezés]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ A2 (ember (szimulált)) – J5 Tervezés: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) A2 szektorban, a felek jog…",
+   "k": "t:1:1:o:K5",
+   "sim": 1
+  },
+  {
+   "ts": 1774863915000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [KÉK / J6 CIS]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B2 (ember (szimulált)) – J6 CIS: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B2 szektorban, a felek jogainak…",
+   "k": "t:1:1:o:K6",
+   "sim": 1
+  },
+  {
+   "ts": 1774863960000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [PIROS / Parancsnok]: Támadó akció a tűzszüneti vonalon túl @ B1 (ember (szimulált)) – Parancsnok: Támadó akció a(z) B1 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:1:1:o:P0",
+   "sim": 1
+  },
+  {
+   "ts": 1774864025000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [PIROS / Törzsfőnök]: Támadó akció a tűzszüneti vonalon túl @ B2 (AI (szimulált)) – Törzsfőnök: Támadó akció a(z) B2 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:1:1:o:P1",
+   "sim": 1
+  },
+  {
+   "ts": 1774864110000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [PIROS / J2 Hírszerzés]: Támadó akció a tűzszüneti vonalon túl @ B2 (AI (szimulált)) – J2 Hírszerzés: Támadó akció a(z) B2 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:1:1:o:P2",
+   "sim": 1
+  },
+  {
+   "ts": 1774864215000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [PIROS / J3 Műveletek]: Támadó akció a tűzszüneti vonalon túl @ C3 (ember (szimulált)) – J3 Műveletek: Támadó akció a(z) C3 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:1:1:o:P3",
+   "sim": 1
+  },
+  {
+   "ts": 1774864260000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [PIROS / J4 Logisztika]: Támadó akció a tűzszüneti vonalon túl @ B3 (ember (szimulált)) – J4 Logisztika: Támadó akció a(z) B3 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:1:1:o:P4",
+   "sim": 1
+  },
+  {
+   "ts": 1774864325000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [PIROS / J5 Tervezés]: Támadó akció a tűzszüneti vonalon túl @ A2 (ember (szimulált)) – J5 Tervezés: Támadó akció a(z) A2 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:1:1:o:P5",
+   "sim": 1
+  },
+  {
+   "ts": 1774864370000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [ZÖLD / Nemzeti parancsnok]: Hozzájárulás megerősítése, szabad mozgás biztosítása @ B1 (ember (szimulált)) – Nemzeti parancsnok: A hatóságok megerősítik a hozzájárulást és szabad mozgást biztosítanak a(z) B1 szektorban az ENSZ-erőnek és a konvojoknak.",
+   "k": "t:1:1:o:Z0",
+   "sim": 1
+  },
+  {
+   "ts": 1774864435000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [ZÖLD / Törzsfőnök]: Hozzájárulás megerősítése, szabad mozgás biztosítása @ B2 (AI (szimulált)) – Törzsfőnök: A hatóságok megerősítik a hozzájárulást és szabad mozgást biztosítanak a(z) B2 szektorban az ENSZ-erőnek és a konvojoknak.",
+   "k": "t:1:1:o:Z1",
+   "sim": 1
+  },
+  {
+   "ts": 1774864520000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [ZÖLD / J2 Hírszerzés]: Hozzájárulás megerősítése, szabad mozgás biztosítása @ B2 (ember (szimulált)) – J2 Hírszerzés: A hatóságok megerősítik a hozzájárulást és szabad mozgást biztosítanak a(z) B2 szektorban az ENSZ-erőnek és a konvojoknak.",
+   "k": "t:1:1:o:Z2",
+   "sim": 1
+  },
+  {
+   "ts": 1774864625000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [ZÖLD / J3 Műveletek]: Hozzájárulás megerősítése, szabad mozgás biztosítása @ C3 (ember (szimulált)) – J3 Műveletek: A hatóságok megerősítik a hozzájárulást és szabad mozgást biztosítanak a(z) C3 szektorban az ENSZ-erőnek és a konvojoknak.",
+   "k": "t:1:1:o:Z3",
+   "sim": 1
+  },
+  {
+   "ts": 1774864805000,
+   "n": 6,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Playtest T1: elbírálás folyamatban – A PIROS erők átlépték a tűzszüneti vonalat a B1 szektorban; civil falvak kerültek veszélybe (a béke fenyegetése, 39. cikk). · súrlódás: Nyelvi és kulturális akadály a tárgyalásokon",
+   "k": "t:1:1:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1774864925000,
+   "n": 6,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Playtest T1 – elbírálás [KÉK]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:1:1:a:K",
+   "sim": 1
+  },
+  {
+   "ts": 1774865045000,
+   "n": 6,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Playtest T1 – elbírálás [PIROS]: Kudarc – A döntés nem érte el a célt, vagy a mandátum/ROE határán kívül esett, illetve a civilek kockázatát növelte.",
+   "k": "t:1:1:a:P",
+   "sim": 1
+  },
+  {
+   "ts": 1774865165000,
+   "n": 6,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Playtest T1 – elbírálás [ZÖLD]: Siker – A döntés a mandátum és a ROE keretein belül, arányosan történt, és a kitűzött célt szolgálta.",
+   "k": "t:1:1:a:Z",
+   "sim": 1
+  },
+  {
+   "ts": 1774865285000,
+   "n": 6,
+   "ph": 1,
+   "role": "FAC",
+   "cat": "megfigyelés",
+   "tx": "Playtest T1 – megfigyelés: A tűzszüneti vonal megsértése után a KÉK a 40. cikk szerinti ideiglenes intézkedéseket választotta; a PIROS részben alkalmazkodott, a ZÖLD információja késett.",
+   "k": "t:1:1:obs",
+   "sim": 1
+  },
+  {
+   "ts": 1774865405000,
+   "n": 6,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Playtest T1: eredmény közölve, kör lezárva – A PIROS erők átlépték a tűzszüneti vonalat a B1 szektorban; civil falvak kerültek veszélybe (a béke fenyegetése, 39. cikk). · súrlódás: Nyelvi és kulturális akadály a tárgyalásokon",
+   "k": "t:1:1:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1774865705000,
+   "n": 6,
+   "ph": 1,
+   "role": "FOR",
+   "cat": "játék",
+   "tx": "Playtest T2: injekt kiadva, döntések gyűjtése – Az A3 szektorban ellenőrzőponton feltartottak egy humanitárius konvojt; élelmiszer- és gyógyszerhiány alakul ki. · súrlódás: Összeköttetési zavar (rádió, műhold)",
+   "k": "t:1:2:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1774865870000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [KÉK / Parancsnok]: Civilek védelme, humanitárius hozzáférés biztosítása @ A1 (ember (szimulált)) – Parancsnok: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) A1 szektorban; a konvoj kísérése, a menekültek mozgásának rendezése.",
+   "k": "t:1:2:o:K0",
+   "sim": 1
+  },
+  {
+   "ts": 1774865935000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [KÉK / Törzsfőnök]: Civilek védelme, humanitárius hozzáférés biztosítása @ A1 (ember (szimulált)) – Törzsfőnök: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) A1 szektorban; a konvoj kísérése, a menekültek mozgásának rendezése.",
+   "k": "t:1:2:o:K1",
+   "sim": 1
+  },
+  {
+   "ts": 1774866020000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [KÉK / J2 Hírszerzés]: Civilek védelme, humanitárius hozzáférés biztosítása @ C2 (AI (szimulált)) – J2 Hírszerzés: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) C2 szektorban; a konvoj kísérése, a menekültek mozgásának rendezé…",
+   "k": "t:1:2:o:K2",
+   "sim": 1
+  },
+  {
+   "ts": 1774866125000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [KÉK / J3 Műveletek]: Civilek védelme, humanitárius hozzáférés biztosítása @ C2 (AI (szimulált)) – J3 Műveletek: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) C2 szektorban; a konvoj kísérése, a menekültek mozgásának rendezés…",
+   "k": "t:1:2:o:K3",
+   "sim": 1
+  },
+  {
+   "ts": 1774866170000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [KÉK / J4 Logisztika]: Civilek védelme, humanitárius hozzáférés biztosítása @ B2 (ember (szimulált)) – J4 Logisztika: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) B2 szektorban; a konvoj kísérése, a menekültek mozgásának rendezé…",
+   "k": "t:1:2:o:K4",
+   "sim": 1
+  },
+  {
+   "ts": 1774866235000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [KÉK / J5 Tervezés]: Civilek védelme, humanitárius hozzáférés biztosítása @ A2 (ember (szimulált)) – J5 Tervezés: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) A2 szektorban; a konvoj kísérése, a menekültek mozgásának rendezése.",
+   "k": "t:1:2:o:K5",
+   "sim": 1
+  },
+  {
+   "ts": 1774866320000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [KÉK / J6 CIS]: Civilek védelme, humanitárius hozzáférés biztosítása @ A1 (ember (szimulált)) – J6 CIS: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) A1 szektorban; a konvoj kísérése, a menekültek mozgásának rendezése.",
+   "k": "t:1:2:o:K6",
+   "sim": 1
+  },
+  {
+   "ts": 1774866365000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [PIROS / Parancsnok]: Utánpótlás és fegyverszállítás szervezése @ A1 (ember (szimulált)) – Parancsnok: Utánpótlás és szállítás szervezése a(z) A1 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:1:2:o:P0",
+   "sim": 1
+  },
+  {
+   "ts": 1774866430000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [PIROS / Törzsfőnök]: Utánpótlás és fegyverszállítás szervezése @ A1 (AI (szimulált)) – Törzsfőnök: Utánpótlás és szállítás szervezése a(z) A1 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:1:2:o:P1",
+   "sim": 1
+  },
+  {
+   "ts": 1774866515000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [PIROS / J2 Hírszerzés]: Utánpótlás és fegyverszállítás szervezése @ C2 (AI (szimulált)) – J2 Hírszerzés: Utánpótlás és szállítás szervezése a(z) C2 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:1:2:o:P2",
+   "sim": 1
+  },
+  {
+   "ts": 1774866620000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [PIROS / J3 Műveletek]: Utánpótlás és fegyverszállítás szervezése @ C2 (ember (szimulált)) – J3 Műveletek: Utánpótlás és szállítás szervezése a(z) C2 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:1:2:o:P3",
+   "sim": 1
+  },
+  {
+   "ts": 1774866665000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [PIROS / J4 Logisztika]: Utánpótlás és fegyverszállítás szervezése @ B2 (ember (szimulált)) – J4 Logisztika: Utánpótlás és szállítás szervezése a(z) B2 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:1:2:o:P4",
+   "sim": 1
+  },
+  {
+   "ts": 1774866730000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [PIROS / J5 Tervezés]: Utánpótlás és fegyverszállítás szervezése @ A2 (ember (szimulált)) – J5 Tervezés: Utánpótlás és szállítás szervezése a(z) A2 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:1:2:o:P5",
+   "sim": 1
+  },
+  {
+   "ts": 1774866775000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [ZÖLD / Nemzeti parancsnok]: Humanitárius segélyek szétosztása @ A1 (ember (szimulált)) – Nemzeti parancsnok: Segélyszállítmányok szétosztása a(z) A1 szektorban, a konvojok kísérésének egyeztetésével.",
+   "k": "t:1:2:o:Z0",
+   "sim": 1
+  },
+  {
+   "ts": 1774866840000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [ZÖLD / Törzsfőnök]: Humanitárius segélyek szétosztása @ A1 (AI (szimulált)) – Törzsfőnök: Segélyszállítmányok szétosztása a(z) A1 szektorban, a konvojok kísérésének egyeztetésével.",
+   "k": "t:1:2:o:Z1",
+   "sim": 1
+  },
+  {
+   "ts": 1774866925000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [ZÖLD / J2 Hírszerzés]: Humanitárius segélyek szétosztása @ C2 (ember (szimulált)) – J2 Hírszerzés: Segélyszállítmányok szétosztása a(z) C2 szektorban, a konvojok kísérésének egyeztetésével.",
+   "k": "t:1:2:o:Z2",
+   "sim": 1
+  },
+  {
+   "ts": 1774867030000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [ZÖLD / J3 Műveletek]: Humanitárius segélyek szétosztása @ C2 (ember (szimulált)) – J3 Műveletek: Segélyszállítmányok szétosztása a(z) C2 szektorban, a konvojok kísérésének egyeztetésével.",
+   "k": "t:1:2:o:Z3",
+   "sim": 1
+  },
+  {
+   "ts": 1774867210000,
+   "n": 6,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Playtest T2: elbírálás folyamatban – Az A3 szektorban ellenőrzőponton feltartottak egy humanitárius konvojt; élelmiszer- és gyógyszerhiány alakul ki. · súrlódás: Összeköttetési zavar (rádió, műhold)",
+   "k": "t:1:2:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1774867330000,
+   "n": 6,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Playtest T2 – elbírálás [KÉK]: Siker – A döntés a mandátum és a ROE keretein belül, arányosan történt, és a kitűzött célt szolgálta.",
+   "k": "t:1:2:a:K",
+   "sim": 1
+  },
+  {
+   "ts": 1774867450000,
+   "n": 6,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Playtest T2 – elbírálás [PIROS]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:1:2:a:P",
+   "sim": 1
+  },
+  {
+   "ts": 1774867570000,
+   "n": 6,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Playtest T2 – elbírálás [ZÖLD]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:1:2:a:Z",
+   "sim": 1
+  },
+  {
+   "ts": 1774867690000,
+   "n": 6,
+   "ph": 1,
+   "role": "FAC",
+   "cat": "megfigyelés",
+   "tx": "Playtest T2 – megfigyelés: A humanitárius konvoj feltartása: a POC és a hozzáférés együttes kezelése koordinációs hiányt mutatott a KÉK és a ZÖLD között.",
+   "k": "t:1:2:obs",
+   "sim": 1
+  },
+  {
+   "ts": 1774867810000,
+   "n": 6,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Playtest T2: eredmény közölve, kör lezárva – Az A3 szektorban ellenőrzőponton feltartottak egy humanitárius konvojt; élelmiszer- és gyógyszerhiány alakul ki. · súrlódás: Összeköttetési zavar (rádió, műhold)",
+   "k": "t:1:2:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1774868110000,
+   "n": 6,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Playtest – 1. futás lezárva",
+   "k": "run:1",
+   "sim": 1
+  },
+  {
+   "ts": 1774868170000,
+   "n": 6,
+   "ph": 1,
+   "role": "FEJ",
+   "cat": "játék",
+   "tx": "Playtest – 2. futás megnyitva",
+   "k": "run:2",
+   "sim": 1
+  },
+  {
+   "ts": 1774868170000,
+   "n": 6,
+   "ph": 1,
+   "role": "FOR",
+   "cat": "játék",
+   "tx": "Playtest T1: injekt kiadva, döntések gyűjtése – A PIROS erők átlépték a tűzszüneti vonalat a B1 szektorban; civil falvak kerültek veszélybe (a béke fenyegetése, 39. cikk). · súrlódás: Nyelvi és kulturális akadály a tárgyalásokon",
+   "k": "t:2:1:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1774868335000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [KÉK / Parancsnok]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B1 (ember (szimulált)) – Parancsnok: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B1 szektorban, a felek joga…",
+   "k": "t:2:1:o:K0",
+   "sim": 1
+  },
+  {
+   "ts": 1774868400000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [KÉK / Törzsfőnök]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B2 (ember (szimulált)) – Törzsfőnök: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B2 szektorban, a felek joga…",
+   "k": "t:2:1:o:K1",
+   "sim": 1
+  },
+  {
+   "ts": 1774868485000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [KÉK / J2 Hírszerzés]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B2 (AI (szimulált)) – J2 Hírszerzés: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B2 szektorban, a felek j…",
+   "k": "t:2:1:o:K2",
+   "sim": 1
+  },
+  {
+   "ts": 1774868590000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [KÉK / J3 Műveletek]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ C3 (AI (szimulált)) – J3 Műveletek: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) C3 szektorban, a felek jo…",
+   "k": "t:2:1:o:K3",
+   "sim": 1
+  },
+  {
+   "ts": 1774868635000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [KÉK / J4 Logisztika]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B3 (ember (szimulált)) – J4 Logisztika: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B3 szektorban, a felek j…",
+   "k": "t:2:1:o:K4",
+   "sim": 1
+  },
+  {
+   "ts": 1774868700000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [KÉK / J5 Tervezés]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ A2 (ember (szimulált)) – J5 Tervezés: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) A2 szektorban, a felek jog…",
+   "k": "t:2:1:o:K5",
+   "sim": 1
+  },
+  {
+   "ts": 1774868785000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [KÉK / J6 CIS]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B2 (ember (szimulált)) – J6 CIS: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B2 szektorban, a felek jogainak…",
+   "k": "t:2:1:o:K6",
+   "sim": 1
+  },
+  {
+   "ts": 1774868830000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [PIROS / Parancsnok]: Támadó akció a tűzszüneti vonalon túl @ B1 (ember (szimulált)) – Parancsnok: Támadó akció a(z) B1 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:2:1:o:P0",
+   "sim": 1
+  },
+  {
+   "ts": 1774868895000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [PIROS / Törzsfőnök]: Támadó akció a tűzszüneti vonalon túl @ B2 (AI (szimulált)) – Törzsfőnök: Támadó akció a(z) B2 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:2:1:o:P1",
+   "sim": 1
+  },
+  {
+   "ts": 1774868980000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [PIROS / J2 Hírszerzés]: Támadó akció a tűzszüneti vonalon túl @ B2 (AI (szimulált)) – J2 Hírszerzés: Támadó akció a(z) B2 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:2:1:o:P2",
+   "sim": 1
+  },
+  {
+   "ts": 1774869085000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [PIROS / J3 Műveletek]: Támadó akció a tűzszüneti vonalon túl @ C3 (ember (szimulált)) – J3 Műveletek: Támadó akció a(z) C3 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:2:1:o:P3",
+   "sim": 1
+  },
+  {
+   "ts": 1774869130000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [PIROS / J4 Logisztika]: Támadó akció a tűzszüneti vonalon túl @ B3 (ember (szimulált)) – J4 Logisztika: Támadó akció a(z) B3 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:2:1:o:P4",
+   "sim": 1
+  },
+  {
+   "ts": 1774869195000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [PIROS / J5 Tervezés]: Támadó akció a tűzszüneti vonalon túl @ A2 (ember (szimulált)) – J5 Tervezés: Támadó akció a(z) A2 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:2:1:o:P5",
+   "sim": 1
+  },
+  {
+   "ts": 1774869240000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [ZÖLD / Nemzeti parancsnok]: Hozzájárulás megerősítése, szabad mozgás biztosítása @ B1 (ember (szimulált)) – Nemzeti parancsnok: A hatóságok megerősítik a hozzájárulást és szabad mozgást biztosítanak a(z) B1 szektorban az ENSZ-erőnek és a konvojoknak.",
+   "k": "t:2:1:o:Z0",
+   "sim": 1
+  },
+  {
+   "ts": 1774869305000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [ZÖLD / Törzsfőnök]: Hozzájárulás megerősítése, szabad mozgás biztosítása @ B2 (AI (szimulált)) – Törzsfőnök: A hatóságok megerősítik a hozzájárulást és szabad mozgást biztosítanak a(z) B2 szektorban az ENSZ-erőnek és a konvojoknak.",
+   "k": "t:2:1:o:Z1",
+   "sim": 1
+  },
+  {
+   "ts": 1774869390000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [ZÖLD / J2 Hírszerzés]: Hozzájárulás megerősítése, szabad mozgás biztosítása @ B2 (ember (szimulált)) – J2 Hírszerzés: A hatóságok megerősítik a hozzájárulást és szabad mozgást biztosítanak a(z) B2 szektorban az ENSZ-erőnek és a konvojoknak.",
+   "k": "t:2:1:o:Z2",
+   "sim": 1
+  },
+  {
+   "ts": 1774869495000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T1 – döntés [ZÖLD / J3 Műveletek]: Hozzájárulás megerősítése, szabad mozgás biztosítása @ C3 (ember (szimulált)) – J3 Műveletek: A hatóságok megerősítik a hozzájárulást és szabad mozgást biztosítanak a(z) C3 szektorban az ENSZ-erőnek és a konvojoknak.",
+   "k": "t:2:1:o:Z3",
+   "sim": 1
+  },
+  {
+   "ts": 1774869675000,
+   "n": 6,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Playtest T1: elbírálás folyamatban – A PIROS erők átlépték a tűzszüneti vonalat a B1 szektorban; civil falvak kerültek veszélybe (a béke fenyegetése, 39. cikk). · súrlódás: Nyelvi és kulturális akadály a tárgyalásokon",
+   "k": "t:2:1:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1774869795000,
+   "n": 6,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Playtest T1 – elbírálás [KÉK]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:2:1:a:K",
+   "sim": 1
+  },
+  {
+   "ts": 1774869915000,
+   "n": 6,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Playtest T1 – elbírálás [PIROS]: Kudarc – A döntés nem érte el a célt, vagy a mandátum/ROE határán kívül esett, illetve a civilek kockázatát növelte.",
+   "k": "t:2:1:a:P",
+   "sim": 1
+  },
+  {
+   "ts": 1774870035000,
+   "n": 6,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Playtest T1 – elbírálás [ZÖLD]: Siker – A döntés a mandátum és a ROE keretein belül, arányosan történt, és a kitűzött célt szolgálta.",
+   "k": "t:2:1:a:Z",
+   "sim": 1
+  },
+  {
+   "ts": 1774870155000,
+   "n": 6,
+   "ph": 1,
+   "role": "FAC",
+   "cat": "megfigyelés",
+   "tx": "Playtest T1 – megfigyelés: A tűzszüneti vonal megsértése után a KÉK a 40. cikk szerinti ideiglenes intézkedéseket választotta; a PIROS részben alkalmazkodott, a ZÖLD információja késett.",
+   "k": "t:2:1:obs",
+   "sim": 1
+  },
+  {
+   "ts": 1774870275000,
+   "n": 6,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Playtest T1: eredmény közölve, kör lezárva – A PIROS erők átlépték a tűzszüneti vonalat a B1 szektorban; civil falvak kerültek veszélybe (a béke fenyegetése, 39. cikk). · súrlódás: Nyelvi és kulturális akadály a tárgyalásokon",
+   "k": "t:2:1:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1774870575000,
+   "n": 6,
+   "ph": 1,
+   "role": "FOR",
+   "cat": "játék",
+   "tx": "Playtest T2: injekt kiadva, döntések gyűjtése – Az A3 szektorban ellenőrzőponton feltartottak egy humanitárius konvojt; élelmiszer- és gyógyszerhiány alakul ki. · súrlódás: Összeköttetési zavar (rádió, műhold)",
+   "k": "t:2:2:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1774870740000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [KÉK / Parancsnok]: Civilek védelme, humanitárius hozzáférés biztosítása @ A1 (ember (szimulált)) – Parancsnok: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) A1 szektorban; a konvoj kísérése, a menekültek mozgásának rendezése.",
+   "k": "t:2:2:o:K0",
+   "sim": 1
+  },
+  {
+   "ts": 1774870805000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [KÉK / Törzsfőnök]: Civilek védelme, humanitárius hozzáférés biztosítása @ A1 (ember (szimulált)) – Törzsfőnök: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) A1 szektorban; a konvoj kísérése, a menekültek mozgásának rendezése.",
+   "k": "t:2:2:o:K1",
+   "sim": 1
+  },
+  {
+   "ts": 1774870890000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [KÉK / J2 Hírszerzés]: Civilek védelme, humanitárius hozzáférés biztosítása @ C2 (AI (szimulált)) – J2 Hírszerzés: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) C2 szektorban; a konvoj kísérése, a menekültek mozgásának rendezé…",
+   "k": "t:2:2:o:K2",
+   "sim": 1
+  },
+  {
+   "ts": 1774870995000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [KÉK / J3 Műveletek]: Civilek védelme, humanitárius hozzáférés biztosítása @ C2 (AI (szimulált)) – J3 Műveletek: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) C2 szektorban; a konvoj kísérése, a menekültek mozgásának rendezés…",
+   "k": "t:2:2:o:K3",
+   "sim": 1
+  },
+  {
+   "ts": 1774871040000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [KÉK / J4 Logisztika]: Civilek védelme, humanitárius hozzáférés biztosítása @ B2 (ember (szimulált)) – J4 Logisztika: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) B2 szektorban; a konvoj kísérése, a menekültek mozgásának rendezé…",
+   "k": "t:2:2:o:K4",
+   "sim": 1
+  },
+  {
+   "ts": 1774871105000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [KÉK / J5 Tervezés]: Civilek védelme, humanitárius hozzáférés biztosítása @ A2 (ember (szimulált)) – J5 Tervezés: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) A2 szektorban; a konvoj kísérése, a menekültek mozgásának rendezése.",
+   "k": "t:2:2:o:K5",
+   "sim": 1
+  },
+  {
+   "ts": 1774871190000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [KÉK / J6 CIS]: Civilek védelme, humanitárius hozzáférés biztosítása @ A1 (ember (szimulált)) – J6 CIS: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) A1 szektorban; a konvoj kísérése, a menekültek mozgásának rendezése.",
+   "k": "t:2:2:o:K6",
+   "sim": 1
+  },
+  {
+   "ts": 1774871235000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [PIROS / Parancsnok]: Utánpótlás és fegyverszállítás szervezése @ A1 (ember (szimulált)) – Parancsnok: Utánpótlás és szállítás szervezése a(z) A1 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:2:2:o:P0",
+   "sim": 1
+  },
+  {
+   "ts": 1774871300000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [PIROS / Törzsfőnök]: Utánpótlás és fegyverszállítás szervezése @ A1 (AI (szimulált)) – Törzsfőnök: Utánpótlás és szállítás szervezése a(z) A1 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:2:2:o:P1",
+   "sim": 1
+  },
+  {
+   "ts": 1774871385000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [PIROS / J2 Hírszerzés]: Utánpótlás és fegyverszállítás szervezése @ C2 (AI (szimulált)) – J2 Hírszerzés: Utánpótlás és szállítás szervezése a(z) C2 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:2:2:o:P2",
+   "sim": 1
+  },
+  {
+   "ts": 1774871490000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [PIROS / J3 Műveletek]: Utánpótlás és fegyverszállítás szervezése @ C2 (ember (szimulált)) – J3 Műveletek: Utánpótlás és szállítás szervezése a(z) C2 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:2:2:o:P3",
+   "sim": 1
+  },
+  {
+   "ts": 1774871535000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [PIROS / J4 Logisztika]: Utánpótlás és fegyverszállítás szervezése @ B2 (ember (szimulált)) – J4 Logisztika: Utánpótlás és szállítás szervezése a(z) B2 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:2:2:o:P4",
+   "sim": 1
+  },
+  {
+   "ts": 1774871600000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [PIROS / J5 Tervezés]: Utánpótlás és fegyverszállítás szervezése @ A2 (ember (szimulált)) – J5 Tervezés: Utánpótlás és szállítás szervezése a(z) A2 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:2:2:o:P5",
+   "sim": 1
+  },
+  {
+   "ts": 1774871645000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [ZÖLD / Nemzeti parancsnok]: Humanitárius segélyek szétosztása @ A1 (ember (szimulált)) – Nemzeti parancsnok: Segélyszállítmányok szétosztása a(z) A1 szektorban, a konvojok kísérésének egyeztetésével.",
+   "k": "t:2:2:o:Z0",
+   "sim": 1
+  },
+  {
+   "ts": 1774871710000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [ZÖLD / Törzsfőnök]: Humanitárius segélyek szétosztása @ A1 (AI (szimulált)) – Törzsfőnök: Segélyszállítmányok szétosztása a(z) A1 szektorban, a konvojok kísérésének egyeztetésével.",
+   "k": "t:2:2:o:Z1",
+   "sim": 1
+  },
+  {
+   "ts": 1774871795000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [ZÖLD / J2 Hírszerzés]: Humanitárius segélyek szétosztása @ C2 (ember (szimulált)) – J2 Hírszerzés: Segélyszállítmányok szétosztása a(z) C2 szektorban, a konvojok kísérésének egyeztetésével.",
+   "k": "t:2:2:o:Z2",
+   "sim": 1
+  },
+  {
+   "ts": 1774871900000,
+   "n": 6,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Playtest T2 – döntés [ZÖLD / J3 Műveletek]: Humanitárius segélyek szétosztása @ C2 (ember (szimulált)) – J3 Műveletek: Segélyszállítmányok szétosztása a(z) C2 szektorban, a konvojok kísérésének egyeztetésével.",
+   "k": "t:2:2:o:Z3",
+   "sim": 1
+  },
+  {
+   "ts": 1774872080000,
+   "n": 6,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Playtest T2: elbírálás folyamatban – Az A3 szektorban ellenőrzőponton feltartottak egy humanitárius konvojt; élelmiszer- és gyógyszerhiány alakul ki. · súrlódás: Összeköttetési zavar (rádió, műhold)",
+   "k": "t:2:2:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1774872200000,
+   "n": 6,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Playtest T2 – elbírálás [KÉK]: Siker – A döntés a mandátum és a ROE keretein belül, arányosan történt, és a kitűzött célt szolgálta.",
+   "k": "t:2:2:a:K",
+   "sim": 1
+  },
+  {
+   "ts": 1774872320000,
+   "n": 6,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Playtest T2 – elbírálás [PIROS]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:2:2:a:P",
+   "sim": 1
+  },
+  {
+   "ts": 1774872440000,
+   "n": 6,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Playtest T2 – elbírálás [ZÖLD]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:2:2:a:Z",
+   "sim": 1
+  },
+  {
+   "ts": 1774872560000,
+   "n": 6,
+   "ph": 1,
+   "role": "FAC",
+   "cat": "megfigyelés",
+   "tx": "Playtest T2 – megfigyelés: A humanitárius konvoj feltartása: a POC és a hozzáférés együttes kezelése koordinációs hiányt mutatott a KÉK és a ZÖLD között.",
+   "k": "t:2:2:obs",
+   "sim": 1
+  },
+  {
+   "ts": 1774872680000,
+   "n": 6,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Playtest T2: eredmény közölve, kör lezárva – Az A3 szektorban ellenőrzőponton feltartottak egy humanitárius konvojt; élelmiszer- és gyógyszerhiány alakul ki. · súrlódás: Összeköttetési zavar (rádió, műhold)",
+   "k": "t:2:2:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1774872980000,
+   "n": 6,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Playtest – 2. futás lezárva",
+   "k": "run:2",
+   "sim": 1
+  },
+  {
+   "ts": 1774873640000,
+   "n": 6,
+   "ph": 1,
+   "role": "ELE",
+   "cat": "DCAP",
+   "tx": "DCAP-kérdés: Milyen mandátum- és ROE-értelmezés alapján döntöttek a csapatok az erőalkalmazásról (40–42., 51. cikk)? [Döntés és indoklás; teszt: van adat]",
+   "k": "dc:1",
+   "sim": 1
+  },
+  {
+   "ts": 1774873640000,
+   "n": 6,
+   "ph": 1,
+   "role": "ELE",
+   "cat": "DCAP",
+   "tx": "DCAP-kérdés: Hogyan alakult a civilek védelmének és a humanitárius hozzáférésnek az eredménye körönként? [Elbírálási eredmény; teszt: van adat]",
+   "k": "dc:2",
+   "sim": 1
+  },
+  {
+   "ts": 1774873640000,
+   "n": 6,
+   "ph": 1,
+   "role": "ELE",
+   "cat": "DCAP",
+   "tx": "DCAP-kérdés: Mennyi idő kellett a döntésekhez a kritikus injekteknél (ROE-döntés, konvoj)? [Időfelhasználás; teszt: van adat]",
+   "k": "dc:3",
+   "sim": 1
+  },
+  {
+   "ts": 1774873640000,
+   "n": 6,
+   "ph": 1,
+   "role": "ELE",
+   "cat": "DCAP",
+   "tx": "DCAP-kérdés: Mi akadályozta a koordinációt az ENSZ-erő, a vendéglátó állam és a humanitárius szervezetek között? [Megfigyelés (ELE/FAC); teszt: hiányzik]",
+   "k": "dc:4",
+   "sim": 1
+  },
+  {
+   "ts": 1774874240000,
+   "n": 6,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "6. lépés (Playtest) lezárva",
+   "k": "done:6",
+   "sim": 1
+  },
+  {
+   "ts": 1775466420000,
+   "n": 7,
+   "ph": 1,
+   "role": "FEJ",
+   "cat": "feladat",
+   "tx": "Feladat kész [FEJ]: Javítja a szabályokat, információt, időzítést; újrateszt",
+   "k": "tick:7:0",
+   "sim": 1
+  },
+  {
+   "ts": 1775466840000,
+   "n": 7,
+   "ph": 1,
+   "role": "ELE",
+   "cat": "feladat",
+   "tx": "Feladat kész [ELE]: Hiányzó vagy felesleges adat miatt igazítja a DCAP-ot",
+   "k": "tick:7:1",
+   "sim": 1
+  },
+  {
+   "ts": 1775468100000,
+   "n": 7,
+   "ph": 1,
+   "role": "ELE",
+   "cat": "DCAP",
+   "tx": "DCAP-kérdés: Mi akadályozta a koordinációt az ENSZ-erő, a vendéglátó állam és a humanitárius szervezetek között? [Megfigyelés (ELE/FAC); teszt: van adat]",
+   "k": "dc:4",
+   "sim": 1
+  },
+  {
+   "ts": 1775468700000,
+   "n": 7,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "7. lépés (Finomítás) lezárva",
+   "k": "done:7",
+   "sim": 1
+  },
+  {
+   "ts": 1776071220000,
+   "n": 8,
+   "ph": 1,
+   "role": "MEG",
+   "cat": "feladat",
+   "tx": "Feladat kész [MEG]: Ha a DCAP nem ad elég adatot: őszinte egyeztetés",
+   "k": "tick:8:0",
+   "sim": 1
+  },
+  {
+   "ts": 1776071640000,
+   "n": 8,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "feladat",
+   "tx": "Feladat kész [IGA]: Lezárja a fejlesztést a megállapodott határidőre",
+   "k": "tick:8:1",
+   "sim": 1
+  },
+  {
+   "ts": 1776072060000,
+   "n": 8,
+   "ph": 1,
+   "role": "FEJ",
+   "cat": "feladat",
+   "tx": "Feladat kész [FEJ]: Véglegesíti a játéktermékeket, mechanikát, OOB-t",
+   "k": "tick:8:2",
+   "sim": 1
+  },
+  {
+   "ts": 1776072480000,
+   "n": 8,
+   "ph": 1,
+   "role": "ELE",
+   "cat": "feladat",
+   "tx": "Feladat kész [ELE]: Validálja a DCAP-ot: minden kérdésre van adat?",
+   "k": "tick:8:3",
+   "sim": 1
+  },
+  {
+   "ts": 1776072900000,
+   "n": 8,
+   "ph": 1,
+   "role": "REN",
+   "cat": "feladat",
+   "tx": "Feladat kész [REN]: Véglegesíti a feladatokat; kiküldi a meghívót",
+   "k": "tick:8:4",
+   "sim": 1
+  },
+  {
+   "ts": 1776074220000,
+   "n": 8,
+   "ph": 1,
+   "role": "REN",
+   "cat": "produktum",
+   "tx": "Produktum – A szereplista (OOB) és a játéktermékek véglegesek: igen",
+   "k": "field:8:oobfinal",
+   "sim": 1
+  },
+  {
+   "ts": 1776074820000,
+   "n": 8,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "8. lépés (Véglegesítés) lezárva",
+   "k": "done:8",
+   "sim": 1
+  },
+  {
+   "ts": 1777280820000,
+   "n": 9,
+   "ph": 1,
+   "role": "MEG",
+   "cat": "feladat",
+   "tx": "Feladat kész [MEG]: Maga vagy képviselője részt vesz",
+   "k": "tick:9:0",
+   "sim": 1
+  },
+  {
+   "ts": 1777281240000,
+   "n": 9,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "feladat",
+   "tx": "Feladat kész [IGA]: Vezeti; szenior játéknál alsóbb stábbal is",
+   "k": "tick:9:1",
+   "sim": 1
+  },
+  {
+   "ts": 1777281660000,
+   "n": 9,
+   "ph": 1,
+   "role": "ELE",
+   "cat": "feladat",
+   "tx": "Feladat kész [ELE]: Gyakorolja az adatgyűjtést",
+   "k": "tick:9:2",
+   "sim": 1
+  },
+  {
+   "ts": 1777282080000,
+   "n": 9,
+   "ph": 1,
+   "role": "REN",
+   "cat": "feladat",
+   "tx": "Feladat kész [REN]: Rendezvénytámogató stáb gyakorol",
+   "k": "tick:9:3",
+   "sim": 1
+  },
+  {
+   "ts": 1777282500000,
+   "n": 9,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "feladat",
+   "tx": "Feladat kész [ADJ]: Begyakorolja az elbírálást",
+   "k": "tick:9:4",
+   "sim": 1
+  },
+  {
+   "ts": 1777282920000,
+   "n": 9,
+   "ph": 1,
+   "role": "FAC",
+   "cat": "feladat",
+   "tx": "Feladat kész [FAC]: Begyakorolja a facilitálást",
+   "k": "tick:9:5",
+   "sim": 1
+  },
+  {
+   "ts": 1777284180000,
+   "n": 9,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Főpróba – 3. futás megnyitva",
+   "k": "run:3",
+   "sim": 1
+  },
+  {
+   "ts": 1777284180000,
+   "n": 9,
+   "ph": 1,
+   "role": "FOR",
+   "cat": "játék",
+   "tx": "Főpróba T1: injekt kiadva, döntések gyűjtése – A PIROS erők átlépték a tűzszüneti vonalat a B1 szektorban; civil falvak kerültek veszélybe (a béke fenyegetése, 39. cikk). · súrlódás: Nyelvi és kulturális akadály a tárgyalásokon",
+   "k": "t:3:1:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1777284345000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T1 – döntés [KÉK / Parancsnok]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B1 (ember (szimulált)) – Parancsnok: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B1 szektorban, a felek joga…",
+   "k": "t:3:1:o:K0",
+   "sim": 1
+  },
+  {
+   "ts": 1777284410000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T1 – döntés [KÉK / Törzsfőnök]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B2 (ember (szimulált)) – Törzsfőnök: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B2 szektorban, a felek joga…",
+   "k": "t:3:1:o:K1",
+   "sim": 1
+  },
+  {
+   "ts": 1777284495000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T1 – döntés [KÉK / J2 Hírszerzés]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B2 (AI (szimulált)) – J2 Hírszerzés: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B2 szektorban, a felek j…",
+   "k": "t:3:1:o:K2",
+   "sim": 1
+  },
+  {
+   "ts": 1777284600000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T1 – döntés [KÉK / J3 Műveletek]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ C3 (AI (szimulált)) – J3 Műveletek: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) C3 szektorban, a felek jo…",
+   "k": "t:3:1:o:K3",
+   "sim": 1
+  },
+  {
+   "ts": 1777284645000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T1 – döntés [KÉK / J4 Logisztika]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B3 (ember (szimulált)) – J4 Logisztika: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B3 szektorban, a felek j…",
+   "k": "t:3:1:o:K4",
+   "sim": 1
+  },
+  {
+   "ts": 1777284710000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T1 – döntés [KÉK / J5 Tervezés]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ A2 (ember (szimulált)) – J5 Tervezés: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) A2 szektorban, a felek jog…",
+   "k": "t:3:1:o:K5",
+   "sim": 1
+  },
+  {
+   "ts": 1777284795000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T1 – döntés [KÉK / J6 CIS]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B2 (ember (szimulált)) – J6 CIS: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B2 szektorban, a felek jogainak…",
+   "k": "t:3:1:o:K6",
+   "sim": 1
+  },
+  {
+   "ts": 1777284840000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T1 – döntés [PIROS / Parancsnok]: Támadó akció a tűzszüneti vonalon túl @ B1 (ember (szimulált)) – Parancsnok: Támadó akció a(z) B1 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:3:1:o:P0",
+   "sim": 1
+  },
+  {
+   "ts": 1777284905000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T1 – döntés [PIROS / Törzsfőnök]: Támadó akció a tűzszüneti vonalon túl @ B2 (AI (szimulált)) – Törzsfőnök: Támadó akció a(z) B2 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:3:1:o:P1",
+   "sim": 1
+  },
+  {
+   "ts": 1777284990000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T1 – döntés [PIROS / J2 Hírszerzés]: Támadó akció a tűzszüneti vonalon túl @ B2 (AI (szimulált)) – J2 Hírszerzés: Támadó akció a(z) B2 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:3:1:o:P2",
+   "sim": 1
+  },
+  {
+   "ts": 1777285095000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T1 – döntés [PIROS / J3 Műveletek]: Támadó akció a tűzszüneti vonalon túl @ C3 (ember (szimulált)) – J3 Műveletek: Támadó akció a(z) C3 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:3:1:o:P3",
+   "sim": 1
+  },
+  {
+   "ts": 1777285140000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T1 – döntés [PIROS / J4 Logisztika]: Támadó akció a tűzszüneti vonalon túl @ B3 (ember (szimulált)) – J4 Logisztika: Támadó akció a(z) B3 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:3:1:o:P4",
+   "sim": 1
+  },
+  {
+   "ts": 1777285205000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T1 – döntés [PIROS / J5 Tervezés]: Támadó akció a tűzszüneti vonalon túl @ A2 (ember (szimulált)) – J5 Tervezés: Támadó akció a(z) A2 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:3:1:o:P5",
+   "sim": 1
+  },
+  {
+   "ts": 1777285250000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T1 – döntés [ZÖLD / Nemzeti parancsnok]: Hozzájárulás megerősítése, szabad mozgás biztosítása @ B1 (ember (szimulált)) – Nemzeti parancsnok: A hatóságok megerősítik a hozzájárulást és szabad mozgást biztosítanak a(z) B1 szektorban az ENSZ-erőnek és a konvojoknak.",
+   "k": "t:3:1:o:Z0",
+   "sim": 1
+  },
+  {
+   "ts": 1777285315000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T1 – döntés [ZÖLD / Törzsfőnök]: Hozzájárulás megerősítése, szabad mozgás biztosítása @ B2 (AI (szimulált)) – Törzsfőnök: A hatóságok megerősítik a hozzájárulást és szabad mozgást biztosítanak a(z) B2 szektorban az ENSZ-erőnek és a konvojoknak.",
+   "k": "t:3:1:o:Z1",
+   "sim": 1
+  },
+  {
+   "ts": 1777285400000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T1 – döntés [ZÖLD / J2 Hírszerzés]: Hozzájárulás megerősítése, szabad mozgás biztosítása @ B2 (ember (szimulált)) – J2 Hírszerzés: A hatóságok megerősítik a hozzájárulást és szabad mozgást biztosítanak a(z) B2 szektorban az ENSZ-erőnek és a konvojoknak.",
+   "k": "t:3:1:o:Z2",
+   "sim": 1
+  },
+  {
+   "ts": 1777285505000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T1 – döntés [ZÖLD / J3 Műveletek]: Hozzájárulás megerősítése, szabad mozgás biztosítása @ C3 (ember (szimulált)) – J3 Műveletek: A hatóságok megerősítik a hozzájárulást és szabad mozgást biztosítanak a(z) C3 szektorban az ENSZ-erőnek és a konvojoknak.",
+   "k": "t:3:1:o:Z3",
+   "sim": 1
+  },
+  {
+   "ts": 1777285685000,
+   "n": 9,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Főpróba T1: elbírálás folyamatban – A PIROS erők átlépték a tűzszüneti vonalat a B1 szektorban; civil falvak kerültek veszélybe (a béke fenyegetése, 39. cikk). · súrlódás: Nyelvi és kulturális akadály a tárgyalásokon",
+   "k": "t:3:1:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1777285805000,
+   "n": 9,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Főpróba T1 – elbírálás [KÉK]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:3:1:a:K",
+   "sim": 1
+  },
+  {
+   "ts": 1777285925000,
+   "n": 9,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Főpróba T1 – elbírálás [PIROS]: Kudarc – A döntés nem érte el a célt, vagy a mandátum/ROE határán kívül esett, illetve a civilek kockázatát növelte.",
+   "k": "t:3:1:a:P",
+   "sim": 1
+  },
+  {
+   "ts": 1777286045000,
+   "n": 9,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Főpróba T1 – elbírálás [ZÖLD]: Siker – A döntés a mandátum és a ROE keretein belül, arányosan történt, és a kitűzött célt szolgálta.",
+   "k": "t:3:1:a:Z",
+   "sim": 1
+  },
+  {
+   "ts": 1777286165000,
+   "n": 9,
+   "ph": 1,
+   "role": "FAC",
+   "cat": "megfigyelés",
+   "tx": "Főpróba T1 – megfigyelés: A tűzszüneti vonal megsértése után a KÉK a 40. cikk szerinti ideiglenes intézkedéseket választotta; a PIROS részben alkalmazkodott, a ZÖLD információja késett.",
+   "k": "t:3:1:obs",
+   "sim": 1
+  },
+  {
+   "ts": 1777286285000,
+   "n": 9,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Főpróba T1: eredmény közölve, kör lezárva – A PIROS erők átlépték a tűzszüneti vonalat a B1 szektorban; civil falvak kerültek veszélybe (a béke fenyegetése, 39. cikk). · súrlódás: Nyelvi és kulturális akadály a tárgyalásokon",
+   "k": "t:3:1:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1777286585000,
+   "n": 9,
+   "ph": 1,
+   "role": "FOR",
+   "cat": "játék",
+   "tx": "Főpróba T2: injekt kiadva, döntések gyűjtése – Az A3 szektorban ellenőrzőponton feltartottak egy humanitárius konvojt; élelmiszer- és gyógyszerhiány alakul ki. · súrlódás: Összeköttetési zavar (rádió, műhold)",
+   "k": "t:3:2:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1777286750000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T2 – döntés [KÉK / Parancsnok]: Civilek védelme, humanitárius hozzáférés biztosítása @ A1 (ember (szimulált)) – Parancsnok: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) A1 szektorban; a konvoj kísérése, a menekültek mozgásának rendezése.",
+   "k": "t:3:2:o:K0",
+   "sim": 1
+  },
+  {
+   "ts": 1777286815000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T2 – döntés [KÉK / Törzsfőnök]: Civilek védelme, humanitárius hozzáférés biztosítása @ A1 (ember (szimulált)) – Törzsfőnök: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) A1 szektorban; a konvoj kísérése, a menekültek mozgásának rendezése.",
+   "k": "t:3:2:o:K1",
+   "sim": 1
+  },
+  {
+   "ts": 1777286900000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T2 – döntés [KÉK / J2 Hírszerzés]: Civilek védelme, humanitárius hozzáférés biztosítása @ C2 (AI (szimulált)) – J2 Hírszerzés: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) C2 szektorban; a konvoj kísérése, a menekültek mozgásának rendezé…",
+   "k": "t:3:2:o:K2",
+   "sim": 1
+  },
+  {
+   "ts": 1777287005000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T2 – döntés [KÉK / J3 Műveletek]: Civilek védelme, humanitárius hozzáférés biztosítása @ C2 (AI (szimulált)) – J3 Műveletek: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) C2 szektorban; a konvoj kísérése, a menekültek mozgásának rendezés…",
+   "k": "t:3:2:o:K3",
+   "sim": 1
+  },
+  {
+   "ts": 1777287050000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T2 – döntés [KÉK / J4 Logisztika]: Civilek védelme, humanitárius hozzáférés biztosítása @ B2 (ember (szimulált)) – J4 Logisztika: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) B2 szektorban; a konvoj kísérése, a menekültek mozgásának rendezé…",
+   "k": "t:3:2:o:K4",
+   "sim": 1
+  },
+  {
+   "ts": 1777287115000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T2 – döntés [KÉK / J5 Tervezés]: Civilek védelme, humanitárius hozzáférés biztosítása @ A2 (ember (szimulált)) – J5 Tervezés: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) A2 szektorban; a konvoj kísérése, a menekültek mozgásának rendezése.",
+   "k": "t:3:2:o:K5",
+   "sim": 1
+  },
+  {
+   "ts": 1777287200000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T2 – döntés [KÉK / J6 CIS]: Civilek védelme, humanitárius hozzáférés biztosítása @ A1 (ember (szimulált)) – J6 CIS: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) A1 szektorban; a konvoj kísérése, a menekültek mozgásának rendezése.",
+   "k": "t:3:2:o:K6",
+   "sim": 1
+  },
+  {
+   "ts": 1777287245000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T2 – döntés [PIROS / Parancsnok]: Utánpótlás és fegyverszállítás szervezése @ A1 (ember (szimulált)) – Parancsnok: Utánpótlás és szállítás szervezése a(z) A1 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:3:2:o:P0",
+   "sim": 1
+  },
+  {
+   "ts": 1777287310000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T2 – döntés [PIROS / Törzsfőnök]: Utánpótlás és fegyverszállítás szervezése @ A1 (AI (szimulált)) – Törzsfőnök: Utánpótlás és szállítás szervezése a(z) A1 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:3:2:o:P1",
+   "sim": 1
+  },
+  {
+   "ts": 1777287395000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T2 – döntés [PIROS / J2 Hírszerzés]: Utánpótlás és fegyverszállítás szervezése @ C2 (AI (szimulált)) – J2 Hírszerzés: Utánpótlás és szállítás szervezése a(z) C2 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:3:2:o:P2",
+   "sim": 1
+  },
+  {
+   "ts": 1777287500000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T2 – döntés [PIROS / J3 Műveletek]: Utánpótlás és fegyverszállítás szervezése @ C2 (ember (szimulált)) – J3 Műveletek: Utánpótlás és szállítás szervezése a(z) C2 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:3:2:o:P3",
+   "sim": 1
+  },
+  {
+   "ts": 1777287545000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T2 – döntés [PIROS / J4 Logisztika]: Utánpótlás és fegyverszállítás szervezése @ B2 (ember (szimulált)) – J4 Logisztika: Utánpótlás és szállítás szervezése a(z) B2 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:3:2:o:P4",
+   "sim": 1
+  },
+  {
+   "ts": 1777287610000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T2 – döntés [PIROS / J5 Tervezés]: Utánpótlás és fegyverszállítás szervezése @ A2 (ember (szimulált)) – J5 Tervezés: Utánpótlás és szállítás szervezése a(z) A2 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:3:2:o:P5",
+   "sim": 1
+  },
+  {
+   "ts": 1777287655000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T2 – döntés [ZÖLD / Nemzeti parancsnok]: Humanitárius segélyek szétosztása @ A1 (ember (szimulált)) – Nemzeti parancsnok: Segélyszállítmányok szétosztása a(z) A1 szektorban, a konvojok kísérésének egyeztetésével.",
+   "k": "t:3:2:o:Z0",
+   "sim": 1
+  },
+  {
+   "ts": 1777287720000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T2 – döntés [ZÖLD / Törzsfőnök]: Humanitárius segélyek szétosztása @ A1 (AI (szimulált)) – Törzsfőnök: Segélyszállítmányok szétosztása a(z) A1 szektorban, a konvojok kísérésének egyeztetésével.",
+   "k": "t:3:2:o:Z1",
+   "sim": 1
+  },
+  {
+   "ts": 1777287805000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T2 – döntés [ZÖLD / J2 Hírszerzés]: Humanitárius segélyek szétosztása @ C2 (ember (szimulált)) – J2 Hírszerzés: Segélyszállítmányok szétosztása a(z) C2 szektorban, a konvojok kísérésének egyeztetésével.",
+   "k": "t:3:2:o:Z2",
+   "sim": 1
+  },
+  {
+   "ts": 1777287910000,
+   "n": 9,
+   "ph": 1,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Főpróba T2 – döntés [ZÖLD / J3 Műveletek]: Humanitárius segélyek szétosztása @ C2 (ember (szimulált)) – J3 Műveletek: Segélyszállítmányok szétosztása a(z) C2 szektorban, a konvojok kísérésének egyeztetésével.",
+   "k": "t:3:2:o:Z3",
+   "sim": 1
+  },
+  {
+   "ts": 1777288090000,
+   "n": 9,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Főpróba T2: elbírálás folyamatban – Az A3 szektorban ellenőrzőponton feltartottak egy humanitárius konvojt; élelmiszer- és gyógyszerhiány alakul ki. · súrlódás: Összeköttetési zavar (rádió, műhold)",
+   "k": "t:3:2:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1777288210000,
+   "n": 9,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Főpróba T2 – elbírálás [KÉK]: Siker – A döntés a mandátum és a ROE keretein belül, arányosan történt, és a kitűzött célt szolgálta.",
+   "k": "t:3:2:a:K",
+   "sim": 1
+  },
+  {
+   "ts": 1777288330000,
+   "n": 9,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Főpróba T2 – elbírálás [PIROS]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:3:2:a:P",
+   "sim": 1
+  },
+  {
+   "ts": 1777288450000,
+   "n": 9,
+   "ph": 1,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Főpróba T2 – elbírálás [ZÖLD]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:3:2:a:Z",
+   "sim": 1
+  },
+  {
+   "ts": 1777288570000,
+   "n": 9,
+   "ph": 1,
+   "role": "FAC",
+   "cat": "megfigyelés",
+   "tx": "Főpróba T2 – megfigyelés: A humanitárius konvoj feltartása: a POC és a hozzáférés együttes kezelése koordinációs hiányt mutatott a KÉK és a ZÖLD között.",
+   "k": "t:3:2:obs",
+   "sim": 1
+  },
+  {
+   "ts": 1777288690000,
+   "n": 9,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Főpróba T2: eredmény közölve, kör lezárva – Az A3 szektorban ellenőrzőponton feltartottak egy humanitárius konvojt; élelmiszer- és gyógyszerhiány alakul ki. · súrlódás: Összeköttetési zavar (rádió, műhold)",
+   "k": "t:3:2:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1777288990000,
+   "n": 9,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Főpróba – 3. futás lezárva",
+   "k": "run:3",
+   "sim": 1
+  },
+  {
+   "ts": 1777289950000,
+   "n": 9,
+   "ph": 1,
+   "role": "MEG",
+   "cat": "megbízó",
+   "tx": "Megbízói jóváhagyás: 9. lépés (Főpróba)",
+   "k": "sp:9",
+   "sim": 1
+  },
+  {
+   "ts": 1777290550000,
+   "n": 9,
+   "ph": 1,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "9. lépés (Főpróba) lezárva",
+   "k": "done:9",
+   "sim": 1
+  },
+  {
+   "ts": 1777885620000,
+   "n": 10,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "feladat",
+   "tx": "Feladat kész [IGA]: Read-ahead 1–2 héttel előbb kiadva",
+   "k": "tick:10:0",
+   "sim": 1
+  },
+  {
+   "ts": 1777886040000,
+   "n": 10,
+   "ph": 2,
+   "role": "ELE",
+   "cat": "feladat",
+   "tx": "Feladat kész [ELE]: Kiképzi az elemzőket: DCAP, hol-mikor-hogyan",
+   "k": "tick:10:1",
+   "sim": 1
+  },
+  {
+   "ts": 1777886460000,
+   "n": 10,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "feladat",
+   "tx": "Feladat kész [JAT]: Célok → háttér → mechanika → időrend → kommunikáció",
+   "k": "tick:10:2",
+   "sim": 1
+  },
+  {
+   "ts": 1777886880000,
+   "n": 10,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "feladat",
+   "tx": "Feladat kész [ADJ]: Mechanika, időzítés, kommunikáció",
+   "k": "tick:10:3",
+   "sim": 1
+  },
+  {
+   "ts": 1777887300000,
+   "n": 10,
+   "ph": 2,
+   "role": "FAC",
+   "cat": "feladat",
+   "tx": "Feladat kész [FAC]: Ugyanez + ellenőrzi: értik-e a céljaikat?",
+   "k": "tick:10:4",
+   "sim": 1
+  },
+  {
+   "ts": 1777888620000,
+   "n": 10,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – A read-ahead 1–2 héttel előbb kiment: igen",
+   "k": "field:10:readsent",
+   "sim": 1
+  },
+  {
+   "ts": 1777889220000,
+   "n": 10,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "10. lépés (Kiképzés) lezárva",
+   "k": "done:10",
+   "sim": 1
+  },
+  {
+   "ts": 1778490420000,
+   "n": 11,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "feladat",
+   "tx": "Feladat kész [IGA]: Gondoskodik: minden kész és tesztelt érkezés előtt",
+   "k": "tick:11:0",
+   "sim": 1
+  },
+  {
+   "ts": 1778490840000,
+   "n": 11,
+   "ph": 2,
+   "role": "FEJ",
+   "cat": "feladat",
+   "tx": "Feladat kész [FEJ]: Felállítja a játékeszközöket, kijelzőket",
+   "k": "tick:11:1",
+   "sim": 1
+  },
+  {
+   "ts": 1778491260000,
+   "n": 11,
+   "ph": 2,
+   "role": "REN",
+   "cat": "feladat",
+   "tx": "Feladat kész [REN]: Helyszín, szállítás, biztonság, regisztráció, étkezés",
+   "k": "tick:11:2",
+   "sim": 1
+  },
+  {
+   "ts": 1778491680000,
+   "n": 11,
+   "ph": 2,
+   "role": "REN",
+   "cat": "feladat",
+   "tx": "Feladat kész [REN]: IT-szakemberekkel végponttól végpontig tesztel",
+   "k": "tick:11:3",
+   "sim": 1
+  },
+  {
+   "ts": 1778493000000,
+   "n": 11,
+   "ph": 2,
+   "role": "REN",
+   "cat": "produktum",
+   "tx": "Produktum – A végponttól végpontig tartó IT-teszt lefutott: igen",
+   "k": "field:11:it",
+   "sim": 1
+  },
+  {
+   "ts": 1778493660000,
+   "n": 11,
+   "ph": 2,
+   "role": "REN",
+   "cat": "produktum",
+   "tx": "Produktum – A játékeszközök, kijelzők fel vannak állítva: igen",
+   "k": "field:11:equip",
+   "sim": 1
+  },
+  {
+   "ts": 1778493720000,
+   "n": 11,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – KÉK / Parancsnok: csatlakozott (QR)",
+   "k": "seat:K0:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778493780000,
+   "n": 11,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – KÉK / Törzsfőnök: csatlakozott (QR)",
+   "k": "seat:K1:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778493840000,
+   "n": 11,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – KÉK / J4 Logisztika: csatlakozott (QR)",
+   "k": "seat:K4:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778493900000,
+   "n": 11,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – KÉK / J5 Tervezés: csatlakozott (QR)",
+   "k": "seat:K5:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778493960000,
+   "n": 11,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – KÉK / J6 CIS: csatlakozott (QR)",
+   "k": "seat:K6:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778494020000,
+   "n": 11,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – PIROS / Parancsnok: csatlakozott (QR)",
+   "k": "seat:P0:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778494080000,
+   "n": 11,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – PIROS / J3 Műveletek: csatlakozott (QR)",
+   "k": "seat:P3:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778494140000,
+   "n": 11,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – PIROS / J4 Logisztika: csatlakozott (QR)",
+   "k": "seat:P4:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778494200000,
+   "n": 11,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – PIROS / J5 Tervezés: csatlakozott (QR)",
+   "k": "seat:P5:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778494260000,
+   "n": 11,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – ZÖLD / Nemzeti parancsnok: csatlakozott (QR)",
+   "k": "seat:Z0:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778494320000,
+   "n": 11,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – ZÖLD / J2 Hírszerzés: csatlakozott (QR)",
+   "k": "seat:Z2:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778494380000,
+   "n": 11,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – ZÖLD / J3 Műveletek: csatlakozott (QR)",
+   "k": "seat:Z3:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778494440000,
+   "n": 11,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – FEHÉR / Wargame-igazgató: csatlakozott (QR)",
+   "k": "seat:F0:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778494500000,
+   "n": 11,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – FEHÉR / Adjudikátor 1: csatlakozott (QR)",
+   "k": "seat:F1:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778494560000,
+   "n": 11,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – FEHÉR / Adjudikátor 2: csatlakozott (QR)",
+   "k": "seat:F2:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778494620000,
+   "n": 11,
+   "ph": 2,
+   "role": "FAC",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – FEHÉR / Facilitátor: csatlakozott (QR)",
+   "k": "seat:F3:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778494680000,
+   "n": 11,
+   "ph": 2,
+   "role": "ELE",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – FEHÉR / Elemző 1: csatlakozott (QR)",
+   "k": "seat:F4:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778494740000,
+   "n": 11,
+   "ph": 2,
+   "role": "FOR",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – FEHÉR / Forgatókönyv-tervező: csatlakozott (QR)",
+   "k": "seat:F6:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778494800000,
+   "n": 11,
+   "ph": 2,
+   "role": "OPF",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – FEHÉR / OPFOR-vezető: csatlakozott (QR)",
+   "k": "seat:F7:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778494860000,
+   "n": 11,
+   "ph": 2,
+   "role": "REN",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – FEHÉR / Rendezvényszervező: csatlakozott (QR)",
+   "k": "seat:F8:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778494920000,
+   "n": 11,
+   "ph": 2,
+   "role": "FEJ",
+   "cat": "szervezés",
+   "tx": "Csatlakozás – FEHÉR / Játékfejlesztő: csatlakozott (QR)",
+   "k": "seat:F9:j",
+   "sim": 1
+  },
+  {
+   "ts": 1778495520000,
+   "n": 11,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "11. lépés (Felállítás, IT-teszt) lezárva",
+   "k": "done:11",
+   "sim": 1
+  },
+  {
+   "ts": 1779095220000,
+   "n": 12,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "feladat",
+   "tx": "Feladat kész [IGA]: A warm startot beépíti az időtervbe",
+   "k": "tick:12:0",
+   "sim": 1
+  },
+  {
+   "ts": 1779095640000,
+   "n": 12,
+   "ph": 2,
+   "role": "FAC",
+   "cat": "feladat",
+   "tx": "Feladat kész [FAC]: Jégtörő: oldja a feszültséget (opcionális)",
+   "k": "tick:12:1",
+   "sim": 1
+  },
+  {
+   "ts": 1779096060000,
+   "n": 12,
+   "ph": 2,
+   "role": "ELE",
+   "cat": "feladat",
+   "tx": "Feladat kész [ELE]: Bemutatkozik a játékosoknak, bekapcsolódik",
+   "k": "tick:12:2",
+   "sim": 1
+  },
+  {
+   "ts": 1779096480000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "feladat",
+   "tx": "Feladat kész [JAT]: Turn 0: teljes próbakör könnyebb vignette-tel",
+   "k": "tick:12:3",
+   "sim": 1
+  },
+  {
+   "ts": 1779096900000,
+   "n": 12,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "feladat",
+   "tx": "Feladat kész [ADJ]: Kipróbálja az elbírálást a turn 0-n",
+   "k": "tick:12:4",
+   "sim": 1
+  },
+  {
+   "ts": 1779097560000,
+   "n": 12,
+   "ph": 2,
+   "role": "FAC",
+   "cat": "produktum",
+   "tx": "Produktum – Jégtörő megtartva (opcionális): igen",
+   "k": "field:12:ice",
+   "sim": 1
+  },
+  {
+   "ts": 1779098160000,
+   "n": 12,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Végrehajtás – 4. futás megnyitva",
+   "k": "run:4",
+   "sim": 1
+  },
+  {
+   "ts": 1779098280000,
+   "n": 12,
+   "ph": 2,
+   "role": "FOR",
+   "cat": "játék",
+   "tx": "Végrehajtás T0: injekt kiadva, döntések gyűjtése – Turn 0 – bemelegítő vignette: a tűzszüneti vonalon feszültség; az ENSZ-járőr a PIROS erők mozgását észleli az A1 szektorban.",
+   "k": "t:4:0:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779098445000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T0 – döntés [KÉK / Parancsnok]: Helyzetmegállapítás és jelentés az SZT-nek (39. cikk) @ B3 (ember (szimulált)) – Parancsnok: Helyzetmegállapítás: a(z) B3 szektorban észlelt fenyegetés a nemzetközi béke és biztonság megsértése (39. cikk); jelentés az SZT-nek és a…",
+   "k": "t:4:0:o:K0",
+   "sim": 1
+  },
+  {
+   "ts": 1779098510000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T0 – döntés [KÉK / Törzsfőnök]: Helyzetmegállapítás és jelentés az SZT-nek (39. cikk) @ B3 (ember (szimulált)) – Törzsfőnök: Helyzetmegállapítás: a(z) B3 szektorban észlelt fenyegetés a nemzetközi béke és biztonság megsértése (39. cikk); jelentés az SZT-nek és a…",
+   "k": "t:4:0:o:K1",
+   "sim": 1
+  },
+  {
+   "ts": 1779098595000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T0 – döntés [KÉK / J2 Hírszerzés]: Helyzetmegállapítás és jelentés az SZT-nek (39. cikk) @ B2 (AI (szimulált)) – J2 Hírszerzés: Helyzetmegállapítás: a(z) B2 szektorban észlelt fenyegetés a nemzetközi béke és biztonság megsértése (39. cikk); jelentés az SZT-nek é…",
+   "k": "t:4:0:o:K2",
+   "sim": 1
+  },
+  {
+   "ts": 1779098700000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T0 – döntés [KÉK / J3 Műveletek]: Helyzetmegállapítás és jelentés az SZT-nek (39. cikk) @ B1 (AI (szimulált)) – J3 Műveletek: Helyzetmegállapítás: a(z) B1 szektorban észlelt fenyegetés a nemzetközi béke és biztonság megsértése (39. cikk); jelentés az SZT-nek és…",
+   "k": "t:4:0:o:K3",
+   "sim": 1
+  },
+  {
+   "ts": 1779098745000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T0 – döntés [KÉK / J4 Logisztika]: Helyzetmegállapítás és jelentés az SZT-nek (39. cikk) @ B2 (ember (szimulált)) – J4 Logisztika: Helyzetmegállapítás: a(z) B2 szektorban észlelt fenyegetés a nemzetközi béke és biztonság megsértése (39. cikk); jelentés az SZT-nek é…",
+   "k": "t:4:0:o:K4",
+   "sim": 1
+  },
+  {
+   "ts": 1779098810000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T0 – döntés [KÉK / J5 Tervezés]: Helyzetmegállapítás és jelentés az SZT-nek (39. cikk) @ C1 (ember (szimulált)) – J5 Tervezés: Helyzetmegállapítás: a(z) C1 szektorban észlelt fenyegetés a nemzetközi béke és biztonság megsértése (39. cikk); jelentés az SZT-nek és …",
+   "k": "t:4:0:o:K5",
+   "sim": 1
+  },
+  {
+   "ts": 1779098895000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T0 – döntés [KÉK / J6 CIS]: Helyzetmegállapítás és jelentés az SZT-nek (39. cikk) @ A1 (ember (szimulált)) – J6 CIS: Helyzetmegállapítás: a(z) A1 szektorban észlelt fenyegetés a nemzetközi béke és biztonság megsértése (39. cikk); jelentés az SZT-nek és a For…",
+   "k": "t:4:0:o:K6",
+   "sim": 1
+  },
+  {
+   "ts": 1779098940000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T0 – döntés [PIROS / Parancsnok]: Állások megerősítése, védelem @ B3 (ember (szimulált)) – Parancsnok: Állások megerősítése a(z) B3 szektorban; a csoport védekezésre rendezkedik be, és időt nyer a tárgyalásokhoz.",
+   "k": "t:4:0:o:P0",
+   "sim": 1
+  },
+  {
+   "ts": 1779099005000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T0 – döntés [PIROS / Törzsfőnök]: Állások megerősítése, védelem @ B3 (AI (szimulált)) – Törzsfőnök: Állások megerősítése a(z) B3 szektorban; a csoport védekezésre rendezkedik be, és időt nyer a tárgyalásokhoz.",
+   "k": "t:4:0:o:P1",
+   "sim": 1
+  },
+  {
+   "ts": 1779099090000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T0 – döntés [PIROS / J2 Hírszerzés]: Állások megerősítése, védelem @ B2 (AI (szimulált)) – J2 Hírszerzés: Állások megerősítése a(z) B2 szektorban; a csoport védekezésre rendezkedik be, és időt nyer a tárgyalásokhoz.",
+   "k": "t:4:0:o:P2",
+   "sim": 1
+  },
+  {
+   "ts": 1779099195000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T0 – döntés [PIROS / J3 Műveletek]: Állások megerősítése, védelem @ B1 (ember (szimulált)) – J3 Műveletek: Állások megerősítése a(z) B1 szektorban; a csoport védekezésre rendezkedik be, és időt nyer a tárgyalásokhoz.",
+   "k": "t:4:0:o:P3",
+   "sim": 1
+  },
+  {
+   "ts": 1779099240000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T0 – döntés [PIROS / J4 Logisztika]: Állások megerősítése, védelem @ B2 (ember (szimulált)) – J4 Logisztika: Állások megerősítése a(z) B2 szektorban; a csoport védekezésre rendezkedik be, és időt nyer a tárgyalásokhoz.",
+   "k": "t:4:0:o:P4",
+   "sim": 1
+  },
+  {
+   "ts": 1779099305000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T0 – döntés [PIROS / J5 Tervezés]: Állások megerősítése, védelem @ C1 (ember (szimulált)) – J5 Tervezés: Állások megerősítése a(z) C1 szektorban; a csoport védekezésre rendezkedik be, és időt nyer a tárgyalásokhoz.",
+   "k": "t:4:0:o:P5",
+   "sim": 1
+  },
+  {
+   "ts": 1779099350000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T0 – döntés [ZÖLD / Nemzeti parancsnok]: Koordináció az ENSZ-erővel és a szervezetekkel @ B3 (ember (szimulált)) – Nemzeti parancsnok: Koordinációs egyeztetés a Force HQ-val és a szervezetekkel a(z) B3 szektor helyzetéről.",
+   "k": "t:4:0:o:Z0",
+   "sim": 1
+  },
+  {
+   "ts": 1779099415000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T0 – döntés [ZÖLD / Törzsfőnök]: Koordináció az ENSZ-erővel és a szervezetekkel @ B3 (AI (szimulált)) – Törzsfőnök: Koordinációs egyeztetés a Force HQ-val és a szervezetekkel a(z) B3 szektor helyzetéről.",
+   "k": "t:4:0:o:Z1",
+   "sim": 1
+  },
+  {
+   "ts": 1779099500000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T0 – döntés [ZÖLD / J2 Hírszerzés]: Koordináció az ENSZ-erővel és a szervezetekkel @ B2 (ember (szimulált)) – J2 Hírszerzés: Koordinációs egyeztetés a Force HQ-val és a szervezetekkel a(z) B2 szektor helyzetéről.",
+   "k": "t:4:0:o:Z2",
+   "sim": 1
+  },
+  {
+   "ts": 1779099605000,
+   "n": 12,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T0 – döntés [ZÖLD / J3 Műveletek]: Koordináció az ENSZ-erővel és a szervezetekkel @ B1 (ember (szimulált)) – J3 Műveletek: Koordinációs egyeztetés a Force HQ-val és a szervezetekkel a(z) B1 szektor helyzetéről.",
+   "k": "t:4:0:o:Z3",
+   "sim": 1
+  },
+  {
+   "ts": 1779099785000,
+   "n": 12,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Végrehajtás T0: elbírálás folyamatban – Turn 0 – bemelegítő vignette: a tűzszüneti vonalon feszültség; az ENSZ-járőr a PIROS erők mozgását észleli az A1 szektorban.",
+   "k": "t:4:0:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779099905000,
+   "n": 12,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T0 – elbírálás [KÉK]: Siker – A döntés a mandátum és a ROE keretein belül, arányosan történt, és a kitűzött célt szolgálta.",
+   "k": "t:4:0:a:K",
+   "sim": 1
+  },
+  {
+   "ts": 1779100025000,
+   "n": 12,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T0 – elbírálás [PIROS]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:4:0:a:P",
+   "sim": 1
+  },
+  {
+   "ts": 1779100145000,
+   "n": 12,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T0 – elbírálás [ZÖLD]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:4:0:a:Z",
+   "sim": 1
+  },
+  {
+   "ts": 1779100265000,
+   "n": 12,
+   "ph": 2,
+   "role": "FAC",
+   "cat": "megfigyelés",
+   "tx": "Végrehajtás T0 – megfigyelés: Turn 0: a csapatok megismerték az eszközöket; a VII. fejezeti mandátum értelmezése eltért a KÉK törzsben.",
+   "k": "t:4:0:obs",
+   "sim": 1
+  },
+  {
+   "ts": 1779100385000,
+   "n": 12,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Végrehajtás T0: eredmény közölve, kör lezárva – Turn 0 – bemelegítő vignette: a tűzszüneti vonalon feszültség; az ENSZ-járőr a PIROS erők mozgását észleli az A1 szektorban.",
+   "k": "t:4:0:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779098160000,
+   "n": 12,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "12. lépés (Jégtörő, warm start) lezárva",
+   "k": "done:12",
+   "sim": 1
+  },
+  {
+   "ts": 1779102420000,
+   "n": 13,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "feladat",
+   "tx": "Feladat kész [IGA]: Irányít, kivédi a külső zavarást",
+   "k": "tick:13:0",
+   "sim": 1
+  },
+  {
+   "ts": 1779102840000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "feladat",
+   "tx": "Feladat kész [JAT]: Csak ők döntenek; indokolják a döntésüket",
+   "k": "tick:13:1",
+   "sim": 1
+  },
+  {
+   "ts": 1779103260000,
+   "n": 13,
+   "ph": 2,
+   "role": "OPF",
+   "cat": "feladat",
+   "tx": "Feladat kész [OPF]: Súrlódást ad a célok szerint, az igazgató alatt",
+   "k": "tick:13:2",
+   "sim": 1
+  },
+  {
+   "ts": 1779103680000,
+   "n": 13,
+   "ph": 2,
+   "role": "FAC",
+   "cat": "feladat",
+   "tx": "Feladat kész [FAC]: Tartja az időt, magyarázza a szabályt; nem tereli",
+   "k": "tick:13:3",
+   "sim": 1
+  },
+  {
+   "ts": 1779104100000,
+   "n": 13,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "feladat",
+   "tx": "Feladat kész [ADJ]: Időben, érthetően elbírál; tartalék-módszer kell",
+   "k": "tick:13:4",
+   "sim": 1
+  },
+  {
+   "ts": 1779104520000,
+   "n": 13,
+   "ph": 2,
+   "role": "ELE",
+   "cat": "feladat",
+   "tx": "Feladat kész [ELE]: Észrevétlenül gyűjt adatot; jelez, ha hiány van",
+   "k": "tick:13:5",
+   "sim": 1
+  },
+  {
+   "ts": 1779105120000,
+   "n": 13,
+   "ph": 2,
+   "role": "FOR",
+   "cat": "játék",
+   "tx": "Végrehajtás T1: injekt kiadva, döntések gyűjtése – A PIROS erők átlépték a tűzszüneti vonalat a B1 szektorban; civil falvak kerültek veszélybe (a béke fenyegetése, 39. cikk). · súrlódás: Nyelvi és kulturális akadály a tárgyalásokon",
+   "k": "t:4:1:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779105285000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T1 – döntés [KÉK / Parancsnok]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B1 (ember (szimulált)) – Parancsnok: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B1 szektorban, a felek joga…",
+   "k": "t:4:1:o:K0",
+   "sim": 1
+  },
+  {
+   "ts": 1779105350000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T1 – döntés [KÉK / Törzsfőnök]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B2 (ember (szimulált)) – Törzsfőnök: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B2 szektorban, a felek joga…",
+   "k": "t:4:1:o:K1",
+   "sim": 1
+  },
+  {
+   "ts": 1779105435000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T1 – döntés [KÉK / J2 Hírszerzés]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B2 (AI (szimulált)) – J2 Hírszerzés: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B2 szektorban, a felek j…",
+   "k": "t:4:1:o:K2",
+   "sim": 1
+  },
+  {
+   "ts": 1779105540000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T1 – döntés [KÉK / J3 Műveletek]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ C3 (AI (szimulált)) – J3 Műveletek: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) C3 szektorban, a felek jo…",
+   "k": "t:4:1:o:K3",
+   "sim": 1
+  },
+  {
+   "ts": 1779105585000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T1 – döntés [KÉK / J4 Logisztika]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B3 (ember (szimulált)) – J4 Logisztika: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B3 szektorban, a felek j…",
+   "k": "t:4:1:o:K4",
+   "sim": 1
+  },
+  {
+   "ts": 1779105650000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T1 – döntés [KÉK / J5 Tervezés]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ A2 (ember (szimulált)) – J5 Tervezés: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) A2 szektorban, a felek jog…",
+   "k": "t:4:1:o:K5",
+   "sim": 1
+  },
+  {
+   "ts": 1779105735000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T1 – döntés [KÉK / J6 CIS]: Ideiglenes intézkedések: tűzszünet, szétválasztás (40. cikk) @ B2 (ember (szimulált)) – J6 CIS: Ideiglenes intézkedés (40. cikk): a felek felszólítása a tűzszünet betartására és az erők szétválasztása a(z) B2 szektorban, a felek jogainak…",
+   "k": "t:4:1:o:K6",
+   "sim": 1
+  },
+  {
+   "ts": 1779105780000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T1 – döntés [PIROS / Parancsnok]: Támadó akció a tűzszüneti vonalon túl @ B1 (ember (szimulált)) – Parancsnok: Támadó akció a(z) B1 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:4:1:o:P0",
+   "sim": 1
+  },
+  {
+   "ts": 1779105845000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T1 – döntés [PIROS / Törzsfőnök]: Támadó akció a tűzszüneti vonalon túl @ B2 (AI (szimulált)) – Törzsfőnök: Támadó akció a(z) B2 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:4:1:o:P1",
+   "sim": 1
+  },
+  {
+   "ts": 1779105930000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T1 – döntés [PIROS / J2 Hírszerzés]: Támadó akció a tűzszüneti vonalon túl @ B2 (AI (szimulált)) – J2 Hírszerzés: Támadó akció a(z) B2 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:4:1:o:P2",
+   "sim": 1
+  },
+  {
+   "ts": 1779106035000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T1 – döntés [PIROS / J3 Műveletek]: Támadó akció a tűzszüneti vonalon túl @ C3 (ember (szimulált)) – J3 Műveletek: Támadó akció a(z) C3 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:4:1:o:P3",
+   "sim": 1
+  },
+  {
+   "ts": 1779106080000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T1 – döntés [PIROS / J4 Logisztika]: Támadó akció a tűzszüneti vonalon túl @ B3 (ember (szimulált)) – J4 Logisztika: Támadó akció a(z) B3 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:4:1:o:P4",
+   "sim": 1
+  },
+  {
+   "ts": 1779106145000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T1 – döntés [PIROS / J5 Tervezés]: Támadó akció a tűzszüneti vonalon túl @ A2 (ember (szimulált)) – J5 Tervezés: Támadó akció a(z) A2 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:4:1:o:P5",
+   "sim": 1
+  },
+  {
+   "ts": 1779106190000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T1 – döntés [ZÖLD / Nemzeti parancsnok]: Hozzájárulás megerősítése, szabad mozgás biztosítása @ B1 (ember (szimulált)) – Nemzeti parancsnok: A hatóságok megerősítik a hozzájárulást és szabad mozgást biztosítanak a(z) B1 szektorban az ENSZ-erőnek és a konvojoknak.",
+   "k": "t:4:1:o:Z0",
+   "sim": 1
+  },
+  {
+   "ts": 1779106255000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T1 – döntés [ZÖLD / Törzsfőnök]: Hozzájárulás megerősítése, szabad mozgás biztosítása @ B2 (AI (szimulált)) – Törzsfőnök: A hatóságok megerősítik a hozzájárulást és szabad mozgást biztosítanak a(z) B2 szektorban az ENSZ-erőnek és a konvojoknak.",
+   "k": "t:4:1:o:Z1",
+   "sim": 1
+  },
+  {
+   "ts": 1779106340000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T1 – döntés [ZÖLD / J2 Hírszerzés]: Hozzájárulás megerősítése, szabad mozgás biztosítása @ B2 (ember (szimulált)) – J2 Hírszerzés: A hatóságok megerősítik a hozzájárulást és szabad mozgást biztosítanak a(z) B2 szektorban az ENSZ-erőnek és a konvojoknak.",
+   "k": "t:4:1:o:Z2",
+   "sim": 1
+  },
+  {
+   "ts": 1779106445000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T1 – döntés [ZÖLD / J3 Műveletek]: Hozzájárulás megerősítése, szabad mozgás biztosítása @ C3 (ember (szimulált)) – J3 Műveletek: A hatóságok megerősítik a hozzájárulást és szabad mozgást biztosítanak a(z) C3 szektorban az ENSZ-erőnek és a konvojoknak.",
+   "k": "t:4:1:o:Z3",
+   "sim": 1
+  },
+  {
+   "ts": 1779106625000,
+   "n": 13,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Végrehajtás T1: elbírálás folyamatban – A PIROS erők átlépték a tűzszüneti vonalat a B1 szektorban; civil falvak kerültek veszélybe (a béke fenyegetése, 39. cikk). · súrlódás: Nyelvi és kulturális akadály a tárgyalásokon",
+   "k": "t:4:1:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779106745000,
+   "n": 13,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T1 – elbírálás [KÉK]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:4:1:a:K",
+   "sim": 1
+  },
+  {
+   "ts": 1779106865000,
+   "n": 13,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T1 – elbírálás [PIROS]: Kudarc – A döntés nem érte el a célt, vagy a mandátum/ROE határán kívül esett, illetve a civilek kockázatát növelte.",
+   "k": "t:4:1:a:P",
+   "sim": 1
+  },
+  {
+   "ts": 1779106985000,
+   "n": 13,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T1 – elbírálás [ZÖLD]: Siker – A döntés a mandátum és a ROE keretein belül, arányosan történt, és a kitűzött célt szolgálta.",
+   "k": "t:4:1:a:Z",
+   "sim": 1
+  },
+  {
+   "ts": 1779107105000,
+   "n": 13,
+   "ph": 2,
+   "role": "FAC",
+   "cat": "megfigyelés",
+   "tx": "Végrehajtás T1 – megfigyelés: A tűzszüneti vonal megsértése után a KÉK a 40. cikk szerinti ideiglenes intézkedéseket választotta; a PIROS részben alkalmazkodott, a ZÖLD információja késett.",
+   "k": "t:4:1:obs",
+   "sim": 1
+  },
+  {
+   "ts": 1779107225000,
+   "n": 13,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Végrehajtás T1: eredmény közölve, kör lezárva – A PIROS erők átlépték a tűzszüneti vonalat a B1 szektorban; civil falvak kerültek veszélybe (a béke fenyegetése, 39. cikk). · súrlódás: Nyelvi és kulturális akadály a tárgyalásokon",
+   "k": "t:4:1:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779107525000,
+   "n": 13,
+   "ph": 2,
+   "role": "FOR",
+   "cat": "játék",
+   "tx": "Végrehajtás T2: injekt kiadva, döntések gyűjtése – Az A3 szektorban ellenőrzőponton feltartottak egy humanitárius konvojt; élelmiszer- és gyógyszerhiány alakul ki. · súrlódás: Összeköttetési zavar (rádió, műhold)",
+   "k": "t:4:2:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779107690000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T2 – döntés [KÉK / Parancsnok]: Civilek védelme, humanitárius hozzáférés biztosítása @ A1 (ember (szimulált)) – Parancsnok: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) A1 szektorban; a konvoj kísérése, a menekültek mozgásának rendezése.",
+   "k": "t:4:2:o:K0",
+   "sim": 1
+  },
+  {
+   "ts": 1779107755000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T2 – döntés [KÉK / Törzsfőnök]: Civilek védelme, humanitárius hozzáférés biztosítása @ A1 (ember (szimulált)) – Törzsfőnök: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) A1 szektorban; a konvoj kísérése, a menekültek mozgásának rendezése.",
+   "k": "t:4:2:o:K1",
+   "sim": 1
+  },
+  {
+   "ts": 1779107840000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T2 – döntés [KÉK / J2 Hírszerzés]: Civilek védelme, humanitárius hozzáférés biztosítása @ C2 (AI (szimulált)) – J2 Hírszerzés: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) C2 szektorban; a konvoj kísérése, a menekültek mozgásának rendezé…",
+   "k": "t:4:2:o:K2",
+   "sim": 1
+  },
+  {
+   "ts": 1779107945000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T2 – döntés [KÉK / J3 Műveletek]: Civilek védelme, humanitárius hozzáférés biztosítása @ C2 (AI (szimulált)) – J3 Műveletek: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) C2 szektorban; a konvoj kísérése, a menekültek mozgásának rendezés…",
+   "k": "t:4:2:o:K3",
+   "sim": 1
+  },
+  {
+   "ts": 1779107990000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T2 – döntés [KÉK / J4 Logisztika]: Civilek védelme, humanitárius hozzáférés biztosítása @ B2 (ember (szimulált)) – J4 Logisztika: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) B2 szektorban; a konvoj kísérése, a menekültek mozgásának rendezé…",
+   "k": "t:4:2:o:K4",
+   "sim": 1
+  },
+  {
+   "ts": 1779108055000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T2 – döntés [KÉK / J5 Tervezés]: Civilek védelme, humanitárius hozzáférés biztosítása @ A2 (ember (szimulált)) – J5 Tervezés: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) A2 szektorban; a konvoj kísérése, a menekültek mozgásának rendezése.",
+   "k": "t:4:2:o:K5",
+   "sim": 1
+  },
+  {
+   "ts": 1779108140000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T2 – döntés [KÉK / J6 CIS]: Civilek védelme, humanitárius hozzáférés biztosítása @ A1 (ember (szimulált)) – J6 CIS: Civilek védelme: biztonságos folyosó és humanitárius hozzáférés a(z) A1 szektorban; a konvoj kísérése, a menekültek mozgásának rendezése.",
+   "k": "t:4:2:o:K6",
+   "sim": 1
+  },
+  {
+   "ts": 1779108185000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T2 – döntés [PIROS / Parancsnok]: Utánpótlás és fegyverszállítás szervezése @ A1 (ember (szimulált)) – Parancsnok: Utánpótlás és szállítás szervezése a(z) A1 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:4:2:o:P0",
+   "sim": 1
+  },
+  {
+   "ts": 1779108250000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T2 – döntés [PIROS / Törzsfőnök]: Utánpótlás és fegyverszállítás szervezése @ A1 (AI (szimulált)) – Törzsfőnök: Utánpótlás és szállítás szervezése a(z) A1 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:4:2:o:P1",
+   "sim": 1
+  },
+  {
+   "ts": 1779108335000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T2 – döntés [PIROS / J2 Hírszerzés]: Utánpótlás és fegyverszállítás szervezése @ C2 (AI (szimulált)) – J2 Hírszerzés: Utánpótlás és szállítás szervezése a(z) C2 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:4:2:o:P2",
+   "sim": 1
+  },
+  {
+   "ts": 1779108440000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T2 – döntés [PIROS / J3 Műveletek]: Utánpótlás és fegyverszállítás szervezése @ C2 (ember (szimulált)) – J3 Műveletek: Utánpótlás és szállítás szervezése a(z) C2 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:4:2:o:P3",
+   "sim": 1
+  },
+  {
+   "ts": 1779108485000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T2 – döntés [PIROS / J4 Logisztika]: Utánpótlás és fegyverszállítás szervezése @ B2 (ember (szimulált)) – J4 Logisztika: Utánpótlás és szállítás szervezése a(z) B2 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:4:2:o:P4",
+   "sim": 1
+  },
+  {
+   "ts": 1779108550000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T2 – döntés [PIROS / J5 Tervezés]: Utánpótlás és fegyverszállítás szervezése @ A2 (ember (szimulált)) – J5 Tervezés: Utánpótlás és szállítás szervezése a(z) A2 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:4:2:o:P5",
+   "sim": 1
+  },
+  {
+   "ts": 1779108595000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T2 – döntés [ZÖLD / Nemzeti parancsnok]: Humanitárius segélyek szétosztása @ A1 (ember (szimulált)) – Nemzeti parancsnok: Segélyszállítmányok szétosztása a(z) A1 szektorban, a konvojok kísérésének egyeztetésével.",
+   "k": "t:4:2:o:Z0",
+   "sim": 1
+  },
+  {
+   "ts": 1779108660000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T2 – döntés [ZÖLD / Törzsfőnök]: Humanitárius segélyek szétosztása @ A1 (AI (szimulált)) – Törzsfőnök: Segélyszállítmányok szétosztása a(z) A1 szektorban, a konvojok kísérésének egyeztetésével.",
+   "k": "t:4:2:o:Z1",
+   "sim": 1
+  },
+  {
+   "ts": 1779108745000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T2 – döntés [ZÖLD / J2 Hírszerzés]: Humanitárius segélyek szétosztása @ C2 (ember (szimulált)) – J2 Hírszerzés: Segélyszállítmányok szétosztása a(z) C2 szektorban, a konvojok kísérésének egyeztetésével.",
+   "k": "t:4:2:o:Z2",
+   "sim": 1
+  },
+  {
+   "ts": 1779108850000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T2 – döntés [ZÖLD / J3 Műveletek]: Humanitárius segélyek szétosztása @ C2 (ember (szimulált)) – J3 Műveletek: Segélyszállítmányok szétosztása a(z) C2 szektorban, a konvojok kísérésének egyeztetésével.",
+   "k": "t:4:2:o:Z3",
+   "sim": 1
+  },
+  {
+   "ts": 1779109030000,
+   "n": 13,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Végrehajtás T2: elbírálás folyamatban – Az A3 szektorban ellenőrzőponton feltartottak egy humanitárius konvojt; élelmiszer- és gyógyszerhiány alakul ki. · súrlódás: Összeköttetési zavar (rádió, műhold)",
+   "k": "t:4:2:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779109150000,
+   "n": 13,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T2 – elbírálás [KÉK]: Siker – A döntés a mandátum és a ROE keretein belül, arányosan történt, és a kitűzött célt szolgálta.",
+   "k": "t:4:2:a:K",
+   "sim": 1
+  },
+  {
+   "ts": 1779109270000,
+   "n": 13,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T2 – elbírálás [PIROS]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:4:2:a:P",
+   "sim": 1
+  },
+  {
+   "ts": 1779109390000,
+   "n": 13,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T2 – elbírálás [ZÖLD]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:4:2:a:Z",
+   "sim": 1
+  },
+  {
+   "ts": 1779109510000,
+   "n": 13,
+   "ph": 2,
+   "role": "FAC",
+   "cat": "megfigyelés",
+   "tx": "Végrehajtás T2 – megfigyelés: A humanitárius konvoj feltartása: a POC és a hozzáférés együttes kezelése koordinációs hiányt mutatott a KÉK és a ZÖLD között.",
+   "k": "t:4:2:obs",
+   "sim": 1
+  },
+  {
+   "ts": 1779109630000,
+   "n": 13,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Végrehajtás T2: eredmény közölve, kör lezárva – Az A3 szektorban ellenőrzőponton feltartottak egy humanitárius konvojt; élelmiszer- és gyógyszerhiány alakul ki. · súrlódás: Összeköttetési zavar (rádió, műhold)",
+   "k": "t:4:2:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779109930000,
+   "n": 13,
+   "ph": 2,
+   "role": "FOR",
+   "cat": "játék",
+   "tx": "Végrehajtás T3: injekt kiadva, döntések gyűjtése – Menekültáradat az A2 szektor útjain; a beáramlás akadályozza az ENSZ-erő mozgását és a konvojokat. · súrlódás: Mandátum- és ROE-értelmezési vita a hozzájáruló nemzetek kö…",
+   "k": "t:4:3:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779110095000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T3 – döntés [KÉK / Parancsnok]: Tárgyalás, közvetítés a felek között @ C1 (ember (szimulált)) – Parancsnok: Közvetítés: a felek vezetőinek bevonása a(z) C1 szektorban; a tűzszünet betartásának és az ellenőrzőpontok kérdésének megvitatása.",
+   "k": "t:4:3:o:K0",
+   "sim": 1
+  },
+  {
+   "ts": 1779110160000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T3 – döntés [KÉK / Törzsfőnök]: Tárgyalás, közvetítés a felek között @ B2 (ember (szimulált)) – Törzsfőnök: Közvetítés: a felek vezetőinek bevonása a(z) B2 szektorban; a tűzszünet betartásának és az ellenőrzőpontok kérdésének megvitatása.",
+   "k": "t:4:3:o:K1",
+   "sim": 1
+  },
+  {
+   "ts": 1779110245000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T3 – döntés [KÉK / J2 Hírszerzés]: Tárgyalás, közvetítés a felek között @ C1 (AI (szimulált)) – J2 Hírszerzés: Közvetítés: a felek vezetőinek bevonása a(z) C1 szektorban; a tűzszünet betartásának és az ellenőrzőpontok kérdésének megvitatása.",
+   "k": "t:4:3:o:K2",
+   "sim": 1
+  },
+  {
+   "ts": 1779110350000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T3 – döntés [KÉK / J3 Műveletek]: Tárgyalás, közvetítés a felek között @ A3 (AI (szimulált)) – J3 Műveletek: Közvetítés: a felek vezetőinek bevonása a(z) A3 szektorban; a tűzszünet betartásának és az ellenőrzőpontok kérdésének megvitatása.",
+   "k": "t:4:3:o:K3",
+   "sim": 1
+  },
+  {
+   "ts": 1779110395000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T3 – döntés [KÉK / J4 Logisztika]: Tárgyalás, közvetítés a felek között @ B1 (ember (szimulált)) – J4 Logisztika: Közvetítés: a felek vezetőinek bevonása a(z) B1 szektorban; a tűzszünet betartásának és az ellenőrzőpontok kérdésének megvitatása.",
+   "k": "t:4:3:o:K4",
+   "sim": 1
+  },
+  {
+   "ts": 1779110460000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T3 – döntés [KÉK / J5 Tervezés]: Tárgyalás, közvetítés a felek között @ B2 (ember (szimulált)) – J5 Tervezés: Közvetítés: a felek vezetőinek bevonása a(z) B2 szektorban; a tűzszünet betartásának és az ellenőrzőpontok kérdésének megvitatása.",
+   "k": "t:4:3:o:K5",
+   "sim": 1
+  },
+  {
+   "ts": 1779110545000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T3 – döntés [KÉK / J6 CIS]: Tárgyalás, közvetítés a felek között @ A3 (ember (szimulált)) – J6 CIS: Közvetítés: a felek vezetőinek bevonása a(z) A3 szektorban; a tűzszünet betartásának és az ellenőrzőpontok kérdésének megvitatása.",
+   "k": "t:4:3:o:K6",
+   "sim": 1
+  },
+  {
+   "ts": 1779110590000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T3 – döntés [PIROS / Parancsnok]: Propaganda, dezinformáció a helyi médiában @ C1 (ember (szimulált)) – Parancsnok: Információs kampány a(z) C1 szektorban: a misszió hitelének rombolása, a helyi lakosság bizalmának befolyásolása.",
+   "k": "t:4:3:o:P0",
+   "sim": 1
+  },
+  {
+   "ts": 1779110655000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T3 – döntés [PIROS / Törzsfőnök]: Propaganda, dezinformáció a helyi médiában @ B2 (AI (szimulált)) – Törzsfőnök: Információs kampány a(z) B2 szektorban: a misszió hitelének rombolása, a helyi lakosság bizalmának befolyásolása.",
+   "k": "t:4:3:o:P1",
+   "sim": 1
+  },
+  {
+   "ts": 1779110740000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T3 – döntés [PIROS / J2 Hírszerzés]: Propaganda, dezinformáció a helyi médiában @ C1 (AI (szimulált)) – J2 Hírszerzés: Információs kampány a(z) C1 szektorban: a misszió hitelének rombolása, a helyi lakosság bizalmának befolyásolása.",
+   "k": "t:4:3:o:P2",
+   "sim": 1
+  },
+  {
+   "ts": 1779110845000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T3 – döntés [PIROS / J3 Műveletek]: Propaganda, dezinformáció a helyi médiában @ A3 (ember (szimulált)) – J3 Műveletek: Információs kampány a(z) A3 szektorban: a misszió hitelének rombolása, a helyi lakosság bizalmának befolyásolása.",
+   "k": "t:4:3:o:P3",
+   "sim": 1
+  },
+  {
+   "ts": 1779110890000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T3 – döntés [PIROS / J4 Logisztika]: Propaganda, dezinformáció a helyi médiában @ B1 (ember (szimulált)) – J4 Logisztika: Információs kampány a(z) B1 szektorban: a misszió hitelének rombolása, a helyi lakosság bizalmának befolyásolása.",
+   "k": "t:4:3:o:P4",
+   "sim": 1
+  },
+  {
+   "ts": 1779110955000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T3 – döntés [PIROS / J5 Tervezés]: Propaganda, dezinformáció a helyi médiában @ B2 (ember (szimulált)) – J5 Tervezés: Információs kampány a(z) B2 szektorban: a misszió hitelének rombolása, a helyi lakosság bizalmának befolyásolása.",
+   "k": "t:4:3:o:P5",
+   "sim": 1
+  },
+  {
+   "ts": 1779111000000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T3 – döntés [ZÖLD / Nemzeti parancsnok]: Menekültek befogadása és regisztrálása @ C1 (ember (szimulált)) – Nemzeti parancsnok: Menekültek befogadása és regisztrálása a(z) C1 szektorban, tábor és ellátás szervezése.",
+   "k": "t:4:3:o:Z0",
+   "sim": 1
+  },
+  {
+   "ts": 1779111065000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T3 – döntés [ZÖLD / Törzsfőnök]: Menekültek befogadása és regisztrálása @ B2 (AI (szimulált)) – Törzsfőnök: Menekültek befogadása és regisztrálása a(z) B2 szektorban, tábor és ellátás szervezése.",
+   "k": "t:4:3:o:Z1",
+   "sim": 1
+  },
+  {
+   "ts": 1779111150000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T3 – döntés [ZÖLD / J2 Hírszerzés]: Menekültek befogadása és regisztrálása @ C1 (ember (szimulált)) – J2 Hírszerzés: Menekültek befogadása és regisztrálása a(z) C1 szektorban, tábor és ellátás szervezése.",
+   "k": "t:4:3:o:Z2",
+   "sim": 1
+  },
+  {
+   "ts": 1779111255000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T3 – döntés [ZÖLD / J3 Műveletek]: Menekültek befogadása és regisztrálása @ A3 (ember (szimulált)) – J3 Műveletek: Menekültek befogadása és regisztrálása a(z) A3 szektorban, tábor és ellátás szervezése.",
+   "k": "t:4:3:o:Z3",
+   "sim": 1
+  },
+  {
+   "ts": 1779111435000,
+   "n": 13,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Végrehajtás T3: elbírálás folyamatban – Menekültáradat az A2 szektor útjain; a beáramlás akadályozza az ENSZ-erő mozgását és a konvojokat. · súrlódás: Mandátum- és ROE-értelmezési vita a hozzájáruló nemzetek kö…",
+   "k": "t:4:3:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779111555000,
+   "n": 13,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T3 – elbírálás [KÉK]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:4:3:a:K",
+   "sim": 1
+  },
+  {
+   "ts": 1779111675000,
+   "n": 13,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T3 – elbírálás [PIROS]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:4:3:a:P",
+   "sim": 1
+  },
+  {
+   "ts": 1779111795000,
+   "n": 13,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T3 – elbírálás [ZÖLD]: Siker – A döntés a mandátum és a ROE keretein belül, arányosan történt, és a kitűzött célt szolgálta.",
+   "k": "t:4:3:a:Z",
+   "sim": 1
+  },
+  {
+   "ts": 1779111915000,
+   "n": 13,
+   "ph": 2,
+   "role": "FAC",
+   "cat": "megfigyelés",
+   "tx": "Végrehajtás T3 – megfigyelés: Menekültáradat: a mozgás és a POC ütközött; a tárgyalás a PIROS felé időt nyert, de a ROE-értelmezés vitát váltott ki.",
+   "k": "t:4:3:obs",
+   "sim": 1
+  },
+  {
+   "ts": 1779112035000,
+   "n": 13,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Végrehajtás T3: eredmény közölve, kör lezárva – Menekültáradat az A2 szektor útjain; a beáramlás akadályozza az ENSZ-erő mozgását és a konvojokat. · súrlódás: Mandátum- és ROE-értelmezési vita a hozzájáruló nemzetek kö…",
+   "k": "t:4:3:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779112335000,
+   "n": 13,
+   "ph": 2,
+   "role": "FOR",
+   "cat": "játék",
+   "tx": "Végrehajtás T4: injekt kiadva, döntések gyűjtése – Embargót sértő fegyverszállítmány észlelve a C2 határátkelőnél (a 41. cikk szerinti intézkedések hatóköre). · súrlódás: Dezinformáció a helyi médiában",
+   "k": "t:4:4:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779112500000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T4 – döntés [KÉK / Parancsnok]: Nem katonai eszközök: embargó-, szankcióellenőrzés (41. cikk) @ B3 (ember (szimulált)) – Parancsnok: Nem katonai intézkedés (41. cikk): az embargó- és szankciós előírások ellenőrzése a(z) B3 szektorban; a szállítmány megállítása erőalkalm…",
+   "k": "t:4:4:o:K0",
+   "sim": 1
+  },
+  {
+   "ts": 1779112565000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T4 – döntés [KÉK / Törzsfőnök]: Nem katonai eszközök: embargó-, szankcióellenőrzés (41. cikk) @ C2 (ember (szimulált)) – Törzsfőnök: Nem katonai intézkedés (41. cikk): az embargó- és szankciós előírások ellenőrzése a(z) C2 szektorban; a szállítmány megállítása erőalkalm…",
+   "k": "t:4:4:o:K1",
+   "sim": 1
+  },
+  {
+   "ts": 1779112650000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T4 – döntés [KÉK / J2 Hírszerzés]: Nem katonai eszközök: embargó-, szankcióellenőrzés (41. cikk) @ B1 (AI (szimulált)) – J2 Hírszerzés: Nem katonai intézkedés (41. cikk): az embargó- és szankciós előírások ellenőrzése a(z) B1 szektorban; a szállítmány megállítása erőalk…",
+   "k": "t:4:4:o:K2",
+   "sim": 1
+  },
+  {
+   "ts": 1779112755000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T4 – döntés [KÉK / J3 Műveletek]: Nem katonai eszközök: embargó-, szankcióellenőrzés (41. cikk) @ A1 (AI (szimulált)) – J3 Műveletek: Nem katonai intézkedés (41. cikk): az embargó- és szankciós előírások ellenőrzése a(z) A1 szektorban; a szállítmány megállítása erőalka…",
+   "k": "t:4:4:o:K3",
+   "sim": 1
+  },
+  {
+   "ts": 1779112800000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T4 – döntés [KÉK / J4 Logisztika]: Nem katonai eszközök: embargó-, szankcióellenőrzés (41. cikk) @ B1 (ember (szimulált)) – J4 Logisztika: Nem katonai intézkedés (41. cikk): az embargó- és szankciós előírások ellenőrzése a(z) B1 szektorban; a szállítmány megállítása erőalk…",
+   "k": "t:4:4:o:K4",
+   "sim": 1
+  },
+  {
+   "ts": 1779112865000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T4 – döntés [KÉK / J5 Tervezés]: Nem katonai eszközök: embargó-, szankcióellenőrzés (41. cikk) @ A3 (ember (szimulált)) – J5 Tervezés: Nem katonai intézkedés (41. cikk): az embargó- és szankciós előírások ellenőrzése a(z) A3 szektorban; a szállítmány megállítása erőalkal…",
+   "k": "t:4:4:o:K5",
+   "sim": 1
+  },
+  {
+   "ts": 1779112950000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T4 – döntés [KÉK / J6 CIS]: Nem katonai eszközök: embargó-, szankcióellenőrzés (41. cikk) @ C1 (ember (szimulált)) – J6 CIS: Nem katonai intézkedés (41. cikk): az embargó- és szankciós előírások ellenőrzése a(z) C1 szektorban; a szállítmány megállítása erőalkalmazás…",
+   "k": "t:4:4:o:K6",
+   "sim": 1
+  },
+  {
+   "ts": 1779112995000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T4 – döntés [PIROS / Parancsnok]: Utánpótlás és fegyverszállítás szervezése @ B3 (ember (szimulált)) – Parancsnok: Utánpótlás és szállítás szervezése a(z) B3 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:4:4:o:P0",
+   "sim": 1
+  },
+  {
+   "ts": 1779113060000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T4 – döntés [PIROS / Törzsfőnök]: Utánpótlás és fegyverszállítás szervezése @ C2 (AI (szimulált)) – Törzsfőnök: Utánpótlás és szállítás szervezése a(z) C2 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:4:4:o:P1",
+   "sim": 1
+  },
+  {
+   "ts": 1779113145000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T4 – döntés [PIROS / J2 Hírszerzés]: Utánpótlás és fegyverszállítás szervezése @ B1 (AI (szimulált)) – J2 Hírszerzés: Utánpótlás és szállítás szervezése a(z) B1 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:4:4:o:P2",
+   "sim": 1
+  },
+  {
+   "ts": 1779113250000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T4 – döntés [PIROS / J3 Műveletek]: Utánpótlás és fegyverszállítás szervezése @ A1 (ember (szimulált)) – J3 Műveletek: Utánpótlás és szállítás szervezése a(z) A1 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:4:4:o:P3",
+   "sim": 1
+  },
+  {
+   "ts": 1779113295000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T4 – döntés [PIROS / J4 Logisztika]: Utánpótlás és fegyverszállítás szervezése @ B1 (ember (szimulált)) – J4 Logisztika: Utánpótlás és szállítás szervezése a(z) B1 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:4:4:o:P4",
+   "sim": 1
+  },
+  {
+   "ts": 1779113360000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T4 – döntés [PIROS / J5 Tervezés]: Utánpótlás és fegyverszállítás szervezése @ A3 (ember (szimulált)) – J5 Tervezés: Utánpótlás és szállítás szervezése a(z) A3 szektoron át; az embargó megkerülése, a készletek feltöltése.",
+   "k": "t:4:4:o:P5",
+   "sim": 1
+  },
+  {
+   "ts": 1779113405000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T4 – döntés [ZÖLD / Nemzeti parancsnok]: Jogi és közigazgatási intézkedések @ B3 (ember (szimulált)) – Nemzeti parancsnok: Ellenőrzőpontok, engedélyek és jogi eljárások rendezése a(z) B3 szektorban a humanitárius hozzáférés érdekében.",
+   "k": "t:4:4:o:Z0",
+   "sim": 1
+  },
+  {
+   "ts": 1779113470000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T4 – döntés [ZÖLD / Törzsfőnök]: Jogi és közigazgatási intézkedések @ C2 (AI (szimulált)) – Törzsfőnök: Ellenőrzőpontok, engedélyek és jogi eljárások rendezése a(z) C2 szektorban a humanitárius hozzáférés érdekében.",
+   "k": "t:4:4:o:Z1",
+   "sim": 1
+  },
+  {
+   "ts": 1779113555000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T4 – döntés [ZÖLD / J2 Hírszerzés]: Jogi és közigazgatási intézkedések @ B1 (ember (szimulált)) – J2 Hírszerzés: Ellenőrzőpontok, engedélyek és jogi eljárások rendezése a(z) B1 szektorban a humanitárius hozzáférés érdekében.",
+   "k": "t:4:4:o:Z2",
+   "sim": 1
+  },
+  {
+   "ts": 1779113660000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T4 – döntés [ZÖLD / J3 Műveletek]: Jogi és közigazgatási intézkedések @ A1 (ember (szimulált)) – J3 Műveletek: Ellenőrzőpontok, engedélyek és jogi eljárások rendezése a(z) A1 szektorban a humanitárius hozzáférés érdekében.",
+   "k": "t:4:4:o:Z3",
+   "sim": 1
+  },
+  {
+   "ts": 1779113840000,
+   "n": 13,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Végrehajtás T4: elbírálás folyamatban – Embargót sértő fegyverszállítmány észlelve a C2 határátkelőnél (a 41. cikk szerinti intézkedések hatóköre). · súrlódás: Dezinformáció a helyi médiában",
+   "k": "t:4:4:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779113960000,
+   "n": 13,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T4 – elbírálás [KÉK]: Siker – A döntés a mandátum és a ROE keretein belül, arányosan történt, és a kitűzött célt szolgálta.",
+   "k": "t:4:4:a:K",
+   "sim": 1
+  },
+  {
+   "ts": 1779114080000,
+   "n": 13,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T4 – elbírálás [PIROS]: Kudarc – A döntés nem érte el a célt, vagy a mandátum/ROE határán kívül esett, illetve a civilek kockázatát növelte.",
+   "k": "t:4:4:a:P",
+   "sim": 1
+  },
+  {
+   "ts": 1779114200000,
+   "n": 13,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T4 – elbírálás [ZÖLD]: Siker – A döntés a mandátum és a ROE keretein belül, arányosan történt, és a kitűzött célt szolgálta.",
+   "k": "t:4:4:a:Z",
+   "sim": 1
+  },
+  {
+   "ts": 1779114320000,
+   "n": 13,
+   "ph": 2,
+   "role": "FAC",
+   "cat": "megfigyelés",
+   "tx": "Végrehajtás T4 – megfigyelés: Embargó-megkerülés: a 41. cikk szerinti nem katonai eszközök hatékonynak bizonyultak, a PIROS utánpótlási kísérlete kudarcot vallott.",
+   "k": "t:4:4:obs",
+   "sim": 1
+  },
+  {
+   "ts": 1779114440000,
+   "n": 13,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Végrehajtás T4: eredmény közölve, kör lezárva – Embargót sértő fegyverszállítmány észlelve a C2 határátkelőnél (a 41. cikk szerinti intézkedések hatóköre). · súrlódás: Dezinformáció a helyi médiában",
+   "k": "t:4:4:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779114740000,
+   "n": 13,
+   "ph": 2,
+   "role": "FOR",
+   "cat": "játék",
+   "tx": "Végrehajtás T5: injekt kiadva, döntések gyűjtése – Támadás érte az ENSZ-járőrt a B3 szektorban; sérültek; azonnali ROE-döntés szükséges (42. és 51. cikk).",
+   "k": "t:4:5:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779114905000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T5 – döntés [KÉK / Parancsnok]: Önvédelem, jogos védelem (51. cikk) @ B2 (ember (szimulált)) – Parancsnok: Önvédelem (51. cikk) és a mandátum védelme: a(z) B2 szektorban támadás érte az állományt; azonnali, arányos védelmi intézkedés, utólagos …",
+   "k": "t:4:5:o:K0",
+   "sim": 1
+  },
+  {
+   "ts": 1779114970000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T5 – döntés [KÉK / Törzsfőnök]: Önvédelem, jogos védelem (51. cikk) @ C1 (ember (szimulált)) – Törzsfőnök: Önvédelem (51. cikk) és a mandátum védelme: a(z) C1 szektorban támadás érte az állományt; azonnali, arányos védelmi intézkedés, utólagos …",
+   "k": "t:4:5:o:K1",
+   "sim": 1
+  },
+  {
+   "ts": 1779115055000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T5 – döntés [KÉK / J2 Hírszerzés]: Önvédelem, jogos védelem (51. cikk) @ A1 (AI (szimulált)) – J2 Hírszerzés: Önvédelem (51. cikk) és a mandátum védelme: a(z) A1 szektorban támadás érte az állományt; azonnali, arányos védelmi intézkedés, utólag…",
+   "k": "t:4:5:o:K2",
+   "sim": 1
+  },
+  {
+   "ts": 1779115160000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T5 – döntés [KÉK / J3 Műveletek]: Önvédelem, jogos védelem (51. cikk) @ B1 (AI (szimulált)) – J3 Műveletek: Önvédelem (51. cikk) és a mandátum védelme: a(z) B1 szektorban támadás érte az állományt; azonnali, arányos védelmi intézkedés, utólago…",
+   "k": "t:4:5:o:K3",
+   "sim": 1
+  },
+  {
+   "ts": 1779115205000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T5 – döntés [KÉK / J4 Logisztika]: Önvédelem, jogos védelem (51. cikk) @ B2 (ember (szimulált)) – J4 Logisztika: Önvédelem (51. cikk) és a mandátum védelme: a(z) B2 szektorban támadás érte az állományt; azonnali, arányos védelmi intézkedés, utólag…",
+   "k": "t:4:5:o:K4",
+   "sim": 1
+  },
+  {
+   "ts": 1779115270000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T5 – döntés [KÉK / J5 Tervezés]: Önvédelem, jogos védelem (51. cikk) @ A1 (ember (szimulált)) – J5 Tervezés: Önvédelem (51. cikk) és a mandátum védelme: a(z) A1 szektorban támadás érte az állományt; azonnali, arányos védelmi intézkedés, utólagos…",
+   "k": "t:4:5:o:K5",
+   "sim": 1
+  },
+  {
+   "ts": 1779115355000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T5 – döntés [KÉK / J6 CIS]: Önvédelem, jogos védelem (51. cikk) @ A1 (ember (szimulált)) – J6 CIS: Önvédelem (51. cikk) és a mandátum védelme: a(z) A1 szektorban támadás érte az állományt; azonnali, arányos védelmi intézkedés, utólagos jele…",
+   "k": "t:4:5:o:K6",
+   "sim": 1
+  },
+  {
+   "ts": 1779115400000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T5 – döntés [PIROS / Parancsnok]: Támadó akció a tűzszüneti vonalon túl @ B2 (ember (szimulált)) – Parancsnok: Támadó akció a(z) B2 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:4:5:o:P0",
+   "sim": 1
+  },
+  {
+   "ts": 1779115465000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T5 – döntés [PIROS / Törzsfőnök]: Támadó akció a tűzszüneti vonalon túl @ C1 (AI (szimulált)) – Törzsfőnök: Támadó akció a(z) C1 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:4:5:o:P1",
+   "sim": 1
+  },
+  {
+   "ts": 1779115550000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T5 – döntés [PIROS / J2 Hírszerzés]: Támadó akció a tűzszüneti vonalon túl @ A1 (AI (szimulált)) – J2 Hírszerzés: Támadó akció a(z) A1 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:4:5:o:P2",
+   "sim": 1
+  },
+  {
+   "ts": 1779115655000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T5 – döntés [PIROS / J3 Műveletek]: Támadó akció a tűzszüneti vonalon túl @ B1 (ember (szimulált)) – J3 Műveletek: Támadó akció a(z) B1 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:4:5:o:P3",
+   "sim": 1
+  },
+  {
+   "ts": 1779115700000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T5 – döntés [PIROS / J4 Logisztika]: Támadó akció a tűzszüneti vonalon túl @ B2 (ember (szimulált)) – J4 Logisztika: Támadó akció a(z) B2 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:4:5:o:P4",
+   "sim": 1
+  },
+  {
+   "ts": 1779115765000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T5 – döntés [PIROS / J5 Tervezés]: Támadó akció a tűzszüneti vonalon túl @ A1 (ember (szimulált)) – J5 Tervezés: Támadó akció a(z) A1 szektorban: a csoport megpróbálja megváltoztatni a tűzszüneti vonalat, kihasználva a misszió korlátozott erejét.",
+   "k": "t:4:5:o:P5",
+   "sim": 1
+  },
+  {
+   "ts": 1779115810000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T5 – döntés [ZÖLD / Nemzeti parancsnok]: Tájékoztatás, kommunikáció a lakossággal @ B2 (ember (szimulált)) – Nemzeti parancsnok: Tájékoztató kampány a(z) B2 szektorban a lakosság számára a misszió szerepéről és a biztonsági helyzetről.",
+   "k": "t:4:5:o:Z0",
+   "sim": 1
+  },
+  {
+   "ts": 1779115875000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T5 – döntés [ZÖLD / Törzsfőnök]: Tájékoztatás, kommunikáció a lakossággal @ C1 (AI (szimulált)) – Törzsfőnök: Tájékoztató kampány a(z) C1 szektorban a lakosság számára a misszió szerepéről és a biztonsági helyzetről.",
+   "k": "t:4:5:o:Z1",
+   "sim": 1
+  },
+  {
+   "ts": 1779115960000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T5 – döntés [ZÖLD / J2 Hírszerzés]: Tájékoztatás, kommunikáció a lakossággal @ A1 (ember (szimulált)) – J2 Hírszerzés: Tájékoztató kampány a(z) A1 szektorban a lakosság számára a misszió szerepéről és a biztonsági helyzetről.",
+   "k": "t:4:5:o:Z2",
+   "sim": 1
+  },
+  {
+   "ts": 1779116065000,
+   "n": 13,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "döntés",
+   "tx": "Végrehajtás T5 – döntés [ZÖLD / J3 Műveletek]: Tájékoztatás, kommunikáció a lakossággal @ B1 (ember (szimulált)) – J3 Műveletek: Tájékoztató kampány a(z) B1 szektorban a lakosság számára a misszió szerepéről és a biztonsági helyzetről.",
+   "k": "t:4:5:o:Z3",
+   "sim": 1
+  },
+  {
+   "ts": 1779116245000,
+   "n": 13,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Végrehajtás T5: elbírálás folyamatban – Támadás érte az ENSZ-járőrt a B3 szektorban; sérültek; azonnali ROE-döntés szükséges (42. és 51. cikk).",
+   "k": "t:4:5:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779116365000,
+   "n": 13,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T5 – elbírálás [KÉK]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:4:5:a:K",
+   "sim": 1
+  },
+  {
+   "ts": 1779116485000,
+   "n": 13,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T5 – elbírálás [PIROS]: Kudarc – A döntés nem érte el a célt, vagy a mandátum/ROE határán kívül esett, illetve a civilek kockázatát növelte.",
+   "k": "t:4:5:a:P",
+   "sim": 1
+  },
+  {
+   "ts": 1779116605000,
+   "n": 13,
+   "ph": 2,
+   "role": "ADJ",
+   "cat": "elbírálás",
+   "tx": "Végrehajtás T5 – elbírálás [ZÖLD]: Részleges – A döntés jogszerű volt, de a hatás korlátozott vagy késett (információhiány, koordinációs súrlódás).",
+   "k": "t:4:5:a:Z",
+   "sim": 1
+  },
+  {
+   "ts": 1779116725000,
+   "n": 13,
+   "ph": 2,
+   "role": "FAC",
+   "cat": "megfigyelés",
+   "tx": "Végrehajtás T5 – megfigyelés: Járőrtámadás: az önvédelem (51. cikk) és a mandátum szerinti erőalkalmazás (42. cikk) határa vitás volt; az arányosság indoklása gyenge.",
+   "k": "t:4:5:obs",
+   "sim": 1
+  },
+  {
+   "ts": 1779116845000,
+   "n": 13,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Végrehajtás T5: eredmény közölve, kör lezárva – Támadás érte az ENSZ-járőrt a B3 szektorban; sérültek; azonnali ROE-döntés szükséges (42. és 51. cikk).",
+   "k": "t:4:5:ph",
+   "sim": 1
+  },
+  {
+   "ts": 1779117145000,
+   "n": 13,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "játék",
+   "tx": "Végrehajtás – 4. futás lezárva",
+   "k": "run:4",
+   "sim": 1
+  },
+  {
+   "ts": 1779117745000,
+   "n": 13,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "13. lépés (Játék végrehajtása) lezárva",
+   "k": "done:13",
+   "sim": 1
+  },
+  {
+   "ts": 1779181620000,
+   "n": 14,
+   "ph": 2,
+   "role": "MEG",
+   "cat": "feladat",
+   "tx": "Feladat kész [MEG]: Gyakran jelen van a hot-washen",
+   "k": "tick:14:0",
+   "sim": 1
+  },
+  {
+   "ts": 1779182040000,
+   "n": 14,
+   "ph": 2,
+   "role": "FAC",
+   "cat": "feladat",
+   "tx": "Feladat kész [FAC]: Vezeti a hot-washt: felismerések, tanulságok",
+   "k": "tick:14:1",
+   "sim": 1
+  },
+  {
+   "ts": 1779182460000,
+   "n": 14,
+   "ph": 2,
+   "role": "JAT",
+   "cat": "feladat",
+   "tx": "Feladat kész [JAT]: Elmondják felismeréseiket; kitöltik az exit survey-t",
+   "k": "tick:14:2",
+   "sim": 1
+  },
+  {
+   "ts": 1779182880000,
+   "n": 14,
+   "ph": 2,
+   "role": "ELE",
+   "cat": "feladat",
+   "tx": "Feladat kész [ELE]: Exit survey + további elemzendő kérdések",
+   "k": "tick:14:3",
+   "sim": 1
+  },
+  {
+   "ts": 1779184200000,
+   "n": 14,
+   "ph": 2,
+   "role": "FAC",
+   "cat": "produktum",
+   "tx": "Produktum – Az exit survey kiküldve és kitöltve: igen",
+   "k": "field:14:survey",
+   "sim": 1
+  },
+  {
+   "ts": 1779185100000,
+   "n": 14,
+   "ph": 2,
+   "role": "MEG",
+   "cat": "megbízó",
+   "tx": "Megbízói jóváhagyás: 14. lépés (Zárás)",
+   "k": "sp:14",
+   "sim": 1
+  },
+  {
+   "ts": 1779185700000,
+   "n": 14,
+   "ph": 2,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "14. lépés (Zárás) lezárva",
+   "k": "done:14",
+   "sim": 1
+  },
+  {
+   "ts": 1779786420000,
+   "n": 15,
+   "ph": 3,
+   "role": "ELE",
+   "cat": "feladat",
+   "tx": "Feladat kész [ELE]: Rendszerezi az adatot: cél-elérés, ODCR, vizualizáció",
+   "k": "tick:15:0",
+   "sim": 1
+  },
+  {
+   "ts": 1779786840000,
+   "n": 15,
+   "ph": 3,
+   "role": "IGA",
+   "cat": "feladat",
+   "tx": "Feladat kész [IGA]: Gyorsjelentés: genezis, módszertan, megállapítások",
+   "k": "tick:15:1",
+   "sim": 1
+  },
+  {
+   "ts": 1779787440000,
+   "n": 15,
+   "ph": 3,
+   "role": "ELE",
+   "cat": "ODCR",
+   "tx": "ODCR – 1. célkitűzés, Discussion: A 40. és 42. cikk szerinti eszközök fokozatos alkalmazása ott volt eredményes, ahol a döntés előzetes figyelmeztetéssel és arányosan történt.",
+   "k": "od:0d",
+   "sim": 1
+  },
+  {
+   "ts": 1779787440000,
+   "n": 15,
+   "ph": 3,
+   "role": "ELE",
+   "cat": "ODCR",
+   "tx": "ODCR – 1. célkitűzés, Conclusion: A KÉK csapat az ideiglenes intézkedéseket és a POC-t eredményesebben használta, mint az erőalkalmazást; az arányosság indoklása több körben gyenge volt.",
+   "k": "od:0c",
+   "sim": 1
+  },
+  {
+   "ts": 1779787440000,
+   "n": 15,
+   "ph": 3,
+   "role": "ELE",
+   "cat": "ODCR",
+   "tx": "ODCR – 1. célkitűzés, Recommendation: A ROE-kártyát döntési támogató eljárásrenddel kell kiegészíteni.",
+   "k": "od:0r",
+   "sim": 1
+  },
+  {
+   "ts": 1779787440000,
+   "n": 15,
+   "ph": 3,
+   "role": "ELE",
+   "cat": "ODCR",
+   "tx": "ODCR – 2. célkitűzés, Discussion: A civilek védelmét a koordinációs késedelem és az információhiány akadályozta; a humanitárius hozzáférés a ZÖLD és a KÉK közös döntésein múlt.",
+   "k": "od:1d",
+   "sim": 1
+  },
+  {
+   "ts": 1779787440000,
+   "n": 15,
+   "ph": 3,
+   "role": "ELE",
+   "cat": "ODCR",
+   "tx": "ODCR – 2. célkitűzés, Conclusion: A cél részben teljesült: a POC-döntések a körök többségében sikeresek voltak, de a konvoj-feltartás és a menekültáradat ütközött.",
+   "k": "od:1c",
+   "sim": 1
+  },
+  {
+   "ts": 1779787440000,
+   "n": 15,
+   "ph": 3,
+   "role": "ELE",
+   "cat": "ODCR",
+   "tx": "ODCR – 2. célkitűzés, Recommendation: Közös POC- és konvoj-koordinációs cella kialakítása az ENSZ-erő, a hatóságok és a szervezetek között.",
+   "k": "od:1r",
+   "sim": 1
+  },
+  {
+   "ts": 1779787440000,
+   "n": 15,
+   "ph": 3,
+   "role": "ELE",
+   "cat": "ODCR",
+   "tx": "ODCR – 3. célkitűzés, Discussion: A koordináció a legfőbb szűk keresztmetszet; az információ a ZÖLD felé késve jutott el.",
+   "k": "od:2d",
+   "sim": 1
+  },
+  {
+   "ts": 1779787440000,
+   "n": 15,
+   "ph": 3,
+   "role": "ELE",
+   "cat": "ODCR",
+   "tx": "ODCR – 3. célkitűzés, Conclusion: A cél részben teljesült; a koordináció erősíthető, de nem volt egyértelmű közös helyzetkép.",
+   "k": "od:2c",
+   "sim": 1
+  },
+  {
+   "ts": 1779787440000,
+   "n": 15,
+   "ph": 3,
+   "role": "ELE",
+   "cat": "ODCR",
+   "tx": "ODCR – 3. célkitűzés, Recommendation: Közös helyzetkép (COP) és rendszeres egyeztetés a követő gyakorlatokon.",
+   "k": "od:2r",
+   "sim": 1
+  },
+  {
+   "ts": 1779788040000,
+   "n": 15,
+   "ph": 3,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "15. lépés (Utóelemzés) lezárva",
+   "k": "done:15",
+   "sim": 1
+  },
+  {
+   "ts": 1780996020000,
+   "n": 16,
+   "ph": 3,
+   "role": "MEG",
+   "cat": "feladat",
+   "tx": "Feladat kész [MEG]: Előre elfogadott AAR-szerkezet és határidő",
+   "k": "tick:16:0",
+   "sim": 1
+  },
+  {
+   "ts": 1780996440000,
+   "n": 16,
+   "ph": 3,
+   "role": "ELE",
+   "cat": "feladat",
+   "tx": "Feladat kész [ELE]: AAR: kulcsmegállapítások, cél-elérés, követő lépések",
+   "k": "tick:16:1",
+   "sim": 1
+  },
+  {
+   "ts": 1780996860000,
+   "n": 16,
+   "ph": 3,
+   "role": "IGA",
+   "cat": "feladat",
+   "tx": "Feladat kész [IGA]: Belső értékelés: szabályok, DCAP, rendezvény, megbízó",
+   "k": "tick:16:2",
+   "sim": 1
+  },
+  {
+   "ts": 1780998840000,
+   "n": 16,
+   "ph": 3,
+   "role": "ELE",
+   "cat": "produktum",
+   "tx": "Produktum – Az AAR szerkezetét és határidejét a megbízó előre elfogadta: igen",
+   "k": "field:16:aarstruct",
+   "sim": 1
+  },
+  {
+   "ts": 1781000640000,
+   "n": 16,
+   "ph": 3,
+   "role": "ELE",
+   "cat": "produktum",
+   "tx": "Produktum – AAR: kulcsmegállapítások, cél-elérés, követő lépések: # After Action Review (AAR) – ENSZ békeművelet – Észak-völgy (VII. fejezet) - Scenario: ENSZ békeművelet – Észak-völgy (VII. fejezet) (v1.0-áttekintett, forrás: szimulált teszt: pso-eszak-volgy_v1.0_2026-11-09.json) - P…",
+   "k": "field:16:aar",
+   "sim": 1
+  },
+  {
+   "ts": 1781001540000,
+   "n": 16,
+   "ph": 3,
+   "role": "MEG",
+   "cat": "megbízó",
+   "tx": "Megbízói jóváhagyás: 16. lépés (Értékelés, AAR)",
+   "k": "sp:16",
+   "sim": 1
+  },
+  {
+   "ts": 1781002140000,
+   "n": 16,
+   "ph": 3,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "16. lépés (Értékelés, AAR) lezárva",
+   "k": "done:16",
+   "sim": 1
+  },
+  {
+   "ts": 1781600820000,
+   "n": 17,
+   "ph": 3,
+   "role": "IGA",
+   "cat": "feladat",
+   "tx": "Feladat kész [IGA]: Formális bemutató a megbízónak",
+   "k": "tick:17:0",
+   "sim": 1
+  },
+  {
+   "ts": 1781601240000,
+   "n": 17,
+   "ph": 3,
+   "role": "ELE",
+   "cat": "feladat",
+   "tx": "Feladat kész [ELE]: Végső jelentés: a követő felhasználás a fókusz",
+   "k": "tick:17:1",
+   "sim": 1
+  },
+  {
+   "ts": 1781601660000,
+   "n": 17,
+   "ph": 3,
+   "role": "MEG",
+   "cat": "feladat",
+   "tx": "Feladat kész [MEG]: Átveszi az eredményt; felülvizsgálja a jelentést",
+   "k": "tick:17:2",
+   "sim": 1
+  },
+  {
+   "ts": 1781602980000,
+   "n": 17,
+   "ph": 3,
+   "role": "ELE",
+   "cat": "produktum",
+   "tx": "Produktum – A formális bemutató megtörtént: igen",
+   "k": "field:17:presented",
+   "sim": 1
+  },
+  {
+   "ts": 1781604780000,
+   "n": 17,
+   "ph": 3,
+   "role": "ELE",
+   "cat": "produktum",
+   "tx": "Produktum – Végső jelentés – összefoglaló: GYORSJELENTÉS – ENSZ békeművelet – Észak-völgy (VII. fejezet) (v0.5.0 · 2026-11-09) Genezis: Hogyan tartható fenn a tűzszünet, és hogyan védhetők meg a civilek az Észak-völgy tartományban (Aldória, fiktív), ha az ENSZ B…",
+   "k": "field:17:report",
+   "sim": 1
+  },
+  {
+   "ts": 1781605680000,
+   "n": 17,
+   "ph": 3,
+   "role": "MEG",
+   "cat": "megbízó",
+   "tx": "Megbízói jóváhagyás: 17. lépés (Jelentés, bemutató)",
+   "k": "sp:17",
+   "sim": 1
+  },
+  {
+   "ts": 1781606280000,
+   "n": 17,
+   "ph": 3,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "17. lépés (Jelentés, bemutató) lezárva",
+   "k": "done:17",
+   "sim": 1
+  },
+  {
+   "ts": 1782205620000,
+   "n": 18,
+   "ph": 3,
+   "role": "IGA",
+   "cat": "feladat",
+   "tx": "Feladat kész [IGA]: Tudás tárolása; követi, ki használja az eredményt",
+   "k": "tick:18:0",
+   "sim": 1
+  },
+  {
+   "ts": 1782206040000,
+   "n": 18,
+   "ph": 3,
+   "role": "MEG",
+   "cat": "feladat",
+   "tx": "Feladat kész [MEG]: Beépíti a felismeréseket a további kampányba",
+   "k": "tick:18:1",
+   "sim": 1
+  },
+  {
+   "ts": 1782208020000,
+   "n": 18,
+   "ph": 3,
+   "role": "IGA",
+   "cat": "produktum",
+   "tx": "Produktum – A tudás archiválva: igen",
+   "k": "field:18:archived",
+   "sim": 1
+  },
+  {
+   "ts": 1782208620000,
+   "n": 18,
+   "ph": 3,
+   "role": "IGA",
+   "cat": "kapu",
+   "tx": "18. lépés (Tudás és beépítés) lezárva",
+   "k": "done:18",
+   "sim": 1
+  }
+ ]
+}

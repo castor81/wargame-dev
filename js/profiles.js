@@ -10,7 +10,7 @@
   ];
   /* views: az adott profil számára elérhető fülek; landing: belépés utáni kezdőnézet */
   var LIST = [
-    { id: 'IGA', nm: 'Wargame-igazgató', en: 'Wargame Director', group: 'ctl', views: ['flow', 'roster', 'board', 'data'], landing: 'flow',
+    { id: 'IGA', nm: 'Wargame-igazgató', en: 'Wargame Director', group: 'ctl', views: ['flow', 'roster', 'board', 'scn', 'data'], landing: 'flow',
       desc: 'Teljes jogkör: kapuk lezárása, futások és körök indítása, minden nézet.' },
     { id: 'ADJ', nm: 'Adjudikátor', en: 'Adjudicator', group: 'ctl', views: ['flow', 'board', 'data'], landing: 'board',
       desc: 'Elbírálja a csapatok döntéseit, közli az eredményeket a Játéktéren.' },
@@ -18,11 +18,11 @@
       desc: 'Támogatja a játék menetét, megfigyeléseket rögzít a körökhöz.' },
     { id: 'ELE', nm: 'Elemző', en: 'Analyst', group: 'ctl', views: ['flow', 'board', 'data'], landing: 'data',
       desc: 'DCAP-adatok gyűjtése és elemzése; az Adat és elemzés nézet a kezdőlap.' },
-    { id: 'TER', nm: 'Játéktervező', en: 'Game Designer', group: 'dev', views: ['flow', 'roster'], landing: 'flow',
+    { id: 'TER', nm: 'Játéktervező', en: 'Game Designer', group: 'dev', views: ['flow', 'scn', 'roster'], landing: 'flow',
       desc: 'A játék céljainak, szabályainak és szerkezetének tervezése (1–5. lépés).' },
-    { id: 'FOR', nm: 'Forgatókönyv-tervező', en: 'Scenario Designer', group: 'dev', views: ['flow', 'board'], landing: 'flow',
-      desc: 'Forgatókönyv és injektek; a körökben az injekt kiadása.' },
-    { id: 'FEJ', nm: 'Játékfejlesztő', en: 'Game Developer', group: 'dev', views: ['flow', 'roster', 'data'], landing: 'flow',
+    { id: 'FOR', nm: 'Forgatókönyv-tervező', en: 'Scenario Designer', group: 'dev', views: ['flow', 'scn', 'board'], landing: 'scn',
+      desc: 'Scenario-fejlesztő: kész scenario betöltése vagy szerkesztése, injektek; a körökben az injekt kiadása.' },
+    { id: 'FEJ', nm: 'Játékfejlesztő', en: 'Game Developer', group: 'dev', views: ['flow', 'scn', 'roster', 'data'], landing: 'flow',
       desc: 'Eszközök, adatmodell és játékfelület fejlesztése, playtest-támogatás.' },
     { id: 'REN', nm: 'Rendezvényszervező', en: 'Event Manager', group: 'dev', views: ['flow', 'roster'], landing: 'roster',
       desc: 'Helyszín, létszám, ülések és logisztika; a Játékosok nézet a kezdőlap.' },
@@ -43,7 +43,7 @@
     save: function (o) {
       var rec = { role: o.role, name: (o.name || '').trim().slice(0, 60), at: Date.now() };
       /* DEMÓ: minden új belépés tiszta lappal indul – az előző játék adatai törlődnek */
-      try { localStorage.removeItem('wgd-state-v0.3'); } catch (e) {}
+      try { localStorage.removeItem('wgd-state-v0.3'); localStorage.removeItem('wgs-terr'); localStorage.removeItem('wgs-pack'); } catch (e) {}
       try { sessionStorage.setItem(KEY, JSON.stringify(rec)); } catch (e) {}
       try { localStorage.setItem(LAST, o.role); } catch (e) {}
       return rec;

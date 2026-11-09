@@ -1,0 +1,89 @@
+{
+ "schema": "wargame-studio-scenario",
+ "v": 1,
+ "title": "Scenario neve",
+ "version": "1.0",
+ "date": "2026-11-09",
+ "author": "",
+ "source": "",
+ "brief": {
+  "situation": "",
+  "background": "",
+  "mission": "",
+  "mandate": "",
+  "assumptions": "",
+  "constraints": "",
+  "adjudication": ""
+ },
+ "fields": {
+  "problem": "",
+  "outcome": "",
+  "goal": "",
+  "objectives": "1. célkitűzés\n2. célkitűzés\n3. célkitűzés",
+  "expected": "",
+  "milestones": "",
+  "constraints": "",
+  "research": "",
+  "scenario": "",
+  "eventplan": ""
+ },
+ "design": {
+  "turns": 3,
+  "rigidity": "Matrix wargame",
+  "adj": "Szakértői ítélet",
+  "formal": "Informális"
+ },
+ "teams": {
+  "K": {
+   "sub": "KÉK csapat megnevezése",
+   "start": "A1",
+   "options": [
+    {
+     "abbr": "RÖV",
+     "label": "Válaszlehetőség megnevezése (max. 80 karakter)",
+     "rat": "Opcionális indoklás-sablon a(z) {sec} szektorra"
+    }
+   ]
+  },
+  "P": {
+   "sub": "PIROS csapat megnevezése",
+   "start": "C3",
+   "options": []
+  },
+  "Z": {
+   "sub": "ZÖLD csapat megnevezése",
+   "start": "A3",
+   "options": []
+  }
+ },
+ "sectors": {
+  "A1": "",
+  "A2": "",
+  "A3": "",
+  "B1": "",
+  "B2": "",
+  "B3": "",
+  "C1": "",
+  "C2": "",
+  "C3": ""
+ },
+ "injects": [
+  {
+   "turn": 0,
+   "sector": "A1",
+   "text": "Turn 0 bemelegítő injekt"
+  },
+  {
+   "turn": 1,
+   "sector": "B1",
+   "text": "1. kör injektje"
+  }
+ ],
+ "friction": [],
+ "dcap": [
+  {
+   "q": "Elemzési kérdés",
+   "metric": "decisions"
+  }
+ ]
+}
