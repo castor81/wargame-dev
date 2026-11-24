@@ -227,7 +227,7 @@ th{font:600 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;col
     <div><div class="lbl">Játék</div><input type="text" id="gtitle" aria-label="Játék címe" style="min-height:30px;width:210px;font-weight:600"></div>
     <div class="sp"></div>
     <span class="chipx" id="aichip" hidden style="color:var(--bad);border-color:var(--bad);font-weight:700" title="Valós AI-ügynökök (N8N) aktívak">ÉLŐ AI</span>
-    <span class="chipx" id="sync" title="Élő szinkron a telefonos nézetekkel">Szinkron…</span>
+    <span class="chipx" id="sync" title="A szoba a telefonos játékosnézeteket szinkronizálja. A játék teljes állapota csak a gazdagép böngészőjében van; más számítógépen nem jelenik meg.">Szinkron…</span>
     <span class="chipx hu" id="who" title="Bejelentkezett profil"></span><button class="btn sm" data-act="logout" type="button">Kilépés</button>
     <button class="btn sm pri" id="briefBtn" data-act="brief" type="button" title="A betöltött scenario áttekintése (minden szerep számára)">Scenario Brief</button>
     <label class="ctl">Térkép <select id="terr" aria-label="Térkép"><option value="default">Alaptérkép (légi felvétel)</option><option value="custom" disabled>Feltöltött szelvény</option><option value="temp">Mérsékelt</option><option value="arid">Száraz</option><option value="arctic">Hegyvidéki</option></select></label>
@@ -239,7 +239,7 @@ th{font:600 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;col
   <nav class="tabs" id="tabs" role="tablist" aria-label="Nézetek"></nav>
   <section class="panel rail" id="rail" aria-label="A wargame életciklusa"></section>
   <main id="view"></main>
-  <footer class="foot">Alap: NATO Wargaming Handbook, első kiadás (HQ SACT, 2023; nem hivatalos NATO-kiadvány). A terep procedurálisan generált illusztráció, a szereplők, forgatókönyv és adatok mintaadatok. Az állapot csak ebben a böngészőben tárolódik.</footer>
+  <footer class="foot">Alap: NATO Wargaming Handbook, első kiadás (HQ SACT, 2023; nem hivatalos NATO-kiadvány). A terep procedurálisan generált illusztráció, a szereplők, forgatókönyv és adatok mintaadatok. A játék teljes állapota a gazdagép böngészőjében (ezen az eszközön) tárolódik; a szoba csak a telefonos játékosnézeteket és azok műveleteit szinkronizálja, 3 napig. Több számítógépen/böngészőben a szerepkörök nem osztoznak az állapoton.</footer>
 </div>
 
 <div class="scrim" id="phoneModal" hidden></div>
@@ -848,7 +848,7 @@ function phoneSnap(){const m=modeForStep(S.step),r=m?(openRun(m)||(m==='executio
   return{title:S.title,step:S.step,stepName:STEPS[S.step-1].nm,mode:m,seats,opts:{K:OPL('K'),P:OPL('P'),Z:OPL('Z')},brief:playerBrief(),turn:tn?{i:tn.i,phase:tn.phase,inject:tn.inject,fric:tn.fric,fricT:tn.fric?(FRIC[tn.fric]||''):'',orders:Object.fromEntries(Object.entries(tn.orders).map(([k,o])=>[k,{act:o.act,custom:!!o.custom,sec:o.sec,why:o.why}])),adj:Object.fromEntries(Object.entries(tn.adj).map(([k,a])=>[k,{res:a.res,why:a.why}]))}:null}}
 let pubT=null,pubLast='';
 function schedulePublish(){if(IS_PHONE)return;clearTimeout(pubT);pubT=setTimeout(publishNow,400)}
-async function publishNow(){const sn=phoneSnap(),js=JSON.stringify(sn);if(js===pubLast)return;try{await rpc('wg_put_state',{p_room:S.room,p_key:S.hostKey,p_state:sn});pubLast=js;setSync(1,'Szoba '+S.room+' · élő')}catch(e){setSync(0,'Szinkron hiba');console.warn(e)}}
+async function publishNow(){const sn=phoneSnap(),js=JSON.stringify(sn);if(js===pubLast)return;try{await rpc('wg_put_state',{p_room:S.room,p_key:S.hostKey,p_state:sn});pubLast=js;setSync(1,'Szoba '+S.room+' · telefonos szinkron élő')}catch(e){setSync(0,'Szinkron hiba · a telefonok nem frissülnek');console.warn(e)}}
 function applyEvents(evs){let ch=false;for(const ev of evs){S.evSince=Math.max(S.evSince||0,ev.id);const p=ev.payload||{};const seat=S.seats.find(x=>x.id===p.seat);if(!seat)continue;
   if(ev.kind==='join'&&!seat.joined){seat.joined=true;ch=true}
   if(ev.kind==='order'){const m=modeForStep(S.step),r=m&&openRun(m),tn=curTurn(r);if(tn&&tn.phase===1&&seat.active&&seat.t!=='F'&&!tn.orders[seat.id]&&String(p.why||'').trim()&&((OPL(seat.t).includes(p.act))||(p.custom===true&&typeof p.act==='string'&&p.act.trim()&&p.act.length<=80))&&SEC.includes(p.sec)){tn.orders[seat.id]={act:String(p.act).slice(0,80),custom:!OPL(seat.t).includes(p.act),sec:p.sec,why:String(p.why).slice(0,300),src:'ember (mobil)',at:Date.now()};ch=true}}}

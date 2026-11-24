@@ -1,6 +1,6 @@
 # Wargame Studio – fejlesztési vonal (wargame-dev)
 
-**Jelenlegi verzió:** v0.3.6-dev (2026-11-09)
+**Jelenlegi verzió:** v0.6.1-dev (2026-11-24)
 
 A NATO Wargaming Handbook alapú Wargame Studio külön fejlesztési ága. A stabil demó (v0.2.x) a `castor81/wargame` repóban marad.
 
@@ -21,10 +21,13 @@ A belépés után a munkamenet (`sessionStorage`) a kiválasztott szerepkört t�
 A telefonos szinkron Supabase-adatai (`wg_rooms`, `wg_events`) 3 nap után automatikusan törlődnek: napi 03:17 UTC-kor fut a `wg-purge-old` időzített feladat (`pg_cron`, `public.wg_purge_old()`). Egy szoba addig él, amíg a gazdagép frissíti; a törlés az utolsó frissítéstől számít. SQL: `supabase/`.
 
 ## Ismert korlátok
+- A teljes játékállapot a gazdagép böngészőjében van; a Supabase-szoba csak a telefonos játékosnézeteket szinkronizálja. Egy játék több számítógépen, szerepkörönként külön nézettel jelenleg nem vihető (következő fejlesztési lépés: a teljes állapot szobában tárolása).
+- A szimulált teszt adatai (indoklás, elbírálás, időbélyeg) sablonosak: valós indoklás-minőséget a teszt nem igazol; ezt valós résztvevőkkel kell ellenőrizni.
 - Egyelőre nincs jelszó és szerveroldali hitelesítés: a szerepkör szabadon választható (fejlesztői mód).
 - A profil szerinti nézetkorlátozás kliensoldali, nem biztonsági határ.
 
 ## Változásnapló
+- **v0.6.1-dev (2026-11-24):** a terheléses ellenőrző teszt (18 lépés, 481 naplósor, 4 játékmenet, ENSZ-forgatókönyv) alapján: (1) a lábléc és a szinkron-jelző pontosan megmondja, mi van szinkronban: a teljes játékállapot a gazdagép böngészőjében van, a szoba csak a telefonos játékosnézeteket és műveleteket szinkronizálja (nem több-eszközös játék minden szerepkörre); hiba esetén „a telefonok nem frissülnek” jelzés; (2) a belépő oldal a tényleges verziót mutatja (korábban elmaradt a v0.3.6-dev felirat); (3) ismert korlát rögzítve: a teszt indoklásai és elbírálásai sablonszövegek, az időbélyegek szabályosak, ezért a valós szöveges indoklás minősége a szimulált próbából nem igazolható.
 - **v0.3.6-dev (2026-11-09):** a „Pull” nyíl és felirat 3D-sebb: extrudált (vastag) nyíltest, fémes sárgaréz-árnyalás és végigfutó csillanás, perspektivikus megdöntés, extrudált betűk vetett árnyékkal.
 - **v0.3.5-dev (2026-11-09):** a „Pull” felirat doboza nyíl alakú, és ütemesen a húzás irányába (a pintől balra) mozog.
 - **v0.3.4-dev (2026-11-09):** a Supabase demó-adatok (szobák, események) automatikus törlése 3 nap után (napi időzített feladat).
